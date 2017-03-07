@@ -3,10 +3,11 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using SocialNetwork.Core.Dependency;
+using System.Web;
 
 namespace SocialNetwork.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -17,6 +18,7 @@ namespace SocialNetwork.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(NinjectBindings.Instance);
+
         }
     }
 }

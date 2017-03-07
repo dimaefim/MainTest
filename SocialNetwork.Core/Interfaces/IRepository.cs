@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SocialNetwork.DataAccess.Repository
+namespace SocialNetwork.Core.Interfaces
 {
     public interface IRepository<T> where T : class 
     {

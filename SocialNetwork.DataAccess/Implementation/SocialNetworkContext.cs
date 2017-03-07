@@ -10,6 +10,10 @@ namespace SocialNetwork.DataAccess.Implementation
         {
         }
 
+        public SocialNetworkContext(string connectionName) : base(connectionName)
+        {
+        }
+
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<UsersInRolesEntity> UsersInRoles { get; set; }

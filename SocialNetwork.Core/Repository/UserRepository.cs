@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using SocialNetwork.Core.Interfaces;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.DataAccess.Implementation;
 
-namespace SocialNetwork.DataAccess.Repository
+namespace SocialNetwork.Core.Repository
 {
     public class UserRepository : IRepository<UserEntity>
     {
