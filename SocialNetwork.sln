@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Web", "SocialNetwork.Web\SocialNetwork.Web.csproj", "{5448C7EC-C18E-44BA-88D9-097F9FD7CD50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Core", "SocialNetwork.Core\SocialNetwork.Core.csproj", "{8046D297-7E3E-44AB-9CC9-709E757FBF7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.DataAccess", "SocialNetwork.DataAccess\SocialNetwork.DataAccess.csproj", "{22CE3822-0338-4010-9E5A-CC0E5B5C7AAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Models", "SocialNetwork.Models\SocialNetwork.Models.csproj", "{E8F4D92A-724A-46D0-9C30-909D67EBC54A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5448C7EC-C18E-44BA-88D9-097F9FD7CD50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5448C7EC-C18E-44BA-88D9-097F9FD7CD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5448C7EC-C18E-44BA-88D9-097F9FD7CD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5448C7EC-C18E-44BA-88D9-097F9FD7CD50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8046D297-7E3E-44AB-9CC9-709E757FBF7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8046D297-7E3E-44AB-9CC9-709E757FBF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8046D297-7E3E-44AB-9CC9-709E757FBF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8046D297-7E3E-44AB-9CC9-709E757FBF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22CE3822-0338-4010-9E5A-CC0E5B5C7AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CE3822-0338-4010-9E5A-CC0E5B5C7AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CE3822-0338-4010-9E5A-CC0E5B5C7AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CE3822-0338-4010-9E5A-CC0E5B5C7AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8F4D92A-724A-46D0-9C30-909D67EBC54A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8F4D92A-724A-46D0-9C30-909D67EBC54A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8F4D92A-724A-46D0-9C30-909D67EBC54A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8F4D92A-724A-46D0-9C30-909D67EBC54A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
