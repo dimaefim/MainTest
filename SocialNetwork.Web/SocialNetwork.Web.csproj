@@ -225,7 +225,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>32195</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:32195/</IISUrl>
+          <IISUrl>http://localhost:33331/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:33331/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
