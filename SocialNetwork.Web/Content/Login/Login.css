@@ -1,0 +1,13 @@
+﻿body {
+    background-color: #cccccc;
+}
+
+.main-div {
+    margin-top: 10%;
+}
+
+.message-error {
+    color: red;
+    font-weight: bolder;
+}body {
+}

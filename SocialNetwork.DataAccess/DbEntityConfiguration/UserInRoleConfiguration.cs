@@ -7,6 +7,7 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
     {
         public UserRoleConfiguration()
         {
+            ToTable("UsersInRoles");
             HasKey(x => new { x.UserId, x.RoleId });
         }
     }

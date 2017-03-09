@@ -84,6 +84,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\UserLogin.cs" />
+    <Compile Include="Account\UserRegistration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Dependency\NinjectBindings.cs" />
     <Compile Include="Dependency\NinjectDependencyResolver.cs" />

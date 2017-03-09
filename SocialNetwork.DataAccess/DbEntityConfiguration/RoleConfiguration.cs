@@ -9,6 +9,7 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
     {
         public RoleConfiguration()
         {
+            ToTable("Roles");
             HasKey(t => t.Id);
             Property(t => t.RoleName).IsRequired().HasMaxLength(50).
                 HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_RoleNameUnique") { IsUnique = true }));

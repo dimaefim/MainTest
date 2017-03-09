@@ -9,10 +9,11 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
     {
         public UserConfiguration()
         {
+            ToTable("Users");
             HasKey(t => t.Id);
             Property(t => t.Email).IsRequired().HasMaxLength(128)
                 .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_UserEmailUnique") { IsUnique = true }));
-            Property(t => t.Passowrd).IsRequired().HasMaxLength(128);
+            Property(t => t.Password).IsRequired().HasMaxLength(128);
             Property(t => t.Name).IsRequired().HasMaxLength(50);
             Property(t => t.Surname).IsRequired().HasMaxLength(50);
           

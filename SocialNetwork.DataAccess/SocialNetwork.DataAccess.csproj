@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
     <Compile Include="Implementation\SocialNetworkContext.cs" />
     <Compile Include="DbEntityConfiguration\RoleConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\UserConfiguration.cs" />
@@ -59,6 +58,15 @@
     <Compile Include="DbEntity\RoleEntity.cs" />
     <Compile Include="DbEntity\UserEntity.cs" />
     <Compile Include="DbEntity\UsersInRolesEntity.cs" />
+    <Compile Include="Migrations\201703091121176_Migration1.cs" />
+    <Compile Include="Migrations\201703091121176_Migration1.Designer.cs">
+      <DependentUpon>201703091121176_Migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703091257425_Migration2.cs" />
+    <Compile Include="Migrations\201703091257425_Migration2.Designer.cs">
+      <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +78,14 @@
       <Project>{e8f4d92a-724a-46d0-9c30-909d67ebc54a}</Project>
       <Name>SocialNetwork.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703091121176_Migration1.resx">
+      <DependentUpon>201703091121176_Migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703091257425_Migration2.resx">
+      <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
