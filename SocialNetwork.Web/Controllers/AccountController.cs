@@ -18,7 +18,7 @@ namespace SocialNetwork.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!await UserLogin.Check_Existence_User(user))
+                if (!await UserLogin.CheckExistenceUser(user))
                 {
                     ViewBag.Message = "Неверный логин или пароль";
 
@@ -41,14 +41,14 @@ namespace SocialNetwork.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await UserRegistration.Check_Existence_User(newUser))
+                if (await UserRegistration.CheckExistenceUser(newUser))
                 {
                     ViewBag.Message = "Пользователь с таким логином или адресом электронной почты уже существует";
 
                     return View(newUser);
                 }
 
-                if (!await UserRegistration.Add_New_User(newUser))
+                if (!await UserRegistration.AddNewUser(newUser))
                 {
                     ViewBag.Message = "Ошибка создания пользователя";
 

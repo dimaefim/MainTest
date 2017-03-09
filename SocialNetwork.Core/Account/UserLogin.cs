@@ -15,10 +15,10 @@ namespace SocialNetwork.Core.Account
         {
             db = new SocialNetworkUW();
         }
-        public static async Task<bool> Check_Existence_User(LoginViewModel user)
+        public static async Task<bool> CheckExistenceUser(LoginViewModel user)
         {
-            IEnumerable<UserEntity> allUsers = await db.Users.GetAllItems();
-            UserEntity searchedUser = allUsers.FirstOrDefault
+            var allUsers = await db.Users.GetAllItems();
+            var searchedUser = allUsers.FirstOrDefault
                 (
                     item =>
                     (item.Login == user.Login && item.Password == user.Password) || 
