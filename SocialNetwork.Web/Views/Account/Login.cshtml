@@ -34,11 +34,19 @@
 
             //Секция Пароля
             <div class="form-group">
-                @Html.LabelFor(model => model.Password, new { @class = "col-md-5 control-label" })
+                @Html.LabelFor(model => model.Password, new {@class = "col-md-5 control-label"})
 
                 <div class="col-md-7">
-                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.PasswordFor(model => model.Password, new {@class = "form-control"})
                     @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            //Секция Запомнить меня
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-7">
+                    @Html.CheckBoxFor(model => model.RememberMe)
+                    @Html.LabelFor(model => model.RememberMe)
                 </div>
             </div>
 

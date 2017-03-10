@@ -17,5 +17,8 @@ namespace SocialNetwork.Models.Models
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public String Password { get; set; }
+
+        [Display(Name = "Запомнить меня")]
+        public bool RememberMe { get; set; }
     }
 }
