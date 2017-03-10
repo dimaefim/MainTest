@@ -28,11 +28,10 @@ namespace SocialNetwork.Web
         protected void Application_Error()
         {
             Exception exc = Server.GetLastError();
-            logger.Error(DateTime.Now + ": Ошибка! ");
+            logger.Error(DateTime.Now + ": Ошибка! " + exc);
 
             if (exc is HttpException)
             {
-                logger.Info(": FF ");
                 RedirectToErrorPage((HttpException)exc);
             }
 
@@ -56,7 +55,6 @@ namespace SocialNetwork.Web
                     routeData.Values.Add("action", "ErrorCode403");
                     break;
                 case 404:
-                    logger.Info(": Ошибка404! ");
                     routeData.Values.Add("action", "ErrorCode404");
                     break;
                 case 500:
