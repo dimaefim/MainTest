@@ -1,26 +1,54 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using System.Web.Security;
+using SocialNetwork.Core.Home;
+using SocialNetwork.Core.Repository;
+using SocialNetwork.DataAccess.DbEntity;
+using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            _currentUser = await UserData.GetUserByLoginOrEmail(User.Identity.Name);
+
+            if (_currentUser == null)
+            {
+                FormsAuthentication.SignOut();
+                RedirectToAction("Login", "Account");
+            }
+
+            MainPageViewModel user = new MainPageViewModel
+            {
+                PathPhoto = "~/Content/Home/nophoto.jpg",
+                Name = _currentUser.Name,
+                Surname = _currentUser.Surname,
+                DateOfBirth = _currentUser.DateOfBirth
+            };
+            
+
+            ViewBag.Title = _currentUser.Name + " " + _currentUser.Surname;
+
+            return View(user);
         }
 
-        public ActionResult About()
+        public ActionResult LogOff()
         {
-            ViewBag.Message = "Your application description page.";
+            FormsAuthentication.SignOut();
 
-            return View();
+            if (Request.Cookies["SN_AUTH_COOKIES"] != null)
+            {
+                Response.Cookies["SN_AUTH_COOKIES"].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        private UserEntity _currentUser;
     }
 }

@@ -5,6 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using SocialNetwork.Core.Dependency;
 using System.Web;
+using System.Web.Security;
 using SocialNetwork.Web.Controllers;
 
 namespace SocialNetwork.Web

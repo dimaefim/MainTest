@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbEntity\FileEntity.cs" />
+    <Compile Include="DbEntity\UserSettings.cs" />
     <Compile Include="Implementation\SocialNetworkContext.cs" />
     <Compile Include="DbEntityConfiguration\RoleConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\UserConfiguration.cs" />

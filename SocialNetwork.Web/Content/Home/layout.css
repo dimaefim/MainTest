@@ -1,0 +1,25 @@
+﻿.row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.main {
+    margin: auto;
+}
+
+.top-container {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.middle-container {
+    height: 700px;
+    margin-left: 16.666666%;
+}
+
+.left-menu {
+    background-color: rgba(128, 128, 128, 0.5);
+}
+
+.main-photo {
+    min-height: 150px;
+}

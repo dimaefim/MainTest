@@ -8,8 +8,10 @@ using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Login()
         {
             if (Request.Cookies["SN_AUTH_COOKIES"] != null)
@@ -23,6 +25,7 @@ namespace SocialNetwork.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel user)
         {
             if (ModelState.IsValid)
@@ -48,12 +51,14 @@ namespace SocialNetwork.Web.Controllers
             return View(user);
         }
 
+        [AllowAnonymous]
         public ActionResult Registration()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Registration(RegistrationViewModel newUser)
         {
             if (ModelState.IsValid)
@@ -72,7 +77,7 @@ namespace SocialNetwork.Web.Controllers
                     return View(newUser);
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
             }
 
             return View(newUser);

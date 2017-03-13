@@ -1,4 +1,1 @@
-2017-03-10 16:52:54.1539|INFO|SocialNetwork.Web.MvcApplication|10.03.2017 16:52:54: старт приложения.
-2017-03-10 16:56:19.4988|ERROR|SocialNetwork.Web.MvcApplication|10.03.2017 16:56:19: Ошибка! 
-2017-03-10 16:56:19.4988|INFO|SocialNetwork.Web.MvcApplication|: FF 
-2017-03-10 16:56:19.5163|INFO|SocialNetwork.Web.MvcApplication|: Ошибка404! 
+

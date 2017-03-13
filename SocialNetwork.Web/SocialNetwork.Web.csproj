@@ -74,6 +74,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -165,6 +166,8 @@
     <Content Include="Content\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Home\layout.css" />
+    <Content Include="Content\Home\nophoto.jpg" />
     <Content Include="Content\Login\Login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -304,6 +307,10 @@
     <ProjectReference Include="..\SocialNetwork.Core\SocialNetwork.Core.csproj">
       <Project>{8046d297-7e3e-44ab-9cc9-709e757fbf7d}</Project>
       <Name>SocialNetwork.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SocialNetwork.DataAccess\SocialNetwork.DataAccess.csproj">
+      <Project>{22ce3822-0338-4010-9e5a-cc0e5b5c7aaa}</Project>
+      <Name>SocialNetwork.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\SocialNetwork.Models\SocialNetwork.Models.csproj">
       <Project>{e8f4d92a-724a-46d0-9c30-909d67ebc54a}</Project>
