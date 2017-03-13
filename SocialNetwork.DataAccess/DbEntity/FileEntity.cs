@@ -12,5 +12,6 @@ namespace SocialNetwork.DataAccess.DbEntity
         public DateTime DateCreated { get; set; }
         public string Notes { get; set; }
         public byte[] Content { get; set; }
+        public UserSettings User { get; set; }
     }
 }

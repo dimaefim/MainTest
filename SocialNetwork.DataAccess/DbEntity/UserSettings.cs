@@ -9,5 +9,7 @@ namespace SocialNetwork.DataAccess.DbEntity
     public class UserSettings : IdEntity
     {
         public String aboutMe { get; set; }
+        public ICollection<FileEntity> Files { get; set; }
+        public UserEntity User { get; set; }
     }
 }
