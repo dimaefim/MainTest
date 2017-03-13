@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using SocialNetwork.Core.Repository;
-using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Core.Account
@@ -25,14 +21,9 @@ namespace SocialNetwork.Core.Account
                     (item.Email == user.Login && item.Password == user.Password)
                 );
 
-            if (searchedUser == null)
-            {
-                return false;
-            }
-
-            return true;
+            return searchedUser != null;
         }
 
-        private static SocialNetworkUW db;
+        private static readonly SocialNetworkUW db;
     }
 }

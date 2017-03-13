@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Web.UI.WebControls;
 using SocialNetwork.Core.Account;
 using SocialNetwork.Models.Models;
 
@@ -14,12 +12,8 @@ namespace SocialNetwork.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            if (Request.Cookies["SN_AUTH_COOKIES"] != null)
-            {
-                FormsAuthentication.SetAuthCookie(Request.Cookies["SN_AUTH_COOKIES"].Value, true);
-
+            if (Request.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
-            }
 
             return View();
         }
@@ -28,6 +22,9 @@ namespace SocialNetwork.Web.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Login(LoginViewModel user)
         {
+            if (Request.IsAuthenticated)
+                FormsAuthentication.SignOut();
+
             if (ModelState.IsValid)
             {
                 if (!await UserLogin.CheckExistenceUser(user))
@@ -37,18 +34,19 @@ namespace SocialNetwork.Web.Controllers
                     return View(user);
                 }
 
-                if (user.RememberMe)
-                {
-                    Response.Cookies["SN_AUTH_COOKIES"].Value = user.Login;
-                    Response.Cookies["SN_AUTH_COOKIES"].Expires = DateTime.Now.AddDays(10);
-                }
-
-                FormsAuthentication.SetAuthCookie(user.Login, true);
+                FormsAuthentication.SetAuthCookie(user.Login, user.RememberMe);
 
                 return RedirectToAction("Index", "Home");
             }
 
             return View(user);
+        }
+
+        [AllowAnonymous]
+        public ActionResult LogOff()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login", "Account");
         }
 
         [AllowAnonymous]
