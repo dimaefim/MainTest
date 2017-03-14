@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Enums\RolesEnum.cs" />
+    <Compile Include="Models\EditProfileViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />

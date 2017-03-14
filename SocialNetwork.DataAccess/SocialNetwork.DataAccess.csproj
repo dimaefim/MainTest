@@ -62,17 +62,9 @@
     <Compile Include="DbEntity\RoleEntity.cs" />
     <Compile Include="DbEntity\UserEntity.cs" />
     <Compile Include="DbEntity\UsersInRolesEntity.cs" />
-    <Compile Include="Migrations\201703091121176_Migration1.cs" />
-    <Compile Include="Migrations\201703091121176_Migration1.Designer.cs">
-      <DependentUpon>201703091121176_Migration1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703091257425_Migration2.cs" />
-    <Compile Include="Migrations\201703091257425_Migration2.Designer.cs">
-      <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201703140956590_Migration3.cs" />
-    <Compile Include="Migrations\201703140956590_Migration3.Designer.cs">
-      <DependentUpon>201703140956590_Migration3.cs</DependentUpon>
+    <Compile Include="Migrations\201703141322017_Migration1.cs" />
+    <Compile Include="Migrations\201703141322017_Migration1.Designer.cs">
+      <DependentUpon>201703141322017_Migration1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,14 +80,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201703091121176_Migration1.resx">
-      <DependentUpon>201703091121176_Migration1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703091257425_Migration2.resx">
-      <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703140956590_Migration3.resx">
-      <DependentUpon>201703140956590_Migration3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703141322017_Migration1.resx">
+      <DependentUpon>201703141322017_Migration1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

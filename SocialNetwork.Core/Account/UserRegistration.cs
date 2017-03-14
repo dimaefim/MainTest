@@ -53,6 +53,12 @@ namespace SocialNetwork.Core.Account
 
                 newUser.UserRoles.Add(new UsersInRolesEntity {RoleId = (int)RolesEnum.User, User = newUser});
 
+                newUser.Settings = new UserSettingsEntity
+                {
+                    aboutMe = "",
+                    User = newUser
+                };
+
                 await db.Users.CreateNewItem(newUser);
             }
             catch (Exception)

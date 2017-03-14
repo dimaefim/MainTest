@@ -32,6 +32,10 @@ namespace SocialNetwork.DataAccess.Migrations
                 DateOfBirth = new DateTime(1992, 8, 13),
                 IsDeleted = false,
                 UserLastLoginDate = new DateTime(2017, 3, 4),
+                Settings = new UserSettingsEntity
+                {
+                    aboutMe = "I am admin"
+                }
             });
 
             context.SaveChanges();
