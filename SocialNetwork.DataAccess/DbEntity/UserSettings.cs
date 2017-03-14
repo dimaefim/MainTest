@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SocialNetwork.DataAccess.DbEntity
 {
-    public class UserSettings : IdEntity
+    public class UserSettingsEntity : IdEntity
     {
-        public String aboutMe { get; set; }
-        public ICollection<FileEntity> Files { get; set; }
-        public UserEntity User { get; set; }
+        public string aboutMe { get; set; }
+        public virtual ICollection<FileEntity> Files { get; set; }
+        public virtual UserEntity User { get; set; }
     }
 }

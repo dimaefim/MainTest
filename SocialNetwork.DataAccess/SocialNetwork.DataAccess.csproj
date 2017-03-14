@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbEntityConfiguration\FileConfiguration.cs" />
+    <Compile Include="DbEntityConfiguration\UserSettingsConfiguration.cs" />
     <Compile Include="DbEntity\FileEntity.cs" />
     <Compile Include="DbEntity\UserSettings.cs" />
     <Compile Include="Implementation\SocialNetworkContext.cs" />
@@ -67,6 +69,10 @@
     <Compile Include="Migrations\201703091257425_Migration2.cs" />
     <Compile Include="Migrations\201703091257425_Migration2.Designer.cs">
       <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140956590_Migration3.cs" />
+    <Compile Include="Migrations\201703140956590_Migration3.Designer.cs">
+      <DependentUpon>201703140956590_Migration3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703091257425_Migration2.resx">
       <DependentUpon>201703091257425_Migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140956590_Migration3.resx">
+      <DependentUpon>201703140956590_Migration3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

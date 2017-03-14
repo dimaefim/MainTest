@@ -15,7 +15,7 @@ namespace SocialNetwork.DataAccess.DbEntity
         public DateTime? UserLastLoginDate { get; set; }
 
         public virtual ICollection<UsersInRolesEntity> UserRoles { get; set; }
-        //public UserSettings Settings { get; set; }
+        public virtual UserSettingsEntity Settings { get; set; }
 
         public UserEntity()
         {
