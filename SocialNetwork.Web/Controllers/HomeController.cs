@@ -12,18 +12,15 @@ namespace SocialNetwork.Web.Controllers
     {
         private UserEntity _currentUser;
 
-        public HomeController()
-        {
-            SetCurrentUser();
-        }
-
-        private async void SetCurrentUser()
+        private async Task SetCurrentUser()
         {
             _currentUser = await UserData.GetUserByLoginOrEmail(User.Identity.Name);
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            await SetCurrentUser();
+
             if (_currentUser == null)
             {
                 FormsAuthentication.SignOut();

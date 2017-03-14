@@ -31,7 +31,7 @@ namespace SocialNetwork.Web
             {
                 logger.Error("Ошибка! " + exc);
             }
-            Response.Redirect($"/error/error{statusCode}", true);
+            Response.Redirect($"/Error/ErrorCode{statusCode}", true);
         }
 
         protected void Application_End()
