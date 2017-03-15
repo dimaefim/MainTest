@@ -10,6 +10,8 @@
     //Сообщение пользователю
     <p class="col-md-offset-5 col-md-7 message-error">@ViewBag.Message</p>
 
+    @Html.HiddenFor(model => model.Login)
+
     //Секция Фамилии
     <div class="form-group">
         @Html.LabelFor(model => model.Surname, new {@class = "col-md-5 control-label"})

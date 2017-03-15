@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Windows.Forms;
 using SocialNetwork.Core.Account;
 using SocialNetwork.Core.Home;
 using SocialNetwork.DataAccess.DbEntity;
@@ -62,6 +64,8 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> EditUserData(EditProfileViewModel newData)
         {
+            await SetCurrentUser();
+
             ViewBag.Message = "Ошибка в заполнении данных";
 
             if (ModelState.IsValid)

@@ -4,12 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace SocialNetwork.Models.Models
 {
     public class EditProfileViewModel
     {
-        [ScaffoldColumn(false)]
+        [HiddenInput(DisplayValue = false)]
         [Required(ErrorMessage = "Это поле не может быть пустым")]
         [Display(Name = "Логин")]
         [StringLength(15, MinimumLength = 4, ErrorMessage = "Логин должен содержать от 4 до 15 символов")]
