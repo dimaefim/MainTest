@@ -13,7 +13,7 @@ namespace SocialNetwork.DataAccess.DbEntity
         public string Notes { get; set; }
         public byte[] Content { get; set; }
 
-        public int? UserSettingsId { get; set; }
+        public int UserSettingsId { get; set; }
         public virtual UserSettingsEntity UserSettings { get; set; }
     }
 }

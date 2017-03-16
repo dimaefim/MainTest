@@ -279,7 +279,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -289,8 +288,8 @@
     <Content Include="Views\Error\ErrorCode403.cshtml" />
     <Content Include="Views\Error\ErrorCode404.cshtml" />
     <Content Include="Views\Error\ErrorCode500.cshtml" />
-    <Content Include="Views\Shared\Error\_ErrorLayout.cshtml" />
     <Content Include="Views\Home\EditUserData.cshtml" />
+    <Content Include="Views\Home\LoadPhoto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

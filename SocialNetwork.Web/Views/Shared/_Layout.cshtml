@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/Site.css")
     @Styles.Render("~/Content/Home/layout.css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/Login/Login.css")
 </head>
 <body>
 
@@ -16,7 +17,14 @@
     <!--Верхний контейнер-->
     <div class="row top-container">
         <ul class="nav nav-pills">
-            <li class="col-md-3 col-md-offset-9 text-center">@Html.ActionLink("Выход", "LogOff", "Account")</li>
+            @if (Request.IsAuthenticated)
+            {
+                <li class="col-md-3 col-md-offset-9 text-center">@Html.ActionLink("Выход", "LogOff", "Account")</li>
+            }
+            else
+            {
+                <li class="col-md-3 col-md-offset-9 text-center">@Html.ActionLink("Вход", "Login", "Account")</li>
+            }
         </ul>
     </div>
 

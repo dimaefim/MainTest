@@ -15,6 +15,11 @@ namespace SocialNetwork.Web.Controllers
     {
         private UserEntity _currentUser;
 
+        public HomeController()
+        {
+            
+        }
+
         private async Task SetCurrentUser()
         {
             _currentUser = await UserData.GetUserByLoginOrEmail(User.Identity.Name);
@@ -95,6 +100,11 @@ namespace SocialNetwork.Web.Controllers
             }
 
             return View(newData);
+        }
+
+        public ActionResult LoadPhoto()
+        {
+            return View();
         }
     }
 }

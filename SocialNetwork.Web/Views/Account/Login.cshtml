@@ -1,69 +1,55 @@
 ﻿@model SocialNetwork.Models.Models.LoginViewModel
 
 @{
-    Layout = null;
+    Layout = "../Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<div class="main-div">
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        //Сообщение пользователю
+        <p class="col-md-offset-5 col-md-7 message-error">@ViewBag.Message</p>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-    @Styles.Render("~/Content/Site.css")
-    @Styles.Render("~/Content/bootstrap.min.css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/Login/Login.css")
-</head>
-<body>
-    <div class="main-div">
-        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-        {
-            //Сообщение пользователю
-            <p class="col-md-offset-5 col-md-7 message-error">@ViewBag.Message</p>
+        //Секция Логина
+        <div class="form-group">
+            @Html.LabelFor(model => model.Login, new { @class = "col-md-5 control-label" })
 
-            //Секция Логина
-            <div class="form-group">
-                @Html.LabelFor(model => model.Login, new { @class = "col-md-5 control-label" })
-
-                <div class="col-md-7">
-                    @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Login)
-                </div>
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.Login, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Login)
             </div>
-
-            //Секция Пароля
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, new {@class = "col-md-5 control-label"})
-
-                <div class="col-md-7">
-                    @Html.PasswordFor(model => model.Password, new {@class = "form-control"})
-                    @Html.ValidationMessageFor(model => model.Password)
-                </div>
-            </div>
-
-            //Секция Запомнить меня
-            <div class="form-group">
-                <div class="col-md-offset-5 col-md-7">
-                    @Html.CheckBoxFor(model => model.RememberMe)
-                    @Html.LabelFor(model => model.RememberMe)
-                </div>
-            </div>
-
-            //Кнопка отправки формы
-            <div class="form-group">
-                <div class="col-md-offset-5 col-md-7">
-                    <input type="submit" class="btn btn-default col-md-10" value="Войти" />
-                </div>
-            </div>
-        }
-
-        <!--Ссылка на регистрацию-->
-        <div class="col-md-offset-5 col-md-7">
-            @Html.ActionLink("Нет аккаунта? Зарегистрироваться!", "Registration", "Account")
         </div>
+
+        //Секция Пароля
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, new { @class = "col-md-5 control-label" })
+
+            <div class="col-md-7">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+        </div>
+
+        //Секция Запомнить меня
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-7">
+                @Html.CheckBoxFor(model => model.RememberMe)
+                @Html.LabelFor(model => model.RememberMe)
+            </div>
+        </div>
+
+        //Кнопка отправки формы
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-7">
+                <input type="submit" class="btn btn-default col-md-10" value="Войти" />
+            </div>
+        </div>
+    }
+
+    <!--Ссылка на регистрацию-->
+    <div class="col-md-offset-5 col-md-7">
+        @Html.ActionLink("Нет аккаунта? Зарегистрироваться!", "Registration", "Account")
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-</body>
-</html>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

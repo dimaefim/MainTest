@@ -20,7 +20,6 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
             Property(p => p.Content).IsRequired();
             Property(p => p.DateCreated).IsRequired();
             Property(p => p.MimeType).IsRequired();
-            Property(p => p.Notes).IsRequired();
             Property(p => p.Name).IsRequired();
         }
     }
