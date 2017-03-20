@@ -22,6 +22,7 @@ namespace SocialNetwork.Core.Dependency
             NinjectKernel.Bind<SocialNetworkContext>().ToSelf().InScope(t => HttpContext.Current);
             NinjectKernel.Bind<IRepository<UserEntity>>().To<UserRepository>();
             NinjectKernel.Bind<IRepository<RoleEntity>>().To<RoleRepository>();
+            NinjectKernel.Bind<IUsersRepository>().To<UsersRepository>();
         }
 
         public static IKernel Instance => NinjectKernel;

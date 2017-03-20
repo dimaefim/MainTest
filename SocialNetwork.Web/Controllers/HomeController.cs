@@ -1,11 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Windows.Forms;
-using SocialNetwork.Core.Account;
-using SocialNetwork.Core.Home;
+using SocialNetwork.Core.Cache;
 using SocialNetwork.DataAccess.DbEntity;
+using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
@@ -14,20 +16,19 @@ namespace SocialNetwork.Web.Controllers
     public class HomeController : Controller
     {
         private UserEntity _currentUser;
-
+        
         public HomeController()
         {
-            
+            SetCurrentUser();
         }
 
-        private async Task SetCurrentUser()
+        public async void SetCurrentUser()
         {
-            _currentUser = await UserData.GetUserByLoginOrEmail(User.Identity.Name);
+            _currentUser = await UserData.db.WorkWithUser.GetUserByLoginOrEmail(HttpContext.Cur);
         }
-
         public async Task<ActionResult> Index()
         {
-            await SetCurrentUser();
+
 
             if (_currentUser == null)
             {
@@ -50,8 +51,6 @@ namespace SocialNetwork.Web.Controllers
 
         public async Task<ActionResult> EditUserData()
         {
-            await SetCurrentUser();
-
             EditProfileViewModel updeteUser = new EditProfileViewModel
             {
                 Login = _currentUser.Login,
@@ -69,27 +68,18 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> EditUserData(EditProfileViewModel newData)
         {
-            await SetCurrentUser();
-
             ViewBag.Message = "Ошибка в заполнении данных";
 
             if (ModelState.IsValid)
             {
-                if (await UserData.CheckExistenceEmail(newData))
+                if (await UserData.db.WorkWithUser.CheckExistenceEmail(newData.Email, newData.Login))
                 {
                     ViewBag.Message = "Указанный адрес электронной почты уже зарегистрирован в системе";
 
                     return View(newData);
                 }
 
-                _currentUser.Name = newData.Name;
-                _currentUser.Surname = newData.Surname;
-                _currentUser.Patronymic = newData.Patronymic;
-                _currentUser.Email = newData.Email;
-                _currentUser.DateOfBirth = newData.DateOfBirth;
-                _currentUser.Settings.aboutMe = newData.AboutMe;
-
-                if (!await UserData.UpdateUser(_currentUser))
+                if (!await UserData.db.WorkWithUser.UpdateUser(newData))
                 {
                     ViewBag.Message = "Ошибка редактирования данных";
 

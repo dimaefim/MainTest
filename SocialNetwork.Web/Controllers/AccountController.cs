@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
-using SocialNetwork.Core.Account;
+using SocialNetwork.Core.Repository;
+using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
@@ -27,7 +28,7 @@ namespace SocialNetwork.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!await UserLogin.CheckExistenceUser(user))
+                if (!await UserData.db.WorkWithUser.CheckExistenceUser(user.Login, user.Password))
                 {
                     ViewBag.Message = "Неверный логин или пароль";
 
@@ -61,14 +62,14 @@ namespace SocialNetwork.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await UserRegistration.CheckExistenceUser(newUser))
+                if (await UserData.db.WorkWithUser.CheckExistenceEmailOrLogin(newUser.Login, newUser.Email))
                 {
                     ViewBag.Message = "Пользователь с таким логином или адресом электронной почты уже существует";
 
                     return View(newUser);
                 }
 
-                if (!await UserRegistration.AddNewUser(newUser))
+                if (!await UserData.db.WorkWithUser.AddNewUser(newUser))
                 {
                     ViewBag.Message = "Ошибка создания пользователя";
 
