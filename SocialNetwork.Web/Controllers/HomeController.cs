@@ -1,14 +1,11 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Windows.Forms;
+using Ninject;
 using SocialNetwork.Core.Cache;
+using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
 using SocialNetwork.DataAccess.DbEntity;
-using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
@@ -16,23 +13,16 @@ namespace SocialNetwork.Web.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private UserEntity _currentUser;
-        public IUsersRepository UsersRepository;
+        private readonly UserEntity _currentUser;
+        private readonly IUsersRepository _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
 
-        public HomeController(IUsersRepository usersRepository)
-        {
-            UsersRepository = usersRepository;
-            SetCurrentUser();
-        }
-
-        public void SetCurrentUser()
+        public HomeController()
         {
             _currentUser = SessionCache.CurrentUser;
         }
+
         public ActionResult Index()
         {
-
-
             if (_currentUser == null)
             {
                 FormsAuthentication.SignOut();
@@ -54,7 +44,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult EditUserData()
         {
-            EditProfileViewModel updeteUser = new EditProfileViewModel
+            var updeteUser = new EditProfileViewModel
             {
                 Login = _currentUser.Login,
                 Name = _currentUser.Name,
@@ -75,14 +65,14 @@ namespace SocialNetwork.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await UsersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
+                if (await _usersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
                 {
                     ViewBag.Message = "Указанный адрес электронной почты уже зарегистрирован в системе";
 
                     return View(newData);
                 }
 
-                if (!await UsersRepository.UpdateUserAsync(newData))
+                if (!await _usersRepository.UpdateUserAsync(newData))
                 {
                     ViewBag.Message = "Ошибка редактирования данных";
 

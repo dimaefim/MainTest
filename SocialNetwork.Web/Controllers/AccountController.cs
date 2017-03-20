@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
-using SocialNetwork.Core.Repository;
 using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
