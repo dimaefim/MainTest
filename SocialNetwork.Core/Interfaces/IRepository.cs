@@ -5,11 +5,18 @@ namespace SocialNetwork.Core.Interfaces
 {
     public interface IRepository<T> where T : class 
     {
-        Task<IEnumerable<T>> GetAllItems();
-        Task<T> GetItemById(int id);
-        Task CreateNewItem(T newItem);
-        Task UpdateItem(T newItem);
-        Task DeleteItemById(int id);
-        Task DeleteAllItems();
+        Task<IEnumerable<T>> GetAllItemsAsync();
+        Task<T> GetItemByIdAsync(int id);
+        Task CreateNewItemAsync(T newItem);
+        Task UpdateItemAsync(T newItem);
+        Task DeleteItemByIdAsync(int id);
+        Task DeleteAllItemsAsync();
+
+        IEnumerable<T> GetAllItems();
+        T GetItemById(int id);
+        void CreateNewItem(T newItem);
+        void UpdateItem(T newItem);
+        void DeleteItemById(int id);
+        void DeleteAllItems();
     }
 }

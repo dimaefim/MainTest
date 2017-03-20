@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,9 @@ using System.Web;
 using System.Web.Caching;
 using System.Web.Http.Description;
 using System.Web.UI;
+using Ninject;
+using SocialNetwork.Core.Dependency;
+using SocialNetwork.Core.Interfaces;
 using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.DataAccess.DbEntity;
 
@@ -14,24 +18,46 @@ namespace SocialNetwork.Core.Cache
 {
     public static class SessionCache
     {
-        public static UserEntity GetCurrentUser(string login)
+        public static string KeyCurrentUser = "CurrentUser";
+
+        public static UserEntity CurrentUser
         {
-            /*cache.SetExpires(DateTime.Now.AddMinutes(30));
-            cache.SetCacheability(HttpCacheability.Public);
-            cache.
-            cache.VaryByParams(login);*/
+            get
+            {
+                if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    var user = HttpContext.Current.Cache.Get(KeyCurrentUser + HttpContext.Current.User.Identity.Name.ToLower(CultureInfo.InvariantCulture)) 
+                        as UserEntity;
 
-            Some(login);
+                    if (user == null)
+                    {
+                        var userRepository = NinjectBindings.Instance.Get<IUsersRepository>();
+                        user = userRepository.GetUserByLoginOrEmail(HttpContext.Current.User.Identity.Name);
+                        AddUserToCache(user);
+                    }
 
-            return _currentUser;
+                    return user;
+                }
+
+                    return null;
+            }
+
+            set { AddUserToCache(value); }
         }
 
-        public static async void Some(string login)
+        private static void AddUserToCache(UserEntity user)
         {
-            _currentUser = await UserData.db.WorkWithUser.GetUserByLoginOrEmail(login);
+            if (user != null)
+            {
+                HttpContext.Current.Cache.Remove(KeyCurrentUser + user.Login.ToLower(CultureInfo.InvariantCulture));
+                HttpContext.Current.Cache.Add(KeyCurrentUser + user.Login.ToLower(CultureInfo.InvariantCulture),
+                    user,
+                    null,
+                    System.Web.Caching.Cache.NoAbsoluteExpiration,
+                    TimeSpan.FromMinutes(30),
+                    CacheItemPriority.AboveNormal,
+                    null);
+            }
         }
-
-        private static UserEntity _currentUser;
-        private static HttpCachePolicy cache;
     }
 }

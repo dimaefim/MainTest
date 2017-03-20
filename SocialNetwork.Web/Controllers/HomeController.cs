@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Windows.Forms;
 using SocialNetwork.Core.Cache;
+using SocialNetwork.Core.Interfaces;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
@@ -16,17 +17,19 @@ namespace SocialNetwork.Web.Controllers
     public class HomeController : Controller
     {
         private UserEntity _currentUser;
-        
-        public HomeController()
+        public IUsersRepository UsersRepository;
+
+        public HomeController(IUsersRepository usersRepository)
         {
+            UsersRepository = usersRepository;
             SetCurrentUser();
         }
 
-        public async void SetCurrentUser()
+        public void SetCurrentUser()
         {
-            _currentUser = await UserData.db.WorkWithUser.GetUserByLoginOrEmail(HttpContext.Cur);
+            _currentUser = SessionCache.CurrentUser;
         }
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
 
 
@@ -49,7 +52,7 @@ namespace SocialNetwork.Web.Controllers
             return View(user);
         }
 
-        public async Task<ActionResult> EditUserData()
+        public ActionResult EditUserData()
         {
             EditProfileViewModel updeteUser = new EditProfileViewModel
             {
@@ -72,14 +75,14 @@ namespace SocialNetwork.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await UserData.db.WorkWithUser.CheckExistenceEmail(newData.Email, newData.Login))
+                if (await UsersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
                 {
                     ViewBag.Message = "Указанный адрес электронной почты уже зарегистрирован в системе";
 
                     return View(newData);
                 }
 
-                if (!await UserData.db.WorkWithUser.UpdateUser(newData))
+                if (!await UsersRepository.UpdateUserAsync(newData))
                 {
                     ViewBag.Message = "Ошибка редактирования данных";
 

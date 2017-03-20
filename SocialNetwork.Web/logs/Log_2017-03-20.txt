@@ -1,10 +1,80 @@
- Info|  1|10:55:21.7901: Старт приложения.
- Info|  1|11:11:51.9220: Старт приложения.
- Info|  1|11:42:04.3191: Старт приложения.
- Info|  1|13:00:03.6819: Старт приложения.
- Info|  1|13:07:45.4380: Старт приложения.
- Info|  1|13:12:44.5983: Старт приложения.
- Info|  1|13:26:01.0345: Старт приложения.
- Info|  1|13:30:05.3085: Старт приложения.
- Info|  1|13:32:14.1913: Старт приложения.
- Info|  1|14:19:14.8727: Старт приложения.
+ Info|  1|16:45:04.6906: Старт приложения.
+Error|  5|16:45:06.4250: Ошибка! System.InvalidOperationException: An error occurred when trying to create a controller of type 'SocialNetwork.Web.Controllers.HomeController'. Make sure that the controller has a parameterless public constructor. ---> Ninject.ActivationException: Error activating IUsersRepository
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  2) Injection of dependency IUsersRepository into parameter usersRepository of constructor of type HomeController
+  1) Request for HomeController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUsersRepository.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   в Ninject.KernelBase.Resolve(IRequest request)
+   в Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   в Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   в Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   в Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   в System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   в Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   в Ninject.Activation.Context.ResolveInternal(Object scope)
+   в Ninject.Activation.Context.Resolve()
+   в Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   в System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   в System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   в Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ Info|  1|16:55:13.8455: Старт приложения.
+Error|  6|16:55:15.6758: Ошибка! System.InvalidOperationException: An error occurred when trying to create a controller of type 'SocialNetwork.Web.Controllers.HomeController'. Make sure that the controller has a parameterless public constructor. ---> Ninject.ActivationException: Error activating IUsersRepository
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  2) Injection of dependency IUsersRepository into parameter usersRepository of constructor of type HomeController
+  1) Request for HomeController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUsersRepository.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   в Ninject.KernelBase.Resolve(IRequest request)
+   в Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   в Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   в Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   в Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   в System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   в System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   в System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   в Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   в Ninject.Activation.Context.ResolveInternal(Object scope)
+   в Ninject.Activation.Context.Resolve()
+   в Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   в System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   в System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   в Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
