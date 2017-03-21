@@ -1,24 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Caching;
-using System.Web.Http.Description;
-using System.Web.UI;
 using Ninject;
 using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
-using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.DataAccess.DbEntity;
 
 namespace SocialNetwork.Core.Cache
 {
     public static class SessionCache
     {
-        public static string KeyCurrentUser = "CurrentUser";
+        private const string KeyCurrentUser = "CurrentUser";
 
         public static UserEntity CurrentUser
         {
@@ -26,8 +19,8 @@ namespace SocialNetwork.Core.Cache
             {
                 if (HttpContext.Current.User.Identity.IsAuthenticated)
                 {
-                    var user = HttpContext.Current.Cache.Get(KeyCurrentUser + HttpContext.Current.User.Identity.Name.ToLower(CultureInfo.InvariantCulture)) 
-                        as UserEntity;
+                    var user = HttpContext.Current.Cache.Get(KeyCurrentUser + HttpContext.Current.User.Identity.Name
+                        .ToLower(CultureInfo.InvariantCulture)) as UserEntity;
 
                     if (user == null)
                     {
@@ -39,7 +32,7 @@ namespace SocialNetwork.Core.Cache
                     return user;
                 }
 
-                    return null;
+                return null;
             }
 
             set { AddUserToCache(value); }

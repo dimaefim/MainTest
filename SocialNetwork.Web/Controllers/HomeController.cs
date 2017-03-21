@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Windows.Forms;
@@ -13,7 +12,6 @@ using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
 using SocialNetwork.Core.Repository;
 using SocialNetwork.DataAccess.DbEntity;
-using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
@@ -29,10 +27,6 @@ namespace SocialNetwork.Web.Controllers
             SetCurrentUser();
         }
 
-        public void SetCurrentUser()
-        {
-            _currentUser = SessionCache.CurrentUser;
-        }
         public ActionResult Index()
         {
             if (_currentUser == null)
@@ -57,7 +51,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult EditUserData()
         {
-            EditProfileViewModel updeteUser = new EditProfileViewModel
+            var updeteUser = new EditProfileViewModel
             {
                 Login = _currentUser.Login,
                 Name = _currentUser.Name,
