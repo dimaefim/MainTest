@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
+using Ninject;
 using SocialNetwork.Core.Cache;
+using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.DataAccess.Implementation;
@@ -15,6 +20,8 @@ namespace SocialNetwork.Core.Repository
 {
     public class UsersRepository : UserRepository, IUsersRepository
     {
+        private readonly IFilesRepository _filesRepository = NinjectBindings.Instance.Get<IFilesRepository>();
+
         public UsersRepository(SocialNetworkContext context) : base (context)
         {}
 
@@ -127,6 +134,72 @@ namespace SocialNetwork.Core.Repository
             return searchedUser;
         }
 
+        public async Task<byte[]> GetUserMainPhotoAsync(string login)
+        {
+            var searchedUser = await GetUserByLoginOrEmailAsync(login);
+
+            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+
+            if (searchedUser != null && 
+                searchedUser.Settings.Files != null && 
+                searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")) != null)
+            {
+                photo = searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")).Content;
+            }
+
+            return photo;
+        }
+
+        public async Task<bool> SaveNewUserMainPhotoAsync(HttpPostedFileBase photo, string login)
+        {
+            try
+            {
+                var searchedUser = await GetUserByLoginOrEmailAsync(login);
+
+                if (searchedUser == null)
+                {
+                    return false;
+                }
+
+                if (searchedUser.Settings.Files != null)
+                {
+                    var files = searchedUser.Settings.Files;
+
+                    if (!await _filesRepository.SaveNewUserAvatarAsync(searchedUser, photo))
+                    {
+                        return false;
+                    }
+
+                    SessionCache.CurrentUser = searchedUser;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<IEnumerable<MainPageViewModel>> GetAllUsersAsync()
+        {
+            var allUsers = await GetAllItemsAsync();
+
+            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+
+            IEnumerable<MainPageViewModel> result = allUsers.Select(item => new MainPageViewModel
+            {
+                Name = item.Name,
+                Surname = item.Surname,
+                DateOfBirth = item.DateOfBirth,
+                AboutMe = item.Settings.aboutMe,
+                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
+                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content
+            });
+
+            return result;
+        }
+
         public bool CheckExistenceUser(string login, string password)
         {
             var allUsers = GetAllItems();
@@ -234,6 +307,73 @@ namespace SocialNetwork.Core.Repository
                 );
 
             return searchedUser;
+        }
+
+        public byte[] GetUserMainPhoto(string login)
+        {
+            var searchedUser = GetUserByLoginOrEmail(login);
+
+            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+
+            if (searchedUser != null)
+            {
+                if (searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")) != null)
+                {
+                    photo = searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")).Content;
+                }
+            }
+
+            return photo;
+        }
+
+        public bool SaveNewUserMainPhoto(HttpPostedFileBase photo, string login)
+        {
+            try
+            {
+                var searchedUser = GetUserByLoginOrEmail(login);
+
+                if (searchedUser == null)
+                {
+                    return false;
+                }
+
+                if (searchedUser.Settings.Files != null)
+                {
+                    var files = searchedUser.Settings.Files;
+
+                    if (!_filesRepository.SaveNewUserAvatar(searchedUser, photo))
+                    {
+                        return false;
+                    }
+
+                    SessionCache.CurrentUser = searchedUser;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public IEnumerable<MainPageViewModel> GetAllUsers()
+        {
+            var allUsers = GetAllItems();
+
+            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+
+            IEnumerable<MainPageViewModel> result = allUsers.Select(item => new MainPageViewModel
+            {
+                Name = item.Name,
+                Surname = item.Surname,
+                DateOfBirth = item.DateOfBirth,
+                AboutMe = item.Settings.aboutMe,
+                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
+                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content
+            });
+
+            return result;
         }
     }
 }

@@ -9,9 +9,10 @@ namespace SocialNetwork.Models.Models
 {
     public class MainPageViewModel
     {
-        public String Name { get; set; }
-        public String Surname { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public String PathPhoto { get; set; }
+        public string AboutMe { get; set; }
+        public byte[] MainPhoto { get; set; }
     }
 }

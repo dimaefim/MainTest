@@ -27,3 +27,7 @@ input[type="checkbox"].input-validation-error {
 .main-photo {
     height: 300px;
 }
+
+.user-photo {
+    height: 50px;
+}

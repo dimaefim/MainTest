@@ -7,10 +7,11 @@
 
     <!--Фото-->
     <div class="col-md-4">
-        <img src="~/Content/Home/nophoto.jpg" class="main-photo img-responsive">
+        @Html.Raw("<img class=\"main-photo img-responsive\" src=\"data:image/*;base64,"
+                                + Convert.ToBase64String(Model.MainPhoto) + "\" />")
 
         <ul class="nav nav-pills">
-            <li class="">@Html.ActionLink("Редактировать фото", "Index", "Home")</li>
+            <li class="col-md-12 text-center">@Html.ActionLink("Редактировать фото", "LoadPhoto", "Home")</li>
         </ul>
     </div>
 
@@ -22,6 +23,10 @@
             <tr>
                 <td>Дата Рождения</td>
                 <td>@Model.DateOfBirth</td>
+            </tr>
+            <tr>
+                <td>О себе</td>
+                <td>@Model.AboutMe</td>
             </tr>
             </tbody>
         </table>

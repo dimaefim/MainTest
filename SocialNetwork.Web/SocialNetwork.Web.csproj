@@ -290,6 +290,7 @@
     <Content Include="Views\Error\ErrorCode500.cshtml" />
     <Content Include="Views\Home\EditUserData.cshtml" />
     <Content Include="Views\Home\LoadPhoto.cshtml" />
+    <Content Include="Views\Home\ShowAllUsers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

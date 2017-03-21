@@ -89,9 +89,12 @@
     <Compile Include="Dependency\NinjectBindings.cs" />
     <Compile Include="Dependency\NinjectDependencyResolver.cs" />
     <Compile Include="Dependency\NinjectDependencyScope.cs" />
+    <Compile Include="Interfaces\IFilesRepository.cs" />
     <Compile Include="Interfaces\IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Repository\FileRepository.cs" />
+    <Compile Include="Repository\FilesRepository.cs" />
     <Compile Include="Repository\RoleRepository.cs" />
     <Compile Include="Repository\SocialNetworkUW.cs" />
     <Compile Include="Repository\UserRepository.cs" />

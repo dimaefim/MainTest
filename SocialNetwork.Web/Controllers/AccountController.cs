@@ -1,6 +1,9 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
+using Ninject;
+using SocialNetwork.Core.Dependency;
+using SocialNetwork.Core.Interfaces;
 using SocialNetwork.Core.Repository;
 using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
@@ -10,6 +13,8 @@ namespace SocialNetwork.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly IUsersRepository _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
+
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -28,7 +33,7 @@ namespace SocialNetwork.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (!await UserData.db.WorkWithUser.CheckExistenceUserAsync(user.Login, user.Password))
+                if (!await _usersRepository.CheckExistenceUserAsync(user.Login, user.Password))
                 {
                     ViewBag.Message = "Неверный логин или пароль";
 
@@ -62,14 +67,14 @@ namespace SocialNetwork.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (await UserData.db.WorkWithUser.CheckExistenceEmailOrLoginAsync(newUser.Login, newUser.Email))
+                if (await _usersRepository.CheckExistenceEmailOrLoginAsync(newUser.Login, newUser.Email))
                 {
                     ViewBag.Message = "Пользователь с таким логином или адресом электронной почты уже существует";
 
                     return View(newUser);
                 }
 
-                if (!await UserData.db.WorkWithUser.AddNewUserAsync(newUser))
+                if (!await _usersRepository.AddNewUserAsync(newUser))
                 {
                     ViewBag.Message = "Ошибка создания пользователя";
 

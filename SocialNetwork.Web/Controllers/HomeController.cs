@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Windows.Forms;
+using Ninject;
 using SocialNetwork.Core.Cache;
+using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
 using SocialNetwork.Core.Repository;
 using SocialNetwork.DataAccess.DbEntity;
@@ -18,14 +22,10 @@ namespace SocialNetwork.Web.Controllers
     public class HomeController : Controller
     {
         private UserEntity _currentUser;
-        public IUsersRepository UsersRepository;
+        private readonly IUsersRepository _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
 
         public HomeController()
-        {}
-
-        public HomeController(IUsersRepository usersRepository)
         {
-            UsersRepository = usersRepository;
             SetCurrentUser();
         }
 
@@ -35,8 +35,6 @@ namespace SocialNetwork.Web.Controllers
         }
         public ActionResult Index()
         {
-
-
             if (_currentUser == null)
             {
                 FormsAuthentication.SignOut();
@@ -45,10 +43,11 @@ namespace SocialNetwork.Web.Controllers
 
             var user = new MainPageViewModel
             {
-                PathPhoto = "~/Content/Home/nophoto.jpg",
                 Name = _currentUser.Name,
                 Surname = _currentUser.Surname,
-                DateOfBirth = _currentUser.DateOfBirth
+                DateOfBirth = _currentUser.DateOfBirth,
+                AboutMe = _currentUser.Settings.aboutMe,
+                MainPhoto = _usersRepository.GetUserMainPhoto(_currentUser.Login)
             };
             
             ViewBag.Title = _currentUser.Name + " " + _currentUser.Surname;
@@ -79,14 +78,14 @@ namespace SocialNetwork.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                if (await UsersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
+                if (await _usersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
                 {
                     ViewBag.Message = "Указанный адрес электронной почты уже зарегистрирован в системе";
 
                     return View(newData);
                 }
 
-                if (!await UsersRepository.UpdateUserAsync(newData))
+                if (!await _usersRepository.UpdateUserAsync(newData))
                 {
                     ViewBag.Message = "Ошибка редактирования данных";
 
@@ -98,10 +97,29 @@ namespace SocialNetwork.Web.Controllers
 
             return View(newData);
         }
-
+        
         public ActionResult LoadPhoto()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult LoadPhoto(HttpPostedFileBase uploadImage)
+        {
+            if (uploadImage != null)
+            {
+                if (_usersRepository.SaveNewUserMainPhoto(uploadImage, _currentUser.Login))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            return View(uploadImage);
+        }
+
+        public ActionResult ShowAllUsers()
+        {
+            return View(_usersRepository.GetAllUsers());
         }
     }
 }

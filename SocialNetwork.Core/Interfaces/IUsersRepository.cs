@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.Models.Models;
 
@@ -16,6 +17,9 @@ namespace SocialNetwork.Core.Interfaces
         Task<bool> AddNewUserAsync(RegistrationViewModel user);
         Task<bool> UpdateUserAsync(EditProfileViewModel user);
         Task<UserEntity> GetUserByLoginOrEmailAsync(string login);
+        Task<byte[]> GetUserMainPhotoAsync(string login);
+        Task<bool> SaveNewUserMainPhotoAsync(HttpPostedFileBase photo, string login);
+        Task<IEnumerable<MainPageViewModel>> GetAllUsersAsync();
 
         bool CheckExistenceUser(string login, string password);
         bool CheckExistenceEmailOrLogin(string login, string email);
@@ -23,5 +27,8 @@ namespace SocialNetwork.Core.Interfaces
         bool AddNewUser(RegistrationViewModel user);
         bool UpdateUser(EditProfileViewModel user);
         UserEntity GetUserByLoginOrEmail(string login);
+        byte[] GetUserMainPhoto(string login);
+        bool SaveNewUserMainPhoto(HttpPostedFileBase photo, string login);
+        IEnumerable<MainPageViewModel> GetAllUsers();
     }
 }
