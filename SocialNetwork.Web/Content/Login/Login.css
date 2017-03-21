@@ -1,13 +1,8 @@
-﻿body {
-    background-color: #cccccc;
-}
-
-.main-div {
-    margin-top: 10%;
+﻿.main-div {
+    margin-top: 3%;
 }
 
 .message-error {
     color: red;
     font-weight: bolder;
-}body {
 }

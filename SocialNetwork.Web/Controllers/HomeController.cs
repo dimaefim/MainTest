@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Windows.Forms;
 using SocialNetwork.Core.Cache;
 using SocialNetwork.Core.Interfaces;
+using SocialNetwork.Core.Repository;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
@@ -18,6 +19,9 @@ namespace SocialNetwork.Web.Controllers
     {
         private UserEntity _currentUser;
         public IUsersRepository UsersRepository;
+
+        public HomeController()
+        {}
 
         public HomeController(IUsersRepository usersRepository)
         {

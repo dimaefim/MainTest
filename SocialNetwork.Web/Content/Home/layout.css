@@ -8,12 +8,15 @@
 }
 
 .top-container {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: rgba(0, 0, 255, 0.5);
 }
 
 .middle-container {
     height: 700px;
+    margin-top: 2%;
     margin-left: 16.666666%;
+    border: 1px solid rgba(128, 128, 128, 0.8);
+    border-radius: 2px;
 }
 
 .left-menu {
