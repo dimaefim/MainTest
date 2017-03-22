@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
+using System.Runtime.CompilerServices;
 using SocialNetwork.DataAccess.DbEntity;
 
 namespace SocialNetwork.DataAccess.DbEntityConfiguration
@@ -18,6 +19,8 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
             Property(t => t.Surname).IsRequired().HasMaxLength(50);
           
             HasMany(t => t.UserRoles).WithRequired(t => t.User).HasForeignKey(t => t.UserId).WillCascadeOnDelete(false);
+            HasMany(t => t.Friends).WithRequired(t => t.User).HasForeignKey(t => t.UserId).WillCascadeOnDelete(false);
+            HasMany(t => t.Friends).WithRequired(t => t.Friend).HasForeignKey(t => t.FriendId).WillCascadeOnDelete(false);
         }
     }
 }

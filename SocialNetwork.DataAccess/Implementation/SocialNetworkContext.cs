@@ -18,7 +18,8 @@ namespace SocialNetwork.DataAccess.Implementation
         public DbSet<RoleEntity> Roles { get; set; }
         public DbSet<UsersInRolesEntity> UsersInRoles { get; set; }
         public DbSet<UserSettingsEntity> UsersSettings { get; set; }
-        public DbSet<FileEntity> Files { get; set; } 
+        public DbSet<FileEntity> Files { get; set; }
+        public DbSet<FriendsEntity> Friends { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -27,6 +28,7 @@ namespace SocialNetwork.DataAccess.Implementation
             modelBuilder.Configurations.Add(new UserRoleConfiguration());
             modelBuilder.Configurations.Add(new UserSettingsConfiguration());
             modelBuilder.Configurations.Add(new FileConfiguration());
+            modelBuilder.Configurations.Add(new FriendsConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

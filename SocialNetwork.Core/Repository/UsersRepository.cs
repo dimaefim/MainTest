@@ -181,14 +181,15 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public async Task<IEnumerable<MainPageViewModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<ShowUsersViewModel>> GetAllUsersAsync()
         {
             var allUsers = await GetAllItemsAsync();
 
             byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
 
-            IEnumerable<MainPageViewModel> result = allUsers.Select(item => new MainPageViewModel
+            IEnumerable<ShowUsersViewModel> result = allUsers.Select(item => new ShowUsersViewModel
             {
+                Id = item.Id,
                 Name = item.Name,
                 Surname = item.Surname,
                 DateOfBirth = item.DateOfBirth,
@@ -357,14 +358,15 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public IEnumerable<MainPageViewModel> GetAllUsers()
+        public IEnumerable<ShowUsersViewModel> GetAllUsers()
         {
             var allUsers = GetAllItems();
 
             byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
 
-            IEnumerable<MainPageViewModel> result = allUsers.Select(item => new MainPageViewModel
+            IEnumerable<ShowUsersViewModel> result = allUsers.Select(item => new ShowUsersViewModel
             {
+                Id = item.Id,
                 Name = item.Name,
                 Surname = item.Surname,
                 DateOfBirth = item.DateOfBirth,

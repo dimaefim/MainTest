@@ -50,8 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbEntityConfiguration\FileConfiguration.cs" />
+    <Compile Include="DbEntityConfiguration\FriendsConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\UserSettingsConfiguration.cs" />
     <Compile Include="DbEntity\FileEntity.cs" />
+    <Compile Include="DbEntity\FriendsEntity.cs" />
     <Compile Include="DbEntity\UserSettings.cs" />
     <Compile Include="Implementation\SocialNetworkContext.cs" />
     <Compile Include="DbEntityConfiguration\RoleConfiguration.cs" />
@@ -69,6 +71,10 @@
     <Compile Include="Migrations\201703150837320_Mirgation2.cs" />
     <Compile Include="Migrations\201703150837320_Mirgation2.Designer.cs">
       <DependentUpon>201703150837320_Mirgation2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703220846462_AddFriends.cs" />
+    <Compile Include="Migrations\201703220846462_AddFriends.Designer.cs">
+      <DependentUpon>201703220846462_AddFriends.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703150837320_Mirgation2.resx">
       <DependentUpon>201703150837320_Mirgation2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703220846462_AddFriends.resx">
+      <DependentUpon>201703220846462_AddFriends.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Windows.Forms;
@@ -10,7 +11,6 @@ using Ninject;
 using SocialNetwork.Core.Cache;
 using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
-using SocialNetwork.Core.Repository;
 using SocialNetwork.DataAccess.DbEntity;
 using SocialNetwork.Models.Models;
 
@@ -25,6 +25,11 @@ namespace SocialNetwork.Web.Controllers
         public HomeController()
         {
             SetCurrentUser();
+        }
+
+        private void SetCurrentUser()
+        {
+            _currentUser = SessionCache.CurrentUser;
         }
 
         public ActionResult Index()
@@ -113,7 +118,12 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult ShowAllUsers()
         {
-            return View(_usersRepository.GetAllUsers());
+            return View();
+        }
+
+        public JsonResult GetAllUsers()
+        {
+            return Json(_usersRepository.GetAllUsers().ToList());
         }
     }
 }
