@@ -15,34 +15,24 @@
                 allUsers = data;
                 showUsers(allUsers);
             },
-            error: function() {
+            error: function () {
                 alert("Ошибка получения пользователей");
             }
         });
     }
 
     function showUsers(users) {
-        var results = $('#all-users');
+        var results = $('#my-friends');
         results.empty();
 
         for (var i = 0; i < users.length; i++) {
             var status = "";
 
-            if (users[i].Status == 1 || users[i].Status == 2) {
+            if (users[i].Status != 2) {
                 continue;
             }
 
-            switch(users[i].Status) {
-                case 3:
-                    status = "Отменить запрос дружбы";
-                    break;
-                case 4:
-                    status = "Хочет дружить. Добавить в друзья";
-                    break;
-                case 5:
-                    status = "Дружить";
-                    break;
-            }
+            status = "Убрать из друзей";
 
             var mainDiv = $('<div class="col-md-12 row">');
 
@@ -87,14 +77,14 @@
                         alert("Запрос успешно отправлен");
                         break;
                     default:
-                        alert("Ошибка отправки запроса");
+                        alert("Ошибка операции");
                         break;
                 }
 
                 loadUsers();
             },
             error: function () {
-                alert("Ошибка создания запроса на добавление в друзья");
+                alert("Ошибка операции");
             }
         });
     }

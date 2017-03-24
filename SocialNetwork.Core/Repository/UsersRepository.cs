@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms;
 using Ninject;
 using SocialNetwork.Core.Cache;
 using SocialNetwork.Core.Dependency;
@@ -181,7 +183,7 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public async Task<IEnumerable<ShowUsersViewModel>> GetAllUsersAsync()
+        public async Task<IEnumerable<ShowUsersViewModel>> GetAllUsersAsync(UserEntity user)
         {
             var allUsers = await GetAllItemsAsync();
 
@@ -199,6 +201,79 @@ namespace SocialNetwork.Core.Repository
             });
 
             return result;
+        }
+
+        public async Task<string> AddRequestToFriendListAsync(UserEntity user, int id)
+        {
+            try
+            {
+                var updatedUser = await GetUserByLoginOrEmailAsync(user.Login);
+
+                var newFriend = await GetItemByIdAsync(id);
+
+                switch (GetUserStatus(updatedUser, newFriend))
+                {
+                    case FriendStatusEnum.Me:
+
+                        return "me";
+
+                    case FriendStatusEnum.Friends:
+                        _context.Friends.Remove(
+                            updatedUser.UserFriends.FirstOrDefault(
+                                item => item.UserId == updatedUser.Id && item.FriendId == newFriend.Id));
+
+                        _context.Friends.FirstOrDefault(item => item.UserId == newFriend.Id && item.FriendId == updatedUser.Id)
+                            .IsFriends = false;
+
+                        await _context.SaveChangesAsync();
+
+                        return "no friend";
+
+                    case FriendStatusEnum.WaitAccept:
+                        _context.Friends.Remove(
+                            updatedUser.UserFriends.FirstOrDefault(
+                                item => item.UserId == updatedUser.Id && item.FriendId == newFriend.Id));
+
+                        await _context.SaveChangesAsync();
+
+                        return "no friend";
+
+                    case FriendStatusEnum.UserWaitAccept:
+                        _context.Friends.Add(new FriendsEntity
+                        {
+                            RequestDate = DateTime.Now,
+                            IsFriends = true,
+                            FriendId = newFriend.Id,
+                            UserId = updatedUser.Id
+                        });
+
+                        _context.Friends.FirstOrDefault(item => item.UserId == newFriend.Id && item.FriendId == updatedUser.Id)
+                            .IsFriends = true;
+
+                        await _context.SaveChangesAsync();
+
+                        return "i accept";
+
+                    case FriendStatusEnum.NoFriends:
+                        _context.Friends.Add(new FriendsEntity
+                        {
+                            RequestDate = DateTime.Now,
+                            IsFriends = false,
+                            FriendId = newFriend.Id,
+                            UserId = updatedUser.Id
+                        });
+
+                        await _context.SaveChangesAsync();
+
+                        return "request";
+                }
+            }
+            catch (Exception)
+            {
+                return "false";
+            }
+
+            return "false";
         }
 
         public bool CheckExistenceUser(string login, string password)
@@ -358,13 +433,13 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public IEnumerable<ShowUsersViewModel> GetAllUsers()
+        public IEnumerable<ShowUsersViewModel> GetAllUsers(UserEntity user)
         {
             var allUsers = GetAllItems();
 
             byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
 
-            IEnumerable<ShowUsersViewModel> result = allUsers.Select(item => new ShowUsersViewModel
+            IEnumerable<ShowUsersViewModel> result = allUsers.ToList().Select(item => new ShowUsersViewModel
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -372,10 +447,112 @@ namespace SocialNetwork.Core.Repository
                 DateOfBirth = item.DateOfBirth,
                 AboutMe = item.Settings.aboutMe,
                 MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
-                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content
+                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
+                Status = GetUserStatus(user, item)
             });
 
             return result;
+        }
+
+        public string AddRequestToFriendList(UserEntity user, int id)
+        {
+            try
+            {
+                var updatedUser = GetUserByLoginOrEmail(user.Login);
+
+                var newFriend = GetItemById(id);
+
+                switch (GetUserStatus(updatedUser, newFriend))
+                {
+                    case FriendStatusEnum.Me:
+
+                    return "me";
+
+                    case FriendStatusEnum.Friends:
+                        _context.Friends.Remove(
+                            updatedUser.UserFriends.FirstOrDefault(
+                                item => item.UserId == updatedUser.Id && item.FriendId == newFriend.Id));
+
+                        _context.Friends.FirstOrDefault(item => item.UserId == newFriend.Id && item.FriendId == updatedUser.Id)
+                            .IsFriends = false;
+
+                        _context.SaveChanges();
+
+                        return "no friend";
+
+                    case FriendStatusEnum.WaitAccept:
+                        _context.Friends.Remove(
+                            updatedUser.UserFriends.FirstOrDefault(
+                                item => item.UserId == updatedUser.Id && item.FriendId == newFriend.Id));
+
+                        _context.SaveChanges();
+
+                        return "no friend";
+
+                    case FriendStatusEnum.UserWaitAccept:
+                        _context.Friends.Add(new FriendsEntity
+                        {
+                            RequestDate = DateTime.Now,
+                            IsFriends = true,
+                            FriendId = newFriend.Id,
+                            UserId = updatedUser.Id
+                        });
+
+                        _context.Friends.FirstOrDefault(item => item.UserId == newFriend.Id && item.FriendId == updatedUser.Id)
+                            .IsFriends = true;
+
+                        _context.SaveChanges();
+
+                        return "i accept";
+
+                    case FriendStatusEnum.NoFriends:
+                        _context.Friends.Add(new FriendsEntity
+                        {
+                            RequestDate = DateTime.Now,
+                            IsFriends = false,
+                            FriendId = newFriend.Id,
+                            UserId = updatedUser.Id
+                        });
+
+                        _context.SaveChanges();
+
+                        return "request";
+                }
+            }
+            catch (Exception)
+            {
+                return "false";
+            }
+
+            return "false";
+        }
+
+        private FriendStatusEnum GetUserStatus(UserEntity mainUser, UserEntity secondUser)
+        {
+            mainUser = _context.Users.ToList().FirstOrDefault(item => item.Id == mainUser.Id);
+            secondUser = _context.Users.ToList().FirstOrDefault(item => item.Id == secondUser.Id);
+
+            if (mainUser.Id == secondUser.Id)
+            {
+                return FriendStatusEnum.Me;
+            }
+
+            if (mainUser.UserFriends.FirstOrDefault(item => item.FriendId == secondUser.Id) != null)
+            {
+                if (mainUser.UserFriends.FirstOrDefault(item => item.FriendId == secondUser.Id).IsFriends)
+                {
+                    return FriendStatusEnum.Friends;
+                }
+
+                return FriendStatusEnum.WaitAccept;
+            }
+
+            if (secondUser.UserFriends.FirstOrDefault(item => item.FriendId == mainUser.Id) != null)
+            {
+                return FriendStatusEnum.UserWaitAccept;
+            }
+
+            return FriendStatusEnum.NoFriends;
         }
     }
 }

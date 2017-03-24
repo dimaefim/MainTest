@@ -123,7 +123,19 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetAllUsers()
         {
-            return Json(_usersRepository.GetAllUsers().ToList());
+            return Json(_usersRepository.GetAllUsers(_currentUser).ToList());
+        }
+
+        public JsonResult AddRequestToFriendList(int id)
+        {
+            var obj = new {response = _usersRepository.AddRequestToFriendList(_currentUser, id)};
+
+            return Json(obj);
+        }
+
+        public ActionResult ShowMyFriends()
+        {
+            return View();
         }
     }
 }

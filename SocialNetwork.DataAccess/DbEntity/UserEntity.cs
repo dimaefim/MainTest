@@ -15,13 +15,15 @@ namespace SocialNetwork.DataAccess.DbEntity
         public DateTime? UserLastLoginDate { get; set; }
 
         public virtual ICollection<UsersInRolesEntity> UserRoles { get; set; }
-        public virtual ICollection<FriendsEntity> Friends { get; set; } 
+        public virtual ICollection<FriendsEntity> UserFriends { get; set; } 
+        public virtual ICollection<FriendsEntity> FriendUsers { get; set; } 
         public virtual UserSettingsEntity Settings { get; set; }
 
         public UserEntity()
         {
             UserRoles = new List<UsersInRolesEntity>();
-            Friends = new List<FriendsEntity>();
+            FriendUsers = new List<FriendsEntity>();
+            UserFriends = new List<FriendsEntity>();
         }
     }
 }

@@ -19,8 +19,8 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
             Property(t => t.Surname).IsRequired().HasMaxLength(50);
           
             HasMany(t => t.UserRoles).WithRequired(t => t.User).HasForeignKey(t => t.UserId).WillCascadeOnDelete(false);
-            HasMany(t => t.Friends).WithRequired(t => t.User).HasForeignKey(t => t.UserId).WillCascadeOnDelete(false);
-            HasMany(t => t.Friends).WithRequired(t => t.Friend).HasForeignKey(t => t.FriendId).WillCascadeOnDelete(false);
+            HasMany(t => t.UserFriends).WithRequired(t => t.User).HasForeignKey(t => t.UserId).WillCascadeOnDelete(false);
+            HasMany(t => t.FriendUsers).WithRequired(t => t.Friend).HasForeignKey(t => t.FriendId).WillCascadeOnDelete(false);
         }
     }
 }

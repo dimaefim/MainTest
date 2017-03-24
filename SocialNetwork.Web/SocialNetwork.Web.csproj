@@ -194,6 +194,7 @@
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Home\AllUsers\allUsers.js" />
+    <Content Include="Scripts\Home\Friends\myFriends.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -292,6 +293,7 @@
     <Content Include="Views\Home\EditUserData.cshtml" />
     <Content Include="Views\Home\LoadPhoto.cshtml" />
     <Content Include="Views\Home\ShowAllUsers.cshtml" />
+    <Content Include="Views\Home\ShowMyFriends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

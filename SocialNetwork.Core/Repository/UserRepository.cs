@@ -10,7 +10,7 @@ namespace SocialNetwork.Core.Repository
 {
     public class UserRepository : IRepository<UserEntity>
     {
-        private readonly SocialNetworkContext _context;
+        protected readonly SocialNetworkContext _context;
 
         public UserRepository(SocialNetworkContext context)
         {
