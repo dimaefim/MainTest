@@ -31,3 +31,7 @@ input[type="checkbox"].input-validation-error {
 .user-photo {
     height: 50px;
 }
+
+#all-friends, #requests, #my-requests {
+    cursor: pointer;
+}
