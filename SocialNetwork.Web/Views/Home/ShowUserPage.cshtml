@@ -1,0 +1,37 @@
+﻿@model SocialNetwork.Models.Models.UserPageViewModel
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<div class="row">
+
+    <!--Фото-->
+    <div class="col-md-4">
+        @Html.Raw("<img class=\"main-photo img-responsive\" src=\"data:image/*;base64,"
+                  + Convert.ToBase64String(Model.MainPhoto) + "\" />")
+
+        <input id="id" type="hidden" value="@Model.Id" />
+
+        <ul class="nav nav-pills">
+            <li class="col-md-12 text-center">@Html.ActionLink("Написать сообщение", "Index", "Home")</li>
+        </ul>
+    </div>
+
+    <!--Описание-->
+    <div class="col-md-8">
+        <h3>@Model.Surname @Model.Name</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Дата Рождения</td>
+                    <td>@Model.DateOfBirth</td>
+                </tr>
+                <tr>
+                    <td>О себе</td>
+                    <td>@Model.AboutMe</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

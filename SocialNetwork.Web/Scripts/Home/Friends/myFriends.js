@@ -114,7 +114,7 @@
 
             var descriptionDiv = $('<div class="col-md-9">');
             descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
-            descriptionDiv.append('<a href="#">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
+            descriptionDiv.append('<a href="/Home/ShowUserPage/' + users[i].Id + '">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
             descriptionDiv.append('<button type="button" class="btn btn-default">' + status + '</button>');
 
             mainDiv.append(photoDiv);
@@ -150,7 +150,7 @@
 
             var descriptionDiv = $('<div class="col-md-9">');
             descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
-            descriptionDiv.append('<a href="#">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
+            descriptionDiv.append('<a href="/Home/ShowUserPage/' + users[i].Id + '">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
             descriptionDiv.append('<button type="button" class="btn btn-default">' + status + '</button>');
 
             mainDiv.append(photoDiv);
@@ -186,7 +186,7 @@
 
             var descriptionDiv = $('<div class="col-md-9">');
             descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
-            descriptionDiv.append('<a href="#">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
+            descriptionDiv.append('<a href="/Home/ShowUserPage/' + users[i].Id + '">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
             descriptionDiv.append('<button type="button" class="btn btn-default">' + status + '</button>');
 
             mainDiv.append(photoDiv);

@@ -137,5 +137,14 @@ namespace SocialNetwork.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult ShowUserPage(int id)
+        {
+            var model = _usersRepository.GetUserPage(id);
+
+            ViewBag.Title = model.Name + " " + model.Surname;
+
+            return View(model);
+        }
     }
 }

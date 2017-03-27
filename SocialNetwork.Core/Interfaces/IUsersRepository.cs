@@ -19,8 +19,9 @@ namespace SocialNetwork.Core.Interfaces
         Task<UserEntity> GetUserByLoginOrEmailAsync(string login);
         Task<byte[]> GetUserMainPhotoAsync(string login);
         Task<bool> SaveNewUserMainPhotoAsync(HttpPostedFileBase photo, string login);
-        Task<IEnumerable<ShowUsersViewModel>> GetAllUsersAsync(UserEntity user);
+        Task<IEnumerable<UsersViewModel>> GetAllUsersAsync(UserEntity user);
         Task<string> AddRequestToFriendListAsync(UserEntity user, int id);
+        Task<UserPageViewModel> GetUserPageAsync(int id);
 
         bool CheckExistenceUser(string login, string password);
         bool CheckExistenceEmailOrLogin(string login, string email);
@@ -30,7 +31,8 @@ namespace SocialNetwork.Core.Interfaces
         UserEntity GetUserByLoginOrEmail(string login);
         byte[] GetUserMainPhoto(string login);
         bool SaveNewUserMainPhoto(HttpPostedFileBase photo, string login);
-        IEnumerable<ShowUsersViewModel> GetAllUsers(UserEntity user);
+        IEnumerable<UsersViewModel> GetAllUsers(UserEntity user);
         string AddRequestToFriendList(UserEntity user, int id);
+        UserPageViewModel GetUserPage(int id);
     }
 }

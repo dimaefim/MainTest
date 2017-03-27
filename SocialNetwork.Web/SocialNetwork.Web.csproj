@@ -294,6 +294,7 @@
     <Content Include="Views\Home\LoadPhoto.cshtml" />
     <Content Include="Views\Home\ShowAllUsers.cshtml" />
     <Content Include="Views\Home\ShowMyFriends.cshtml" />
+    <Content Include="Views\Home\ShowUserPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

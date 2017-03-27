@@ -183,13 +183,13 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public async Task<IEnumerable<ShowUsersViewModel>> GetAllUsersAsync(UserEntity user)
+        public async Task<IEnumerable<UsersViewModel>> GetAllUsersAsync(UserEntity user)
         {
             var allUsers = await GetAllItemsAsync();
 
             byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
 
-            IEnumerable<ShowUsersViewModel> result = allUsers.Select(item => new ShowUsersViewModel
+            IEnumerable<UsersViewModel> result = allUsers.Select(item => new UsersViewModel
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -274,6 +274,23 @@ namespace SocialNetwork.Core.Repository
             }
 
             return "false";
+        }
+
+        public async Task<UserPageViewModel> GetUserPageAsync(int id)
+        {
+            var user = await GetItemByIdAsync(id);
+
+            var model = new UserPageViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                DateOfBirth = user.DateOfBirth,
+                AboutMe = user.Settings.aboutMe,
+                MainPhoto = await GetUserMainPhotoAsync(user.Login)
+            };
+
+            return model;
         }
 
         public bool CheckExistenceUser(string login, string password)
@@ -433,13 +450,13 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public IEnumerable<ShowUsersViewModel> GetAllUsers(UserEntity user)
+        public IEnumerable<UsersViewModel> GetAllUsers(UserEntity user)
         {
             var allUsers = GetAllItems();
 
             byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
 
-            IEnumerable<ShowUsersViewModel> result = allUsers.ToList().Select(item => new ShowUsersViewModel
+            IEnumerable<UsersViewModel> result = allUsers.ToList().Select(item => new UsersViewModel
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -553,6 +570,23 @@ namespace SocialNetwork.Core.Repository
             }
 
             return FriendStatusEnum.NoFriends;
+        }
+
+        public UserPageViewModel GetUserPage(int id)
+        {
+            var user = GetItemById(id);
+
+            var model = new UserPageViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                DateOfBirth = user.DateOfBirth,
+                AboutMe = user.Settings.aboutMe,
+                MainPhoto = GetUserMainPhoto(user.Login)
+            };
+
+            return model;
         }
     }
 }
