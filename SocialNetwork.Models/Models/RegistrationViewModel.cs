@@ -40,10 +40,10 @@ namespace SocialNetwork.Models.Models
         [Required(ErrorMessage = "Это поле не может быть пустым")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата рождения")]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Это поле не может быть пустым")]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Некорректный адрес электронной почты")]
+        [DataType(DataType.EmailAddress)]
         [Display(Name = "Электронная почта")]
         public String Email { get; set; }
     }

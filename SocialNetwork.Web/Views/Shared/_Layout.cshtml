@@ -1,51 +1,68 @@
-﻿<!DOCTYPE html>
+﻿@using System.Diagnostics.Eventing.Reader
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/bootstrap.min.css")
-    @Styles.Render("~/Content/Site.css?123")
-    @Styles.Render("~/Content/Home/layout.css?123")
+    @Styles.Render("~/Content/Site.css?356")
+    @Styles.Render("~/Content/Home/layout.css?356")
     @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/Login/Login.css?123")
+    @Styles.Render("~/Content/Login/Login.css?356")
 </head>
 <body>
 
-<div class="row main">
+<div class="main">
 
     <!--Верхний контейнер-->
     <div class="row top-container">
         <ul class="nav nav-pills">
+            <li class="col-md-5 text-center" style="font-size: 2em;">Социальная сеть</li>
             @if (Request.IsAuthenticated)
             {
-                <li class="col-md-2 col-md-offset-9 text-center">@Html.ActionLink("Выход", "LogOff", "Account")</li>
+                <li class="text-center" style="margin-left: 28%;">@Html.ActionLink("Выход", "LogOff", "Account", new {}, new {@class = "login-link"})</li>
             }
             else
             {
-                <li class="col-md-2 col-md-offset-9 text-center">@Html.ActionLink("Вход", "Login", "Account")</li>
+                <li class="text-center" style="margin-left: 28%;">@Html.ActionLink("Вход", "Login", "Account", new {}, new {@class = "login-link"})</li>
             }
         </ul>
     </div>
 
     <!--Основной контейнер-->
     <div class="row col-md-8 middle-container">
-        
+
         <!--Левое меню-->
-        <div class="col-md-3 left-menu">
-            <ul class="nav nav-pills nav-stacked">
-                <li>@Html.ActionLink("Моя страница", "Index", "Home")</li>
-                <li>@Html.ActionLink("Мои друзья", "ShowMyFriends", "Home")</li>
-                <li>@Html.ActionLink("Редактировать профиль", "EditUserData", "Home")</li>
-                <li>@Html.ActionLink("Все пользователи", "ShowAllUsers", "Home")</li>
-            </ul>
-        </div>
+        @if (@ViewBag.RenderMenu)
+        {
+            <div class="col-md-3 left-menu">
+                <ul class="nav nav-pills nav-stacked">
+                    <li>@Html.ActionLink("Моя страница", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Мои друзья", "ShowMyFriends", "Home")</li>
+                    <li>@Html.ActionLink("Редактировать профиль", "EditUserData", "Home")</li>
+                    <li>@Html.ActionLink("Все пользователи", "ShowAllUsers", "Home")</li>
+                </ul>
+            </div>
 
-        <!--Тело с данными-->
-        <div class="col-md-9">
-            @RenderBody()
-        </div>
+            <!--Тело с данными-->
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+        }
+        else
+        {
+            <!--Тело с данными-->
+            <div class="col-md-12">
+                @RenderBody()
+            </div>
+        }
 
+    </div>
+
+    <!--Нижний контейнер-->
+    <div class="row bottom-container text-center">
+        <p>Социальная сеть. 2017г.</p>
     </div>
 </div>
 </body>

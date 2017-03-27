@@ -76,7 +76,7 @@ namespace SocialNetwork.Core.Repository
                     Surname = user.Surname,
                     Patronymic = user.Patronymic.Length == 0 ? "Undefined" : user.Patronymic,
                     Email = user.Email,
-                    DateOfBirth = user.DateOfBirth,
+                    DateOfBirth = DateTime.Parse(user.DateOfBirth),
                     IsDeleted = false,
                     UserLastLoginDate = DateTime.Now
                 };
@@ -109,7 +109,7 @@ namespace SocialNetwork.Core.Repository
                 updatedUser.Surname = user.Surname;
                 updatedUser.Patronymic = user.Patronymic;
                 updatedUser.Email = user.Email;
-                updatedUser.DateOfBirth = user.DateOfBirth;
+                updatedUser.DateOfBirth = DateTime.Parse(user.DateOfBirth);
                 updatedUser.Settings.aboutMe = user.AboutMe;
 
                 await UpdateItemAsync(updatedUser);
@@ -140,7 +140,7 @@ namespace SocialNetwork.Core.Repository
         {
             var searchedUser = await GetUserByLoginOrEmailAsync(login);
 
-            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+            byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
 
             if (searchedUser != null && 
                 searchedUser.Settings.Files != null && 
@@ -185,22 +185,22 @@ namespace SocialNetwork.Core.Repository
 
         public async Task<IEnumerable<UsersViewModel>> GetAllUsersAsync(UserEntity user)
         {
-            var allUsers = await GetAllItemsAsync();
+            return GetAllUsersStatus(user).Where(item => item.Status != FriendStatusEnum.Me && item.Status != FriendStatusEnum.Friends);
+        }
 
-            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+        public async Task<IEnumerable<UsersViewModel>> GetMyFriendsAsync(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.Friends);
+        }
 
-            IEnumerable<UsersViewModel> result = allUsers.Select(item => new UsersViewModel
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Surname = item.Surname,
-                DateOfBirth = item.DateOfBirth,
-                AboutMe = item.Settings.aboutMe,
-                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
-                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content
-            });
+        public async Task<IEnumerable<UsersViewModel>> GetRequestsAsync(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.UserWaitAccept);
+        }
 
-            return result;
+        public async Task<IEnumerable<UsersViewModel>> GetMyRequestsAsync(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.WaitAccept);
         }
 
         public async Task<string> AddRequestToFriendListAsync(UserEntity user, int id)
@@ -293,6 +293,27 @@ namespace SocialNetwork.Core.Repository
             return model;
         }
 
+        private async Task<IEnumerable<UsersViewModel>> GetAllUsersStatusAsync(UserEntity user)
+        {
+            var allUsers = await GetAllItemsAsync();
+
+            byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
+
+            IEnumerable<UsersViewModel> result = allUsers.Select(item => new UsersViewModel
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Surname = item.Surname,
+                DateOfBirth = item.DateOfBirth,
+                AboutMe = item.Settings.aboutMe,
+                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
+                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
+                Status = GetUserStatus(user, item)
+            });
+
+            return result;
+        }
+
         public bool CheckExistenceUser(string login, string password)
         {
             var allUsers = GetAllItems();
@@ -342,7 +363,7 @@ namespace SocialNetwork.Core.Repository
                     Surname = user.Surname,
                     Patronymic = user.Patronymic.Length == 0 ? "Undefined" : user.Patronymic,
                     Email = user.Email,
-                    DateOfBirth = user.DateOfBirth,
+                    DateOfBirth = DateTime.Parse(user.DateOfBirth),
                     IsDeleted = false,
                     UserLastLoginDate = DateTime.Now
                 };
@@ -375,7 +396,7 @@ namespace SocialNetwork.Core.Repository
                 updatedUser.Surname = user.Surname;
                 updatedUser.Patronymic = user.Patronymic;
                 updatedUser.Email = user.Email;
-                updatedUser.DateOfBirth = user.DateOfBirth;
+                updatedUser.DateOfBirth = DateTime.Parse(user.DateOfBirth);
                 updatedUser.Settings.aboutMe = user.AboutMe;
 
                 UpdateItem(updatedUser);
@@ -406,7 +427,7 @@ namespace SocialNetwork.Core.Repository
         {
             var searchedUser = GetUserByLoginOrEmail(login);
 
-            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+            byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
 
             if (searchedUser != null)
             {
@@ -452,23 +473,22 @@ namespace SocialNetwork.Core.Repository
 
         public IEnumerable<UsersViewModel> GetAllUsers(UserEntity user)
         {
-            var allUsers = GetAllItems();
+            return GetAllUsersStatus(user).Where(item => item.Status != FriendStatusEnum.Me && item.Status != FriendStatusEnum.Friends);
+        }
 
-            byte[] photo = File.ReadAllBytes("F://Git Repository//SocialNetwork//SocialNetwork.Web//Content//Home/nophoto.jpg");
+        public IEnumerable<UsersViewModel> GetMyFriends(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.Friends);
+        }
 
-            IEnumerable<UsersViewModel> result = allUsers.ToList().Select(item => new UsersViewModel
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Surname = item.Surname,
-                DateOfBirth = item.DateOfBirth,
-                AboutMe = item.Settings.aboutMe,
-                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
-                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
-                Status = GetUserStatus(user, item)
-            });
+        public IEnumerable<UsersViewModel> GetRequests(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.UserWaitAccept);
+        }
 
-            return result;
+        public IEnumerable<UsersViewModel> GetMyRequests(UserEntity user)
+        {
+            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.WaitAccept);
         }
 
         public string AddRequestToFriendList(UserEntity user, int id)
@@ -544,10 +564,29 @@ namespace SocialNetwork.Core.Repository
             return "false";
         }
 
+        public UserPageViewModel GetUserPage(int id)
+        {
+            var user = GetItemById(id);
+
+            var model = new UserPageViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Surname = user.Surname,
+                DateOfBirth = user.DateOfBirth,
+                AboutMe = user.Settings.aboutMe,
+                MainPhoto = GetUserMainPhoto(user.Login)
+            };
+
+            return model;
+        }
+
         private FriendStatusEnum GetUserStatus(UserEntity mainUser, UserEntity secondUser)
         {
-            mainUser = _context.Users.ToList().FirstOrDefault(item => item.Id == mainUser.Id);
-            secondUser = _context.Users.ToList().FirstOrDefault(item => item.Id == secondUser.Id);
+            var allUsers = GetAllItems();
+
+            mainUser = allUsers.FirstOrDefault(item => item.Id == mainUser.Id);
+            secondUser = allUsers.FirstOrDefault(item => item.Id == secondUser.Id);
 
             if (mainUser.Id == secondUser.Id)
             {
@@ -572,21 +611,25 @@ namespace SocialNetwork.Core.Repository
             return FriendStatusEnum.NoFriends;
         }
 
-        public UserPageViewModel GetUserPage(int id)
+        private IEnumerable<UsersViewModel> GetAllUsersStatus(UserEntity user)
         {
-            var user = GetItemById(id);
+            var allUsers = GetAllItems();
 
-            var model = new UserPageViewModel
+            byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
+
+            IEnumerable<UsersViewModel> result = allUsers.Select(item => new UsersViewModel
             {
-                Id = user.Id,
-                Name = user.Name,
-                Surname = user.Surname,
-                DateOfBirth = user.DateOfBirth,
-                AboutMe = user.Settings.aboutMe,
-                MainPhoto = GetUserMainPhoto(user.Login)
-            };
+                Id = item.Id,
+                Name = item.Name,
+                Surname = item.Surname,
+                DateOfBirth = item.DateOfBirth,
+                AboutMe = item.Settings.aboutMe,
+                MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
+                    item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
+                Status = GetUserStatus(user, item)
+            });
 
-            return model;
+            return result;
         }
     }
 }

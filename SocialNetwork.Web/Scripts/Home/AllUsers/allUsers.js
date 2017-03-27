@@ -2,6 +2,29 @@
 
     var allUsers = [];
 
+    $("#nameFilter").keyup(function () {
+        var result = [];
+        result.length = 0;
+        var filter = $(this).val();
+
+        if (filter.length == 0) {
+            showUsers(allUsers);
+
+            return;
+        }
+
+        for (var i = 0; i < allUsers.length; i++) {
+            var fullName1 = allUsers[i].Surname + " " + allUsers[i].Name;
+            var fullName2 = allUsers[i].Name + " " + allUsers[i].Surname;
+
+            if (fullName1.indexOf(filter) != -1 || fullName2.indexOf(filter) != -1) {
+                result.push(allUsers[i]);
+            }
+        }
+
+        showUsers(result);
+    });
+
     loadUsers();
 
     function loadUsers() {
@@ -25,12 +48,14 @@
         var results = $('#all-users');
         results.empty();
 
+        if (users.length == 0) {
+            results.append('<p>Поиск не дал результатов</p>');
+
+            return;
+        }
+
         for (var i = 0; i < users.length; i++) {
             var status = "";
-
-            if (users[i].Status == 1 || users[i].Status == 2) {
-                continue;
-            }
 
             switch(users[i].Status) {
                 case 3:

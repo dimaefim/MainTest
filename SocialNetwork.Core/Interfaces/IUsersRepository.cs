@@ -22,6 +22,9 @@ namespace SocialNetwork.Core.Interfaces
         Task<IEnumerable<UsersViewModel>> GetAllUsersAsync(UserEntity user);
         Task<string> AddRequestToFriendListAsync(UserEntity user, int id);
         Task<UserPageViewModel> GetUserPageAsync(int id);
+        Task<IEnumerable<UsersViewModel>> GetMyFriendsAsync(UserEntity user);
+        Task<IEnumerable<UsersViewModel>> GetRequestsAsync(UserEntity user);
+        Task<IEnumerable<UsersViewModel>> GetMyRequestsAsync(UserEntity user);
 
         bool CheckExistenceUser(string login, string password);
         bool CheckExistenceEmailOrLogin(string login, string email);
@@ -34,5 +37,8 @@ namespace SocialNetwork.Core.Interfaces
         IEnumerable<UsersViewModel> GetAllUsers(UserEntity user);
         string AddRequestToFriendList(UserEntity user, int id);
         UserPageViewModel GetUserPage(int id);
+        IEnumerable<UsersViewModel> GetMyFriends(UserEntity user);
+        IEnumerable<UsersViewModel> GetRequests(UserEntity user);
+        IEnumerable<UsersViewModel> GetMyRequests(UserEntity user);
     }
 }

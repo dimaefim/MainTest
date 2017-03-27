@@ -24,6 +24,7 @@ namespace SocialNetwork.Web.Controllers
 
         public HomeController()
         {
+            ViewBag.RenderMenu = true;
             SetCurrentUser();
         }
 
@@ -63,7 +64,7 @@ namespace SocialNetwork.Web.Controllers
                 Surname = _currentUser.Surname,
                 Patronymic = _currentUser.Patronymic,
                 Email = _currentUser.Email,
-                DateOfBirth = _currentUser.DateOfBirth,
+                DateOfBirth = _currentUser.DateOfBirth.ToShortDateString(),
                 AboutMe = _currentUser.Settings.aboutMe
             };
 
@@ -123,7 +124,22 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetAllUsers()
         {
-            return Json(_usersRepository.GetAllUsers(_currentUser).ToList());
+            return Json(_usersRepository.GetAllUsers(_currentUser));
+        }
+
+        public JsonResult GetMyFriends()
+        {
+            return Json(_usersRepository.GetMyFriends(_currentUser).ToList());
+        }
+
+        public JsonResult GetRequests()
+        {
+            return Json(_usersRepository.GetRequests(_currentUser).ToList());
+        }
+
+        public JsonResult GetMyRequests()
+        {
+            return Json(_usersRepository.GetMyRequests(_currentUser).ToList());
         }
 
         public JsonResult AddRequestToFriendList(int id)

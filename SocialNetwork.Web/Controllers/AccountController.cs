@@ -15,6 +15,11 @@ namespace SocialNetwork.Web.Controllers
     {
         private readonly IUsersRepository _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
 
+        public AccountController()
+        {
+            ViewBag.RenderMenu = false;
+        }
+
         [AllowAnonymous]
         public ActionResult Login()
         {

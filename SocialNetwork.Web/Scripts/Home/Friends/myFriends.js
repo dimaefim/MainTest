@@ -26,20 +26,7 @@
 
         $("#requests").addClass("active");
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/GetAllUsers",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                allUsers.length = 0;
-                allUsers = data;
-                showRequests(allUsers);
-            },
-            error: function () {
-                alert("Ошибка получения пользователей");
-            }
-        });
+        loadUsers();
     });
 
     $("#my-requests").click(function () {
@@ -52,41 +39,56 @@
 
         $("#my-requests").addClass("active");
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/GetAllUsers",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                allUsers.length = 0;
-                allUsers = data;
-                showMyRequests(allUsers);
-            },
-            error: function () {
-                alert("Ошибка получения пользователей");
+        loadUsers();
+    });
+
+    $("#nameFilter").keyup(function () {
+        var result = [];
+        result.length = 0;
+        var filter = $(this).val();
+
+        if (filter.length == 0) {
+            showUsers(allUsers);
+
+            return;
+        }
+
+        for (var i = 0; i < allUsers.length; i++) {
+            var fullName1 = allUsers[i].Surname + " " + allUsers[i].Name;
+            var fullName2 = allUsers[i].Name + " " + allUsers[i].Surname;
+
+            if (fullName1.indexOf(filter) != -1 || fullName2.indexOf(filter) != -1) {
+                result.push(allUsers[i]);
             }
-        });
+        }
+
+        showUsers(result);
     });
 
     loadUsers();
 
     function loadUsers() {
+
+        var url = "/Home/";
+
+        if (tab == 1) {
+            url += "GetMyFriends";
+        } else if (tab == 2) {
+            url += "GetRequests";
+        } else if (tab == 3) {
+            url += "GetMyRequests";
+        }
+
         $.ajax({
             type: "POST",
-            url: "/Home/GetAllUsers",
+            url: url,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
                 allUsers.length = 0;
                 allUsers = data;
 
-                if (tab == 1) {
-                    showMyFriends(allUsers);
-                } else if (tab == 2) {
-                    showRequests(allUsers);
-                } else if (tab == 3) {
-                    showMyRequests(allUsers);
-                }
+                showUsers(allUsers);
             },
             error: function () {
                 alert("Ошибка получения пользователей");
@@ -94,90 +96,27 @@
         });
     }
 
-    function showMyFriends(users) {
+    function showUsers(users) {
         var results = $('#my-friends');
         results.empty();
 
-        for (var i = 0; i < users.length; i++) {
-            var status = "";
+        if (users.length == 0) {
+            results.append('<p>Поиск не дал результатов</p>');
 
-            if (users[i].Status != 2) {
-                continue;
-            }
-
-            status = "Убрать из друзей";
-
-            var mainDiv = $('<div class="col-md-12 row">');
-
-            var photoDiv = $('<div class="col-md-3">');
-            photoDiv.append('<img class="user-photo img-responsive" src="data:image/*;base64,' + btoa(users[i].MainPhoto) + '" />');
-
-            var descriptionDiv = $('<div class="col-md-9">');
-            descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
-            descriptionDiv.append('<a href="/Home/ShowUserPage/' + users[i].Id + '">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
-            descriptionDiv.append('<button type="button" class="btn btn-default">' + status + '</button>');
-
-            mainDiv.append(photoDiv);
-            mainDiv.append(descriptionDiv);
-
-            results.append(mainDiv);
-            results.append('<hr/>');
+            return;
         }
 
-        results.find(".btn").click(function () {
-            var parrent = $(this).parent();
-            addRequestInFriendsList(parrent.find("#id").val());
-        });
-    }
+        var status = "";
 
-    function showRequests(users) {
-        var results = $('#my-friends');
-        results.empty();
-
-        for (var i = 0; i < users.length; i++) {
-            var status = "";
-
-            if (users[i].Status != 4) {
-                continue;
-            }
-
-            status = "Хочет дружить. Добавить в друзья";
-
-            var mainDiv = $('<div class="col-md-12 row">');
-
-            var photoDiv = $('<div class="col-md-3">');
-            photoDiv.append('<img class="user-photo img-responsive" src="data:image/*;base64,' + btoa(users[i].MainPhoto) + '" />');
-
-            var descriptionDiv = $('<div class="col-md-9">');
-            descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
-            descriptionDiv.append('<a href="/Home/ShowUserPage/' + users[i].Id + '">' + users[i].Surname + " " + users[i].Name + '</a><br/>');
-            descriptionDiv.append('<button type="button" class="btn btn-default">' + status + '</button>');
-
-            mainDiv.append(photoDiv);
-            mainDiv.append(descriptionDiv);
-
-            results.append(mainDiv);
-            results.append('<hr/>');
+        if (tab == 1) {
+            status += "Убрать из друзей";
+        } else if (tab == 2) {
+            status += "Хочет дружить. Добавить в друзья";
+        } else if (tab == 3) {
+            status += "Отменить запрос дружбы";
         }
 
-        results.find(".btn").click(function () {
-            var parrent = $(this).parent();
-            addRequestInFriendsList(parrent.find("#id").val());
-        });
-    }
-
-    function showMyRequests(users) {
-        var results = $('#my-friends');
-        results.empty();
-
         for (var i = 0; i < users.length; i++) {
-            var status = "";
-
-            if (users[i].Status != 3) {
-                continue;
-            }
-
-            status = "Отменить запрос дружбы";
 
             var mainDiv = $('<div class="col-md-12 row">');
 
@@ -231,6 +170,4 @@
             }
         });
     }
-
-
 });
