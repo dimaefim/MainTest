@@ -4,6 +4,10 @@ namespace SocialNetwork.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        public ErrorController()
+        {
+            ViewBag.RenderMenu = true;
+        }
         public ActionResult ErrorCode401()
         {
             return View();

@@ -1,83 +1,5 @@
- Info|  1|09:07:54.5514: Старт приложения.
- Info|  1|09:15:48.5025: Старт приложения.
- Info|  1|09:22:34.4439: Старт приложения.
- Info|  1|09:23:04.4624: Старт приложения.
- Info|  1|09:24:42.8947: Старт приложения.
- Info|  1|09:31:55.1801: Старт приложения.
- Info|  1|09:33:51.6649: Старт приложения.
- Info|  1|09:36:36.8025: Старт приложения.
- Info|  1|09:38:02.8394: Старт приложения.
- Info|  1|09:41:05.3822: Старт приложения.
- Info|  1|09:51:20.7071: Старт приложения.
- Info|  1|09:55:46.8413: Старт приложения.
- Info|  1|09:59:52.7278: Старт приложения.
- Info|  1|11:08:18.5890: Старт приложения.
- Info|  1|11:10:15.1893: Старт приложения.
- Info|  1|14:06:47.2273: Старт приложения.
- Info|  1|14:09:09.1298: Старт приложения.
- Info|  1|14:13:03.7403: Старт приложения.
- Info|  1|14:13:47.6594: Старт приложения.
- Info|  1|14:14:49.5219: Старт приложения.
- Info|  1|14:17:56.5008: Старт приложения.
- Info|  1|14:20:10.7398: Старт приложения.
- Info|  1|14:21:46.0851: Старт приложения.
- Info|  1|14:22:36.4451: Старт приложения.
- Info|  1|14:24:02.8705: Старт приложения.
- Info|  1|14:47:25.4464: Старт приложения.
- Info|  1|14:50:14.8682: Старт приложения.
- Info|  1|14:50:58.8496: Старт приложения.
- Info|  1|14:51:55.6775: Старт приложения.
- Info|  1|14:53:56.2474: Старт приложения.
- Info|  1|15:06:49.3339: Старт приложения.
- Info|  1|15:07:35.2597: Старт приложения.
- Info|  1|15:09:32.6833: Старт приложения.
- Info|  1|15:11:47.0594: Старт приложения.
- Info|  1|15:19:35.7536: Старт приложения.
- Info|  1|15:21:06.8059: Старт приложения.
- Info|  1|15:22:04.7791: Старт приложения.
- Info|  1|15:30:49.6391: Старт приложения.
- Info|  1|15:39:33.2420: Старт приложения.
- Info|  1|15:42:19.8330: Старт приложения.
- Info|  1|15:46:13.7478: Старт приложения.
- Info|  1|15:56:41.2720: Старт приложения.
- Info|  1|16:02:12.1695: Старт приложения.
- Info|  1|16:03:48.2963: Старт приложения.
- Info|  1|16:06:36.5424: Старт приложения.
- Info|  1|16:11:20.5361: Старт приложения.
- Info|  1|16:20:44.8940: Старт приложения.
- Info|  1|16:21:50.6340: Старт приложения.
- Info|  1|16:22:30.1101: Старт приложения.
- Info|  1|16:26:35.5666: Старт приложения.
- Info|  1|16:29:52.2787: Старт приложения.
- Info|  1|16:31:29.8298: Старт приложения.
- Info|  1|16:32:41.4944: Старт приложения.
- Info|  1|16:33:31.6271: Старт приложения.
- Info|  1|16:35:03.5377: Старт приложения.
- Info|  1|16:39:27.7763: Старт приложения.
- Info|  1|16:40:46.0170: Старт приложения.
- Info|  1|16:41:22.2925: Старт приложения.
- Info|  1|16:43:28.8726: Старт приложения.
- Info|  1|16:44:35.9509: Старт приложения.
- Info|  1|16:55:46.3712: Старт приложения.
- Info|  1|17:25:23.7698: Старт приложения.
- Info|  1|17:27:08.1987: Старт приложения.
- Info|  1|17:43:00.3053: Старт приложения.
- Info|  1|17:44:01.5753: Старт приложения.
- Info|  1|18:15:03.8105: Старт приложения.
- Info|  1|18:29:31.3734: Старт приложения.
- Info|  1|18:32:19.7783: Старт приложения.
- Info|  1|18:34:12.6864: Старт приложения.
- Info|  1|18:37:58.1677: Старт приложения.
- Info|  1|18:39:26.5078: Старт приложения.
- Info|  1|18:40:51.7420: Старт приложения.
- Info|  1|18:44:45.8003: Старт приложения.
- Info|  1|18:46:43.7411: Старт приложения.
- Info|  1|18:54:27.9466: Старт приложения.
- Info|  1|19:00:58.5662: Старт приложения.
- Info|  1|19:26:24.8530: Старт приложения.
- Info|  1|19:54:17.0967: Старт приложения.
- Info|  1|19:57:10.7300: Старт приложения.
-Error|  7|19:57:14.1650: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+ Info|  1|00:24:23.7840: Старт приложения.
+Error| 16|00:26:38.8729: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult AddRequestToFriendListFromUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
 Имя параметра: parameters
    в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
    в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
@@ -113,8 +35,8 @@ Error|  7|19:57:14.1650: Ошибка! System.ArgumentException: The parameters dictio
    в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
- Info|  1|19:57:47.1401: Старт приложения.
-Error|  7|19:58:11.5851: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult AddRequestToFriendListFromUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+ Info|  1|00:36:37.9560: Старт приложения.
+Error|  7|00:37:53.5137: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
 Имя параметра: parameters
    в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
    в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
@@ -150,8 +72,8 @@ Error|  7|19:58:11.5851: Ошибка! System.ArgumentException: The parameters dictio
    в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
- Info|  1|19:59:57.1837: Старт приложения.
-Error|  8|20:00:12.4921: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult AddRequestToFriendListFromUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+ Info|  1|00:41:55.5686: Старт приложения.
+Error|  6|00:41:58.5273: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
 Имя параметра: parameters
    в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
    в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
@@ -187,8 +109,8 @@ Error|  8|20:00:12.4921: Ошибка! System.ArgumentException: The parameters dictio
    в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
- Info|  1|20:02:09.4890: Старт приложения.
-Error|  6|20:02:24.4185: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult AddRequestToFriendListFromUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+ Info|  1|00:42:35.9312: Старт приложения.
+Error|  6|00:43:05.7570: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
 Имя параметра: parameters
    в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
    в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
@@ -224,8 +146,8 @@ Error|  6|20:02:24.4185: Ошибка! System.ArgumentException: The parameters dictio
    в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
- Info|  1|20:04:47.3206: Старт приложения.
-Error|  5|20:05:01.6182: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult AddRequestToFriendListFromUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+ Info|  1|00:45:18.0768: Старт приложения.
+Error|  8|00:45:59.2570: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
 Имя параметра: parameters
    в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
    в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
@@ -261,3 +183,41 @@ Error|  5|20:05:01.6182: Ошибка! System.ArgumentException: The parameters dictio
    в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ Info|  1|00:48:11.8698: Старт приложения.
+Error|  7|00:48:31.2787: Ошибка! System.ArgumentException: The parameters dictionary contains a null entry for parameter 'id' of non-nullable type 'System.Int32' for method 'System.Web.Mvc.ActionResult ShowUserPage(Int32)' in 'SocialNetwork.Web.Controllers.HomeController'. An optional parameter must be a reference type, a nullable type, or be declared as an optional parameter.
+Имя параметра: parameters
+   в System.Web.Mvc.ActionDescriptor.ExtractParameterFromDictionary(ParameterInfo parameterInfo, IDictionary`2 parameters, MethodInfo methodInfo)
+   в System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   в System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.<BeginInvokeSynchronousActionMethod>b__39(IAsyncResult asyncResult, ActionInvocation innerInvokeState)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`2.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3d()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.<>c__DisplayClass46.<InvokeActionMethodFilterAsynchronouslyRecursive>b__3f()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__32(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   в System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   в System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   в System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   в System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   в System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   в System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ Info|  1|00:51:39.8166: Старт приложения.

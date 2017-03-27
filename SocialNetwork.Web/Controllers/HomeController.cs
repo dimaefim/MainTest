@@ -45,7 +45,7 @@ namespace SocialNetwork.Web.Controllers
             {
                 Name = _currentUser.Name,
                 Surname = _currentUser.Surname,
-                DateOfBirth = _currentUser.DateOfBirth,
+                DateOfBirth = _currentUser.DateOfBirth.ToShortDateString(),
                 AboutMe = _currentUser.Settings.aboutMe,
                 MainPhoto = _usersRepository.GetUserMainPhoto(_currentUser.Login)
             };
@@ -129,17 +129,17 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetMyFriends()
         {
-            return Json(_usersRepository.GetMyFriends(_currentUser).ToList());
+            return Json(_usersRepository.GetMyFriends(_currentUser));
         }
 
         public JsonResult GetRequests()
         {
-            return Json(_usersRepository.GetRequests(_currentUser).ToList());
+            return Json(_usersRepository.GetRequests(_currentUser));
         }
 
         public JsonResult GetMyRequests()
         {
-            return Json(_usersRepository.GetMyRequests(_currentUser).ToList());
+            return Json(_usersRepository.GetMyRequests(_currentUser));
         }
 
         public JsonResult AddRequestToFriendList(int id)
@@ -156,11 +156,21 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult ShowUserPage(int id)
         {
-            var model = _usersRepository.GetUserPage(id);
+            var model = _usersRepository.GetUserPage(_currentUser, id);
 
             ViewBag.Title = model.Name + " " + model.Surname;
 
             return View(model);
+        }
+
+        public ActionResult AddRequestToFriendListFromUserPage(int id = 0)
+        {
+            if (_usersRepository.AddRequestToFriendList(_currentUser, id).Equals("false"))
+            {
+                RedirectToAction("ErrorCode403", "Error");
+            }
+
+            return RedirectToAction("ShowUserPage", "Home", new {id = id});
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SocialNetwork.Core.Interfaces
         Task<bool> SaveNewUserMainPhotoAsync(HttpPostedFileBase photo, string login);
         Task<IEnumerable<UsersViewModel>> GetAllUsersAsync(UserEntity user);
         Task<string> AddRequestToFriendListAsync(UserEntity user, int id);
-        Task<UserPageViewModel> GetUserPageAsync(int id);
+        Task<UsersViewModel> GetUserPageAsync(UserEntity mainUser, int id);
         Task<IEnumerable<UsersViewModel>> GetMyFriendsAsync(UserEntity user);
         Task<IEnumerable<UsersViewModel>> GetRequestsAsync(UserEntity user);
         Task<IEnumerable<UsersViewModel>> GetMyRequestsAsync(UserEntity user);
@@ -36,7 +36,7 @@ namespace SocialNetwork.Core.Interfaces
         bool SaveNewUserMainPhoto(HttpPostedFileBase photo, string login);
         IEnumerable<UsersViewModel> GetAllUsers(UserEntity user);
         string AddRequestToFriendList(UserEntity user, int id);
-        UserPageViewModel GetUserPage(int id);
+        UsersViewModel GetUserPage(UserEntity mainUser, int id);
         IEnumerable<UsersViewModel> GetMyFriends(UserEntity user);
         IEnumerable<UsersViewModel> GetRequests(UserEntity user);
         IEnumerable<UsersViewModel> GetMyRequests(UserEntity user);

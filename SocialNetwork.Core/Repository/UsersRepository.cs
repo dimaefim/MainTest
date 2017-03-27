@@ -276,18 +276,19 @@ namespace SocialNetwork.Core.Repository
             return "false";
         }
 
-        public async Task<UserPageViewModel> GetUserPageAsync(int id)
+        public async Task<UsersViewModel> GetUserPageAsync(UserEntity mainUser, int id)
         {
             var user = await GetItemByIdAsync(id);
 
-            var model = new UserPageViewModel
+            var model = new UsersViewModel
             {
                 Id = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = user.DateOfBirth.ToShortDateString(),
                 AboutMe = user.Settings.aboutMe,
-                MainPhoto = await GetUserMainPhotoAsync(user.Login)
+                MainPhoto = await GetUserMainPhotoAsync(user.Login),
+                Status = GetUserStatus(mainUser, user)
             };
 
             return model;
@@ -304,7 +305,7 @@ namespace SocialNetwork.Core.Repository
                 Id = item.Id,
                 Name = item.Name,
                 Surname = item.Surname,
-                DateOfBirth = item.DateOfBirth,
+                DateOfBirth = item.DateOfBirth.ToShortDateString(),
                 AboutMe = item.Settings.aboutMe,
                 MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
                     item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
@@ -564,18 +565,19 @@ namespace SocialNetwork.Core.Repository
             return "false";
         }
 
-        public UserPageViewModel GetUserPage(int id)
+        public UsersViewModel GetUserPage(UserEntity mainUser, int id)
         {
             var user = GetItemById(id);
 
-            var model = new UserPageViewModel
+            var model = new UsersViewModel
             {
                 Id = user.Id,
                 Name = user.Name,
                 Surname = user.Surname,
-                DateOfBirth = user.DateOfBirth,
+                DateOfBirth = user.DateOfBirth.ToShortDateString(),
                 AboutMe = user.Settings.aboutMe,
-                MainPhoto = GetUserMainPhoto(user.Login)
+                MainPhoto = GetUserMainPhoto(user.Login),
+                Status = GetUserStatus(mainUser, user)
             };
 
             return model;
@@ -622,7 +624,7 @@ namespace SocialNetwork.Core.Repository
                 Id = item.Id,
                 Name = item.Name,
                 Surname = item.Surname,
-                DateOfBirth = item.DateOfBirth,
+                DateOfBirth = item.DateOfBirth.ToShortDateString(),
                 AboutMe = item.Settings.aboutMe,
                 MainPhoto = item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")) == null ? photo :
                     item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content,
