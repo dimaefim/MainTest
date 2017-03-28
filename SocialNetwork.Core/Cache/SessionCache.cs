@@ -52,5 +52,12 @@ namespace SocialNetwork.Core.Cache
                     null);
             }
         }
+
+        public static void UpdateCurrentUser()
+        {
+            var userRepository = NinjectBindings.Instance.Get<IUsersRepository>();
+            var user = userRepository.GetUserByLoginOrEmail(HttpContext.Current.User.Identity.Name);
+            AddUserToCache(user);
+        }
     }
 }

@@ -114,7 +114,7 @@ namespace SocialNetwork.Core.Repository
 
                 await UpdateItemAsync(updatedUser);
 
-                SessionCache.CurrentUser = updatedUser;
+                SessionCache.UpdateCurrentUser();
             }
             catch (Exception)
             {
@@ -402,7 +402,7 @@ namespace SocialNetwork.Core.Repository
 
                 UpdateItem(updatedUser);
 
-                SessionCache.CurrentUser = updatedUser;
+                SessionCache.UpdateCurrentUser();
             }
             catch (Exception)
             {
