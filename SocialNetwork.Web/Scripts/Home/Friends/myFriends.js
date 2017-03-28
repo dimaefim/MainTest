@@ -43,28 +43,20 @@
     });
 
     $("#nameFilter").keyup(function () {
-        var result = [];
-        result.length = 0;
-        var filter = $(this).val();
-
-        if (filter.length == 0) {
-            showUsers(allUsers);
-
-            return;
-        }
-
-        for (var i = 0; i < allUsers.length; i++) {
-            var fullName1 = allUsers[i].Surname + " " + allUsers[i].Name;
-            var fullName2 = allUsers[i].Name + " " + allUsers[i].Surname;
-
-            if (fullName1.indexOf(filter) != -1 || fullName2.indexOf(filter) != -1) {
-                result.push(allUsers[i]);
-            }
-        }
-
-        showUsers(result);
+        filterUsers();
     });
 
+    $("#startAge").change(function () {
+        addValuesToSelects(1);
+        filterUsers();
+    });
+
+    $("#endAge").change(function () {
+        addValuesToSelects(2);
+        filterUsers();
+    });
+
+    addValuesToSelects(0);
     loadUsers();
 
     function loadUsers() {
@@ -169,5 +161,109 @@
                 alert("Ошибка операции");
             }
         });
+    }
+
+    function addValuesToSelects(val) {
+        var startAge = $("#startAge").val();
+        var endAge = $("#endAge").val();
+
+        var startSelect = $("#startAge");
+        var endSelect = $("#endAge");
+
+        if (val == 0) {
+
+            endSelect.empty();
+            startSelect.empty();
+
+            for (var i = 10; i <= 80; i++) {
+                startSelect.append('<option id="start' + i + '">' + i + '</option>');
+                endSelect.append('<option id="end' + i + '">' + i + '</option>');
+            }
+
+            $("#endAge").children().last().attr("selected", "selected");
+        }
+
+        if (val == 1) {
+
+            endSelect.empty();
+
+            for (var i = +startAge; i <= 80; i++) {
+                endSelect.append('<option id="end' + i + '">' + i + '</option>');
+            }
+
+            if (+endAge < +startAge) {
+                endAge = +startAge;
+            }
+
+            $("#end" + endAge).attr("selected", "selected");
+        }
+
+        if (val == 2) {
+
+            startSelect.empty();
+
+            for (var i = 10; i <= +endAge; i++) {
+                startSelect.append('<option id="start' + i + '">' + i + '</option>');
+            }
+
+            if (+startAge > +endAge) {
+                startAge = +endAge;
+            }
+
+            $("#start" + startAge).attr("selected", "selected");
+        }
+    }
+
+    function filterUsers() {
+        var result = [];
+        result.length = 0;
+
+        result = filterUsersByName(allUsers);
+        result = filterUsersByAge(result);
+
+        showUsers(result);
+    }
+
+    function filterUsersByName(users) {
+        var result = [];
+        result.length = 0;
+        var filterName = $("#nameFilter").val().toLowerCase();
+
+        if (filterName.length == 0) {
+
+            return users;
+        }
+
+        for (var i = 0; i < users.length; i++) {
+            var fullName = (users[i].Surname + " " + users[i].Name).toLowerCase();
+            var fullNameReverse = (users[i].Name + " " + users[i].Surname).toLowerCase();
+
+            if (fullName.indexOf(filterName) != -1 || fullNameReverse.indexOf(filterName) != -1) {
+                result.push(users[i]);
+            }
+        }
+
+        return result;
+    }
+
+    function filterUsersByAge(users) {
+        var result = [];
+        result.length = 0;
+
+        var startAge = +$("#startAge").val();
+        var endAge = +$("#endAge").val();
+
+        for (var i = 0; i < users.length; i++) {
+            var dateOfBirth = new Date(users[i].DateOfBirth.substr(6, 4), users[i].DateOfBirth.substr(3, 2), users[i].DateOfBirth.substr(0, 2));
+            var nowDate = new Date();
+
+            var difference = (nowDate - dateOfBirth) / 31536000000;
+
+            if (difference >= startAge && difference <= endAge) {
+                result.push(users[i]);
+            }
+        }
+
+        return result;
     }
 });
