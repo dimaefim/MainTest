@@ -64,7 +64,7 @@
             var mainDiv = $('<div class="col-md-12 row">');
 
             var photoDiv = $('<div class="col-md-3">');
-            photoDiv.append('<img class="user-photo img-responsive" src="data:image/*;base64,' + btoa(users[i].MainPhoto) + '" />');
+            photoDiv.append('<img class="user-photo img-responsive" src="data:image/*;base64,' + users[i].MainPhotoString + '" />');
 
             var descriptionDiv = $('<div class="col-md-9">');
             descriptionDiv.append('<input id="id" type="hidden" value="' + users[i].Id + '"/>');
@@ -178,8 +178,8 @@
     }
 
     function filterUsersByName(users) {
-        var result = [];
-        result.length = 0;
+        var resultAfterNameFilter = [];
+        resultAfterNameFilter.length = 0;
         var filterName = $("#nameFilter").val().toLowerCase();
 
         if (filterName.length == 0) {
@@ -192,31 +192,33 @@
             var fullNameReverse = (users[i].Name + " " + users[i].Surname).toLowerCase();
 
             if (fullName.indexOf(filterName) != -1 || fullNameReverse.indexOf(filterName) != -1) {
-                result.push(users[i]);
+                resultAfterNameFilter.push(users[i]);
             }
         }
 
-        return result;
+        return resultAfterNameFilter;
     }
 
     function filterUsersByAge(users) {
-        var result = [];
-        result.length = 0;
+        var resultAfterAgeFilter = [];
+        resultAfterAgeFilter.length = 0;
 
         var startAge = +$("#startAge").val();
         var endAge = +$("#endAge").val();
 
         for (var i = 0; i < users.length; i++) {
-            var dateOfBirth = new Date(users[i].DateOfBirth.substr(6, 4), users[i].DateOfBirth.substr(3, 2), users[i].DateOfBirth.substr(0, 2));
+            var dateOfBirth = new Date(users[i].DateOfBirthString.substr(6, 4),
+                                       users[i].DateOfBirthString.substr(3, 2),
+                                       users[i].DateOfBirthString.substr(0, 2));
             var nowDate = new Date();
 
             var difference = (nowDate - dateOfBirth) / 31536000000;
 
             if (difference >= startAge && difference <= endAge) {
-                result.push(users[i]);
+                resultAfterAgeFilter.push(users[i]);
             }
         }
 
-        return result;
+        return resultAfterAgeFilter;
     }
 });

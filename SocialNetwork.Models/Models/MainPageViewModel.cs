@@ -17,5 +17,6 @@ namespace SocialNetwork.Models.Models
 
         public string AboutMe { get; set; }
         public byte[] MainPhoto { get; set; }
+        public string MainPhotoString => Convert.ToBase64String(MainPhoto);
     }
 }

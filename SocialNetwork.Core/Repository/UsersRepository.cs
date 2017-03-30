@@ -282,7 +282,7 @@ namespace SocialNetwork.Core.Repository
             return model;
         }
 
-        private FriendStatusEnum GetUserStatus(UserEntity mainUser, UserEntity secondUser)
+        private FriendStatusEnum GetUserStatus(IdEntity mainUser, IdEntity secondUser)
         {
             return mainUser.Id == secondUser.Id
                 ? FriendStatusEnum.Me
@@ -298,7 +298,7 @@ namespace SocialNetwork.Core.Repository
                             : FriendStatusEnum.NoFriends;
         }
 
-        private IEnumerable<UsersViewModel> GetAllUsersStatus(UserEntity user)
+        private IEnumerable<UsersViewModel> GetAllUsersStatus(IdEntity user)
         {
             var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
 
