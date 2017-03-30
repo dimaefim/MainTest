@@ -40,7 +40,9 @@ namespace SocialNetwork.Models.Models
         [Required(ErrorMessage = "Это поле не может быть пустым")]
         [DataType(DataType.Date)]
         [Display(Name = "Дата рождения")]
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        
+        public string DateOfBirthString => DateOfBirth.ToString("dd.MM.yyyy");
 
         [Required(ErrorMessage = "Это поле не может быть пустым")]
         [DataType(DataType.EmailAddress)]

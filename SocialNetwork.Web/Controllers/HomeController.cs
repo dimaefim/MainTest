@@ -45,7 +45,7 @@ namespace SocialNetwork.Web.Controllers
             {
                 Name = _currentUser.Name,
                 Surname = _currentUser.Surname,
-                DateOfBirth = _currentUser.DateOfBirth.ToShortDateString(),
+                DateOfBirth = _currentUser.DateOfBirth,
                 AboutMe = _currentUser.Settings.aboutMe,
                 MainPhoto = _usersRepository.GetUserMainPhoto(_currentUser.Login)
             };
@@ -64,7 +64,7 @@ namespace SocialNetwork.Web.Controllers
                 Surname = _currentUser.Surname,
                 Patronymic = _currentUser.Patronymic,
                 Email = _currentUser.Email,
-                DateOfBirth = _currentUser.DateOfBirth.ToShortDateString(),
+                DateOfBirth = _currentUser.DateOfBirth,
                 AboutMe = _currentUser.Settings.aboutMe
             };
 
@@ -72,20 +72,20 @@ namespace SocialNetwork.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditUserData(EditProfileViewModel newData)
+        public  ActionResult EditUserData(EditProfileViewModel newData)
         {
             ViewBag.Message = "Ошибка в заполнении данных";
 
             if (ModelState.IsValid)
             {
-                if (await _usersRepository.CheckExistenceEmailAsync(newData.Email, newData.Login))
+                if (_usersRepository.CheckExistenceEmail(newData.Email, newData.Login))
                 {
                     ViewBag.Message = "Указанный адрес электронной почты уже зарегистрирован в системе";
 
                     return View(newData);
                 }
 
-                if (!await _usersRepository.UpdateUserAsync(newData))
+                if (! _usersRepository.UpdateCurrentUser(newData))
                 {
                     ViewBag.Message = "Ошибка редактирования данных";
 
@@ -108,7 +108,7 @@ namespace SocialNetwork.Web.Controllers
         {
             if (uploadImage != null)
             {
-                if (_usersRepository.SaveNewUserMainPhoto(uploadImage, _currentUser.Login))
+                if (_usersRepository.SaveNewCurrentUserMainPhoto(uploadImage, _currentUser))
                 {
                     return RedirectToAction("Index", "Home");
                 }

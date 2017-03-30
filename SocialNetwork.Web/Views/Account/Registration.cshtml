@@ -72,11 +72,11 @@
 
         //Секция даты рождения
         <div class="form-group">
-            @Html.LabelFor(model => model.DateOfBirth, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(model => model.DateOfBirthString, new { @class = "col-md-5 control-label" })
 
             <div class="col-md-7">
-                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DateOfBirth)
+                @Html.TextBoxFor(model => model.DateOfBirthString, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DateOfBirthString)
             </div>
         </div>
 
@@ -104,17 +104,13 @@
     </div>
 </div>
 
-<script src="~/Scripts/jquery-1.10.2.js"></script>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-<script src="~/Scripts/bootstrap-datepicker.js"></script>
-
 <script>
         $(document).ready(function() {
-            $("#DateOfBirth").datepicker({
-                format: "dd MM yyyy",
-                autoclose: true,
-                todayHightLight: true
+            $("#DateOfBirthString").datepicker({
+                format: "dd.MM.yyyy",
+                clearBtn: true,
+                language: "ru",
+                autoclose: true
             });
         });
 </script>

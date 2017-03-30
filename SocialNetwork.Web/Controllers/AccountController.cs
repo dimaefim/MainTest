@@ -31,14 +31,14 @@ namespace SocialNetwork.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(LoginViewModel user)
+        public ActionResult Login(LoginViewModel user)
         {
             if (Request.IsAuthenticated)
                 FormsAuthentication.SignOut();
 
             if (ModelState.IsValid)
             {
-                if (!await _usersRepository.CheckExistenceUserAsync(user.Login, user.Password))
+                if (!_usersRepository.CheckExistenceUser(user.Login, user.Password))
                 {
                     ViewBag.Message = "Неверный логин или пароль";
 
@@ -68,18 +68,18 @@ namespace SocialNetwork.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Registration(RegistrationViewModel newUser)
+        public ActionResult Registration(RegistrationViewModel newUser)
         {
             if (ModelState.IsValid)
             {
-                if (await _usersRepository.CheckExistenceEmailOrLoginAsync(newUser.Login, newUser.Email))
+                if (_usersRepository.CheckExistenceEmailOrLogin(newUser.Login, newUser.Email))
                 {
                     ViewBag.Message = "Пользователь с таким логином или адресом электронной почты уже существует";
 
                     return View(newUser);
                 }
 
-                if (!await _usersRepository.AddNewUserAsync(newUser))
+                if (_usersRepository.AddNewUser(newUser))
                 {
                     ViewBag.Message = "Ошибка создания пользователя";
 
