@@ -72,11 +72,11 @@
 
         //Секция даты рождения
         <div class="form-group">
-            @Html.LabelFor(model => model.DateOfBirthString, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(model => model.DateOfBirth, new { @class = "col-md-5 control-label" })
 
             <div class="col-md-7">
-                @Html.TextBoxFor(model => model.DateOfBirthString, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.DateOfBirthString)
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DateOfBirth)
             </div>
         </div>
 

@@ -64,7 +64,7 @@ namespace SocialNetwork.Web.Controllers
                 Surname = _currentUser.Surname,
                 Patronymic = _currentUser.Patronymic,
                 Email = _currentUser.Email,
-                DateOfBirth = _currentUser.DateOfBirth,
+                DateOfBirth = _currentUser.DateOfBirth.ToString("dd.MM.yyyy"),
                 AboutMe = _currentUser.Settings.aboutMe
             };
 
