@@ -132,6 +132,14 @@ namespace SocialNetwork.Core.Repository
             return searchedUser;
         }
 
+        public UserEntity GetUserByLoginOrEmailIncluding(string login)
+        {
+            return _context.Users.Include(item => item.FriendUsers)
+                .Include(item => item.UserFriends)
+                .Include(item => item.Settings)
+                .Include(item => item.Settings.Files).SingleOrDefault(item => item.Login == login);
+        }
+
         public byte[] GetUserMainPhoto(string login)
         {
             var searchedUser = GetUserByLoginOrEmail(login);

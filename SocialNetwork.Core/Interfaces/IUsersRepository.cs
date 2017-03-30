@@ -17,6 +17,7 @@ namespace SocialNetwork.Core.Interfaces
         bool AddNewUser(RegistrationViewModel user);
         bool UpdateCurrentUser(EditProfileViewModel user);
         UserEntity GetUserByLoginOrEmail(string login);
+        UserEntity GetUserByLoginOrEmailIncluding(string login);
         byte[] GetUserMainPhoto(string login);
         bool SaveNewCurrentUserMainPhoto(HttpPostedFileBase photo, UserEntity user);
         IEnumerable<UsersViewModel> GetAllUsers(UserEntity user);

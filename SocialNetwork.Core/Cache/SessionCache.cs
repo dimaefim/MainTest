@@ -25,7 +25,7 @@ namespace SocialNetwork.Core.Cache
                     if (user == null)
                     {
                         var userRepository = NinjectBindings.Instance.Get<IUsersRepository>();
-                        user = userRepository.GetUserByLoginOrEmail(HttpContext.Current.User.Identity.Name);
+                        user = userRepository.GetUserByLoginOrEmailIncluding(HttpContext.Current.User.Identity.Name);
                         AddUserToCache(user);
                     }
 
@@ -56,7 +56,7 @@ namespace SocialNetwork.Core.Cache
         public static void UpdateCurrentUser()
         {
             var userRepository = NinjectBindings.Instance.Get<IUsersRepository>();
-            var user = userRepository.GetUserByLoginOrEmail(HttpContext.Current.User.Identity.Name);
+            var user = userRepository.GetUserByLoginOrEmailIncluding(HttpContext.Current.User.Identity.Name);
             AddUserToCache(user);
         }
     }
