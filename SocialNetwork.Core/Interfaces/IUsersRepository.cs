@@ -20,11 +20,11 @@ namespace SocialNetwork.Core.Interfaces
         UserEntity GetUserByLoginOrEmailIncluding(string login);
         byte[] GetUserMainPhoto(string login);
         bool SaveNewCurrentUserMainPhoto(HttpPostedFileBase photo, UserEntity user);
-        IEnumerable<UsersViewModel> GetAllUsers(UserEntity user);
-        string AddRequestToFriendList(UserEntity user, int id);
+        IEnumerable<UsersViewModel> GetAllUsers(int user);
+        string AddRequestToFriendList(int user, int id);
         UsersViewModel GetUserPage(UserEntity mainUser, int id);
-        IEnumerable<UsersViewModel> GetMyFriends(UserEntity user);
-        IEnumerable<UsersViewModel> GetRequests(UserEntity user);
-        IEnumerable<UsersViewModel> GetMyRequests(UserEntity user);
+        IEnumerable<UsersViewModel> GetMyFriends(int user);
+        IEnumerable<UsersViewModel> GetRequests(int user);
+        IEnumerable<UsersViewModel> GetMyRequests(int user);
     }
 }

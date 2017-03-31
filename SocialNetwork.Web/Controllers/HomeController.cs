@@ -124,27 +124,27 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetAllUsers()
         {
-            return Json(_usersRepository.GetAllUsers(_currentUser));
+            return Json(_usersRepository.GetAllUsers(_currentUser.Id));
         }
 
         public JsonResult GetMyFriends()
         {
-            return Json(_usersRepository.GetMyFriends(_currentUser));
+            return Json(_usersRepository.GetMyFriends(_currentUser.Id));
         }
 
         public JsonResult GetRequests()
         {
-            return Json(_usersRepository.GetRequests(_currentUser));
+            return Json(_usersRepository.GetRequests(_currentUser.Id));
         }
 
         public JsonResult GetMyRequests()
         {
-            return Json(_usersRepository.GetMyRequests(_currentUser));
+            return Json(_usersRepository.GetMyRequests(_currentUser.Id));
         }
 
         public JsonResult AddRequestToFriendList(int id)
         {
-            var obj = new {response = _usersRepository.AddRequestToFriendList(_currentUser, id)};
+            var obj = new {response = _usersRepository.AddRequestToFriendList(_currentUser.Id, id)};
 
             return Json(obj);
         }
@@ -165,7 +165,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult AddRequestToFriendListFromUserPage(int id = 0)
         {
-            if (_usersRepository.AddRequestToFriendList(_currentUser, id).Equals("false"))
+            if (_usersRepository.AddRequestToFriendList(_currentUser.Id, id).Equals("false"))
             {
                 RedirectToAction("ErrorCode403", "Error");
             }
