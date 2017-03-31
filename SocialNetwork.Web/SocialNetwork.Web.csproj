@@ -194,6 +194,7 @@
     </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Home\AllUsers\allUsers.js" />
+    <Content Include="Scripts\Home\Dialogs\myDialogs.js" />
     <Content Include="Scripts\Home\Friends\myFriends.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -298,6 +299,7 @@
     <Content Include="Views\Home\ShowMyFriends.cshtml" />
     <Content Include="Views\Home\ShowUserPage.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Home\MyDialogs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

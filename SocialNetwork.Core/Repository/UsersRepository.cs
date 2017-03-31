@@ -81,7 +81,7 @@ namespace SocialNetwork.Core.Repository
 
                 newUser.Settings = new UserSettingsEntity
                 {
-                    aboutMe = "",
+                    AboutMe = "",
                     User = newUser
                 };
 
@@ -106,7 +106,7 @@ namespace SocialNetwork.Core.Repository
                 updatedUser.Patronymic = user.Patronymic;
                 updatedUser.Email = user.Email;
                 updatedUser.DateOfBirth = DateTime.Parse(user.DateOfBirth);
-                updatedUser.Settings.aboutMe = user.AboutMe;
+                updatedUser.Settings.AboutMe = user.AboutMe;
 
                 UpdateItem(updatedUser);
 
@@ -298,12 +298,35 @@ namespace SocialNetwork.Core.Repository
                 Name = user.Name,
                 Surname = user.Surname,
                 DateOfBirth = user.DateOfBirth,
-                AboutMe = user.Settings.aboutMe,
+                AboutMe = user.Settings.AboutMe,
                 MainPhoto = GetUserMainPhoto(user.Login),
                 Status = GetUserStatus(mainUser.Id, user.Id)
             };
 
             return model;
+        }
+
+        public IEnumerable<DialogsViewModel> GetAllDialogs(int user)
+        {
+            var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
+
+            var dialogs = _context.Dialogs.Where(y => y.DialogUsers.Any(t => t.UserId == user)).ToList(); //пока без ToList никак, sql 
+            //не знает GetDialogLastMessage, Convert.ToBase64String(), потом подумаю как убрать
+
+            var result = dialogs.Select(item => new DialogsViewModel
+            {
+                Id = item.Id,
+                Name = item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Name + " " +
+                       item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Surname,
+                Photo = item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Settings.Files.Any(i => i.Notes.Equals("MainPhoto"))
+                    ? Convert.ToBase64String(item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Settings.Files.FirstOrDefault(
+                        i => i.Notes.Equals("MainPhoto")).Content) 
+                    : Convert.ToBase64String(photo),
+                LastMessage = GetDialogLastMessage(item.Id)
+
+            });
+
+            return result;
         }
 
         private FriendStatusEnum GetUserStatus(int mainUser, int secondUser)
@@ -332,7 +355,7 @@ namespace SocialNetwork.Core.Repository
                 Name = item.Name,
                 Surname = item.Surname,
                 DateOfBirth = item.DateOfBirth,
-                AboutMe = item.Settings.aboutMe,
+                AboutMe = item.Settings.AboutMe,
                 MainPhoto = item.Settings.Files.Any(i => i.Notes.Equals("MainPhoto"))
                     ? item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content :
                     photo,
@@ -351,6 +374,16 @@ namespace SocialNetwork.Core.Repository
             });
 
             return result;
+        }
+
+        private IEnumerable<MessageEntity> GetSortedMessages(int id)
+        {
+            return _context.Messages.Where(item => item.DialogId == id).OrderByDescending(t => t.TimeOfSend);
+        }
+
+        private string GetDialogLastMessage(int id)
+        {
+            return GetSortedMessages(id).FirstOrDefault().Text;
         }
     }
 }

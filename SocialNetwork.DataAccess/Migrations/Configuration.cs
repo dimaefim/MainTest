@@ -34,7 +34,7 @@ namespace SocialNetwork.DataAccess.Migrations
                 UserLastLoginDate = new DateTime(2017, 3, 4),
                 Settings = new UserSettingsEntity
                 {
-                    aboutMe = "I am admin"
+                    AboutMe = "I am admin"
                 }
             });
 

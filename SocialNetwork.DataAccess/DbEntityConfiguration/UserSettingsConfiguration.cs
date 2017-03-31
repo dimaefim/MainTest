@@ -15,7 +15,7 @@ namespace SocialNetwork.DataAccess.DbEntityConfiguration
 
             HasKey(p => p.Id);
 
-            Property(p => p.aboutMe).IsOptional().HasMaxLength(8000);
+            Property(p => p.AboutMe).IsOptional().HasMaxLength(8000);
 
             HasRequired(p => p.User).WithOptional(p => p.Settings).WillCascadeOnDelete(false);
             HasMany(p => p.Files).WithRequired(p => p.UserSettings).HasForeignKey(p => p.UserSettingsId).WillCascadeOnDelete(false);

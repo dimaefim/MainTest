@@ -16,7 +16,8 @@ namespace SocialNetwork.DataAccess.DbEntity
 
         public virtual ICollection<UsersInRolesEntity> UserRoles { get; set; }
         public virtual ICollection<FriendsEntity> UserFriends { get; set; } 
-        public virtual ICollection<FriendsEntity> FriendUsers { get; set; } 
+        public virtual ICollection<FriendsEntity> FriendUsers { get; set; }
+        public virtual ICollection<UsersInDialogsEntity> UserDialogs { get; set; }
         public virtual UserSettingsEntity Settings { get; set; }
 
         public UserEntity()
@@ -24,6 +25,7 @@ namespace SocialNetwork.DataAccess.DbEntity
             UserRoles = new List<UsersInRolesEntity>();
             FriendUsers = new List<FriendsEntity>();
             UserFriends = new List<FriendsEntity>();
+            UserDialogs = new List<UsersInDialogsEntity>();
         }
     }
 }

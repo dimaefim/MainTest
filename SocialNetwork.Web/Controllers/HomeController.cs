@@ -46,7 +46,7 @@ namespace SocialNetwork.Web.Controllers
                 Name = _currentUser.Name,
                 Surname = _currentUser.Surname,
                 DateOfBirth = _currentUser.DateOfBirth,
-                AboutMe = _currentUser.Settings.aboutMe,
+                AboutMe = _currentUser.Settings.AboutMe,
                 MainPhoto = _usersRepository.GetUserMainPhoto(_currentUser.Login)
             };
             
@@ -65,7 +65,7 @@ namespace SocialNetwork.Web.Controllers
                 Patronymic = _currentUser.Patronymic,
                 Email = _currentUser.Email,
                 DateOfBirth = _currentUser.DateOfBirth.ToString("dd.MM.yyyy"),
-                AboutMe = _currentUser.Settings.aboutMe
+                AboutMe = _currentUser.Settings.AboutMe
             };
 
             return View(updeteUser);
@@ -201,6 +201,16 @@ namespace SocialNetwork.Web.Controllers
             }
 
             return PartialView(model);
+        }
+
+        public ActionResult MyDialogs()
+        {
+            return View();
+        }
+
+        public JsonResult GetAllDialogs()
+        {
+            return Json(_usersRepository.GetAllDialogs(_currentUser.Id));
         }
     }
 }

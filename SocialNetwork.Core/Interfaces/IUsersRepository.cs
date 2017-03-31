@@ -27,5 +27,6 @@ namespace SocialNetwork.Core.Interfaces
         IEnumerable<UsersViewModel> GetMyFriends(int user);
         IEnumerable<UsersViewModel> GetRequests(int user);
         IEnumerable<UsersViewModel> GetMyRequests(int user);
+        IEnumerable<DialogsViewModel> GetAllDialogs(int user);
     }
 }

@@ -49,12 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbEntityConfiguration\DialogConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\FileConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\FriendsConfiguration.cs" />
+    <Compile Include="DbEntityConfiguration\MessageConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\UserSettingsConfiguration.cs" />
+    <Compile Include="DbEntityConfiguration\UsersInDialogsConfiguration.cs" />
+    <Compile Include="DbEntity\DialogEntity.cs" />
     <Compile Include="DbEntity\FileEntity.cs" />
     <Compile Include="DbEntity\FriendsEntity.cs" />
-    <Compile Include="DbEntity\UserSettings.cs" />
+    <Compile Include="DbEntity\MessageEntity.cs" />
+    <Compile Include="DbEntity\UserSettingsEntity.cs" />
+    <Compile Include="DbEntity\UsersInDialogsEntity.cs" />
     <Compile Include="Implementation\SocialNetworkContext.cs" />
     <Compile Include="DbEntityConfiguration\RoleConfiguration.cs" />
     <Compile Include="DbEntityConfiguration\UserConfiguration.cs" />
@@ -84,6 +90,10 @@
     <Compile Include="Migrations\201703231447068_UpdateFriends2.Designer.cs">
       <DependentUpon>201703231447068_UpdateFriends2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703311337312_MessagesAndDialogs.cs" />
+    <Compile Include="Migrations\201703311337312_MessagesAndDialogs.Designer.cs">
+      <DependentUpon>201703311337312_MessagesAndDialogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -112,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703231447068_UpdateFriends2.resx">
       <DependentUpon>201703231447068_UpdateFriends2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703311337312_MessagesAndDialogs.resx">
+      <DependentUpon>201703311337312_MessagesAndDialogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
