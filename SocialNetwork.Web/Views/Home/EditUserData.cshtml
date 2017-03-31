@@ -83,12 +83,10 @@
 <script>
     $(document).ready(function() {
         $("#DateOfBirth").datepicker({
-            format: "dd.MM.yyyy",
+            format: "dd.mm.yyyy",
             clearBtn: true,
             language: "ru",
             autoclose: true
         });
-
-        $("#DateOfBirthString").val($("#DateOfBirthString").val().substr(0, 10));
     });
 </script>

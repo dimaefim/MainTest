@@ -42,8 +42,7 @@ namespace SocialNetwork.Core.Repository
                     MimeType = "image/*",
                     Notes = "MainPhoto",
                     Content = imageData,
-                    UserSettingsId = user.Settings.Id,
-                    UserSettings = user.Settings
+                    UserSettingsId = user.Settings.Id
 
                 };
 

@@ -32,8 +32,7 @@ namespace SocialNetwork.Core.Repository
             var searchedUser = _context.Users.FirstOrDefault
                 (
                     item =>
-                    (item.Login == login && item.Password == password) ||
-                    (item.Email == login && item.Password == password)
+                    (item.Login == login || item.Email == login) && item.Password == password
                 );
 
             return searchedUser != null;
@@ -175,7 +174,7 @@ namespace SocialNetwork.Core.Repository
                         return false;
                     }
 
-                    SessionCache.CurrentUser = searchedUser;
+                    SessionCache.UpdateCurrentUser();
                 }
             }
             catch (Exception)
@@ -210,22 +209,18 @@ namespace SocialNetwork.Core.Repository
         {
             try
             {
-                var updatedUser = GetUserByLoginOrEmail(user.Login);
-
-                var friend = GetItemById(id);
-
-                switch (GetUserStatus(updatedUser, friend))
+                switch (GetUserStatus(user, id))
                 {
                     case FriendStatusEnum.Me:
 
                     return "me";
 
                     case FriendStatusEnum.Friends:
-                        _context.Friends.Remove(
-                            _context.Friends.Any(t => t.UserId == updatedUser.Id && t.FriendId == friend.Id) 
-                                ? _context.Friends.FirstOrDefault(t => t.UserId == updatedUser.Id && t.FriendId == friend.Id) 
-                                : _context.Friends.FirstOrDefault(t => t.UserId == friend.Id && t.FriendId == updatedUser.Id)
-                            );
+                        var deletedFriend =
+                            _context.Friends.FirstOrDefault(t => (t.FriendId == id || t.FriendId == user.Id) &&
+                                                                 (t.UserId == id || t.UserId == user.Id) && t.IsFriends);
+
+                        _context.Friends.Remove(deletedFriend);
 
                         _context.SaveChanges();
 
@@ -233,7 +228,7 @@ namespace SocialNetwork.Core.Repository
 
                     case FriendStatusEnum.WaitAccept:
                         _context.Friends.Remove(
-                            _context.Friends.FirstOrDefault(t => t.UserId == updatedUser.Id && t.FriendId == friend.Id)
+                            _context.Friends.FirstOrDefault(t => t.UserId == user.Id && t.FriendId == id)
                             );
 
                         _context.SaveChanges();
@@ -241,10 +236,11 @@ namespace SocialNetwork.Core.Repository
                         return "no friend";
 
                     case FriendStatusEnum.UserWaitAccept:
-                        _context.Friends.FirstOrDefault(item => item.UserId == friend.Id && item.FriendId == updatedUser.Id)
-                            .IsFriends = true;
-                        _context.Friends.FirstOrDefault(item => item.UserId == friend.Id && item.FriendId == updatedUser.Id)
-                            .DataConfirm = DateTime.Now;
+                        var friend = _context.Friends.FirstOrDefault(
+                            item => item.UserId == id && item.FriendId == user.Id);
+
+                        friend.IsFriends = true;
+                        friend.DataConfirm = DateTime.Now;
 
                         _context.SaveChanges();
 
@@ -255,8 +251,8 @@ namespace SocialNetwork.Core.Repository
                         {
                             RequestDate = DateTime.Now,
                             IsFriends = false,
-                            FriendId = friend.Id,
-                            UserId = updatedUser.Id
+                            FriendId = id,
+                            UserId = user.Id
                         });
 
                         _context.SaveChanges();
@@ -284,24 +280,24 @@ namespace SocialNetwork.Core.Repository
                 DateOfBirth = user.DateOfBirth,
                 AboutMe = user.Settings.aboutMe,
                 MainPhoto = GetUserMainPhoto(user.Login),
-                Status = GetUserStatus(mainUser, user)
+                Status = GetUserStatus(mainUser, user.Id)
             };
 
             return model;
         }
 
-        private FriendStatusEnum GetUserStatus(IdEntity mainUser, IdEntity secondUser)
+        private FriendStatusEnum GetUserStatus(IdEntity mainUser, int secondUser)
         {
-            return mainUser.Id == secondUser.Id
+            return mainUser.Id == secondUser
                 ? FriendStatusEnum.Me
                 : _context.Friends.Any(
                     t =>
-                        (t.FriendId == secondUser.Id || t.FriendId == mainUser.Id) &&
-                        (t.UserId == secondUser.Id || t.UserId == mainUser.Id) && t.IsFriends)
+                        (t.FriendId == secondUser || t.FriendId == mainUser.Id) &&
+                        (t.UserId == secondUser || t.UserId == mainUser.Id) && t.IsFriends)
                     ? FriendStatusEnum.Friends
-                    : _context.Friends.Any(t => t.UserId == mainUser.Id && t.FriendId == secondUser.Id)
+                    : _context.Friends.Any(t => t.UserId == mainUser.Id && t.FriendId == secondUser)
                         ? FriendStatusEnum.WaitAccept
-                        : _context.Friends.Any(t => t.UserId == secondUser.Id && t.FriendId == mainUser.Id)
+                        : _context.Friends.Any(t => t.UserId == secondUser && t.FriendId == mainUser.Id)
                             ? FriendStatusEnum.UserWaitAccept
                             : FriendStatusEnum.NoFriends;
         }
@@ -332,7 +328,7 @@ namespace SocialNetwork.Core.Repository
                         : _context.Friends.Any(t => t.UserId == item.Id && t.FriendId == user.Id)
                             ? FriendStatusEnum.UserWaitAccept
                             : FriendStatusEnum.NoFriends
-        });
+            });
 
             return result;
         }
