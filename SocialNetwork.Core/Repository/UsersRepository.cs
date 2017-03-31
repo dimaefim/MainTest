@@ -187,22 +187,22 @@ namespace SocialNetwork.Core.Repository
 
         public IEnumerable<UsersViewModel> GetAllUsers(UserEntity user)
         {
-            return GetAllUsersStatus(user).Where(item => item.Status != FriendStatusEnum.Me && item.Status != FriendStatusEnum.Friends);
+            return GetAllUsersStatus(user.Id).Where(item => item.Status != FriendStatusEnum.Me && item.Status != FriendStatusEnum.Friends);
         }
 
         public IEnumerable<UsersViewModel> GetMyFriends(UserEntity user)
         {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.Friends);
+            return GetAllUsersStatus(user.Id).Where(item => item.Status == FriendStatusEnum.Friends);
         }
 
         public IEnumerable<UsersViewModel> GetRequests(UserEntity user)
         {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.UserWaitAccept);
+            return GetAllUsersStatus(user.Id).Where(item => item.Status == FriendStatusEnum.UserWaitAccept);
         }
 
         public IEnumerable<UsersViewModel> GetMyRequests(UserEntity user)
         {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.WaitAccept);
+            return GetAllUsersStatus(user.Id).Where(item => item.Status == FriendStatusEnum.WaitAccept);
         }
 
         public string AddRequestToFriendList(UserEntity user, int id)
@@ -302,11 +302,11 @@ namespace SocialNetwork.Core.Repository
                             : FriendStatusEnum.NoFriends;
         }
 
-        private IEnumerable<UsersViewModel> GetAllUsersStatus(IdEntity user)
+        private IEnumerable<UsersViewModel> GetAllUsersStatus(int user)
         {
             var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
 
-            IEnumerable<UsersViewModel> result = _context.Users.Where(y => y.Id != user.Id).Select(item => new UsersViewModel
+            IEnumerable<UsersViewModel> result = _context.Users.Where(y => y.Id != user).Select(item => new UsersViewModel
             {
                 Id = item.Id,
                 Name = item.Name,
@@ -316,16 +316,16 @@ namespace SocialNetwork.Core.Repository
                 MainPhoto = item.Settings.Files.Any(i => i.Notes.Equals("MainPhoto"))
                     ? item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content :
                     photo,
-                Status = user.Id == item.Id
+                Status = user == item.Id
                 ? FriendStatusEnum.Me
                 : _context.Friends.Any(
                     t =>
-                        (t.FriendId == item.Id || t.FriendId == user.Id) &&
-                        (t.UserId == item.Id || t.UserId == user.Id) && t.IsFriends)
+                        (t.FriendId == item.Id || t.FriendId == user) &&
+                        (t.UserId == item.Id || t.UserId == user) && t.IsFriends)
                     ? FriendStatusEnum.Friends
-                    : _context.Friends.Any(t => t.UserId == user.Id && t.FriendId == item.Id)
+                    : _context.Friends.Any(t => t.UserId == user && t.FriendId == item.Id)
                         ? FriendStatusEnum.WaitAccept
-                        : _context.Friends.Any(t => t.UserId == item.Id && t.FriendId == user.Id)
+                        : _context.Friends.Any(t => t.UserId == item.Id && t.FriendId == user)
                             ? FriendStatusEnum.UserWaitAccept
                             : FriendStatusEnum.NoFriends
             });
