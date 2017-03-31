@@ -1,4 +1,5 @@
-﻿@model SocialNetwork.Models.Models.EditProfileViewModel
+﻿@using SocialNetwork.Models.Models
+@model SocialNetwork.Models.Models.EditProfileViewModel
 
 @{
     Layout = "../Shared/_Layout.cshtml";
@@ -79,6 +80,10 @@
         </div>
     </div>
 }
+
+<div class="col-md-12" id="password-section">
+    @Html.Partial("ChangePassword", new ChangePasswordViewModel())
+</div>
 
 <script>
     $(document).ready(function() {

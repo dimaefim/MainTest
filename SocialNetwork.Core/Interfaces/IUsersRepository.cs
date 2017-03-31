@@ -16,6 +16,7 @@ namespace SocialNetwork.Core.Interfaces
         bool CheckExistenceEmail(string email, string login);
         bool AddNewUser(RegistrationViewModel user);
         bool UpdateCurrentUser(EditProfileViewModel user);
+        bool ChangePassword(ChangePasswordViewModel model);
         UserEntity GetUserByLoginOrEmail(string login);
         UserEntity GetUserByLoginOrEmailIncluding(string login);
         byte[] GetUserMainPhoto(string login);

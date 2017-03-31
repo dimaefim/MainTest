@@ -120,6 +120,26 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
+        public bool ChangePassword(ChangePasswordViewModel model)
+        {
+            try
+            {
+                var updatedUser = GetUserByLoginOrEmail(SessionCache.CurrentUser.Login);
+                
+                updatedUser.Password = model.NewPassword;
+
+                UpdateItem(updatedUser);
+
+                SessionCache.UpdateCurrentUser();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public UserEntity GetUserByLoginOrEmail(string login)
         {
             var searchedUser = _context.Users.FirstOrDefault

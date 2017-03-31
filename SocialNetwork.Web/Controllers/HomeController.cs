@@ -167,10 +167,40 @@ namespace SocialNetwork.Web.Controllers
         {
             if (_usersRepository.AddRequestToFriendList(_currentUser.Id, id).Equals("false"))
             {
-                RedirectToAction("ErrorCode403", "Error");
+                RedirectToAction("ErrorCode500", "Error");
             }
 
             return RedirectToAction("ShowUserPage", "Home", new {id = id});
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!_currentUser.Password.Equals(model.OldPassword))
+                {
+                    ViewBag.MessageForPassword = "Неверный текущий пароль";
+
+                    return PartialView(model);
+                }
+
+                if (_usersRepository.ChangePassword(model))
+                {
+                    ViewBag.MessageForPassword = "Пароль успешно изменён";
+
+                    return PartialView();
+                }
+
+                ViewBag.MessageForPassword = "Ошибка смены пароля";
+            }
+
+            return PartialView(model);
         }
     }
 }
