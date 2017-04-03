@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Диалог";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<input id="id" type="hidden" value="@ViewBag.DialogId" />
+<div class="col-md-12 messages" id="messages"></div>
+<div class="col-md-12">
+    <p>Введите сообщение</p>
+</div>
+<div class="col-md-12 row">
+    <textarea id="text-message" class="col-md-9" maxlength="8000" rows="3" style="min-width: 70%; max-height: 70px;"></textarea>
+    <input type="button" id="send" class="btn btn-default col-md-3" style="margin-top: 20px; margin-left: 3%" value="Отправить" />
+
+    <script src="~/Scripts/Home/Dialogs/dialog.js"></script>
+</div>
+

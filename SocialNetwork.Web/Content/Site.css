@@ -39,3 +39,12 @@ input[type="checkbox"].input-validation-error {
 .login-link {
     color: white;
 }
+
+.messages {
+    overflow-y: auto;
+    height: 500px;
+}
+
+.dialog {
+    cursor: pointer;
+}

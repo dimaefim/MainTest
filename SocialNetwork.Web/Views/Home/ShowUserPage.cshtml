@@ -45,7 +45,11 @@
                                                                        null)</li>
                     break;
             }
-            <li class="col-md-12 text-center">@Html.ActionLink("Написать сообщение", "Index", "Home")</li>
+            <li class="col-md-12 text-center">@Html.ActionLink("Написать сообщение",
+                                                               "OpenDialog",
+                                                               "Home",
+                                                               new { id = @Model.Id },
+                                                               null)</li>
         </ul>
     </div>
 

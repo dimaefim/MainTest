@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201703311337312_MessagesAndDialogs.Designer.cs">
       <DependentUpon>201703311337312_MessagesAndDialogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704031154338_EditMessage.cs" />
+    <Compile Include="Migrations\201704031154338_EditMessage.Designer.cs">
+      <DependentUpon>201704031154338_EditMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703311337312_MessagesAndDialogs.resx">
       <DependentUpon>201703311337312_MessagesAndDialogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704031154338_EditMessage.resx">
+      <DependentUpon>201704031154338_EditMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

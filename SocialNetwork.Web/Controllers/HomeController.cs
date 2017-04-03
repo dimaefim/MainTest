@@ -167,7 +167,7 @@ namespace SocialNetwork.Web.Controllers
         {
             if (_usersRepository.AddRequestToFriendList(_currentUser.Id, id).Equals("false"))
             {
-                RedirectToAction("ErrorCode500", "Error");
+                return RedirectToAction("ErrorCode500", "Error");
             }
 
             return RedirectToAction("ShowUserPage", "Home", new {id = id});
@@ -211,6 +211,51 @@ namespace SocialNetwork.Web.Controllers
         public JsonResult GetAllDialogs()
         {
             return Json(_usersRepository.GetAllDialogs(_currentUser.Id));
+        }
+
+        public ActionResult OpenDialog(int id = 0)
+        {
+            if(!_usersRepository.CheckExistenceDialog(_currentUser.Id, id))
+            {
+                if(!_usersRepository.CreateNewDialog(new int[] { _currentUser.Id, id }))
+                {
+                    return RedirectToAction("ErrorCode500", "Error");
+                }
+            }
+
+            int dialogId = _usersRepository.GetDialogId(new int[] { _currentUser.Id, id });
+
+            if(dialogId == -1)
+            {
+                return RedirectToAction("ErrorCode500", "Error");
+            }
+
+            ViewBag.DialogId = dialogId;
+
+            return View();
+        }
+
+        public ActionResult OpenDialogByDialogId(int id = 0)
+        {
+            ViewBag.DialogId = id;
+
+            return View();
+        }
+
+        public JsonResult GetMessages(int id)
+        {
+            return Json(_usersRepository.GetMessages(id));
+        }
+
+        [HttpPost]
+        public JsonResult SendMessage(int id, string message)
+        {
+            if(_usersRepository.SendMessage(id, message, _currentUser.Id))
+            {
+                return Json(new { response = "true" });
+            }
+
+            return Json(new { response = "false" });
         }
     }
 }

@@ -310,8 +310,10 @@ namespace SocialNetwork.Core.Repository
         {
             var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
 
-            var dialogs = _context.Dialogs.Where(y => y.DialogUsers.Any(t => t.UserId == user)).ToList(); //пока без ToList никак, sql 
-            //не знает GetDialogLastMessage, Convert.ToBase64String(), потом подумаю как убрать
+            var dialogs = _context.Dialogs.Where(y => y.DialogUsers.Any(t => t.UserId == user))
+                                          .OrderByDescending(a => a.LastMessageTime)
+                                          .ToList(); //пока без ToList никак,
+            //sql не знает GetDialogLastMessage, Convert.ToBase64String(), потом подумаю как убрать
 
             var result = dialogs.Select(item => new DialogsViewModel
             {
@@ -327,6 +329,104 @@ namespace SocialNetwork.Core.Repository
             });
 
             return result;
+        }
+
+        public bool CheckExistenceDialog(int mainUser, int secondUser)
+        {
+            return _context.Dialogs.Any(item => item.DialogUsers.Any(a => a.UserId == mainUser) 
+                                        && item.DialogUsers.Any(b => b.UserId == secondUser)
+                                        && item.DialogUsers.Count == 2);
+        }
+
+        public bool CreateNewDialog(int[] users)
+        {
+            try
+            {
+                var dialog = new DialogEntity
+                {
+                    LastMessageTime = DateTime.Now
+                };
+
+                _context.Dialogs.Add(dialog);
+                _context.SaveChanges();
+
+                foreach(int item in users)
+                {
+                    _context.UsersInDialogs.Add(new UsersInDialogsEntity
+                    {
+                        DialogId = dialog.Id,
+                        UserId = item
+                    });
+                }
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
+        public int GetDialogId(int[] users)
+        {
+            try
+            {
+                return _context.Dialogs.FirstOrDefault(
+                item =>
+                    item.DialogUsers.All(
+                        a => users.Any(b => b == a.UserId)
+                    && item.DialogUsers.Count == users.Count())
+                    ).Id;
+            }
+            catch(Exception)
+            {
+                return -1;
+            }
+        }
+
+        public IEnumerable<MessageViewModel> GetMessages(int dialog)
+        {
+            var messages = _context.Messages.Where(item => item.DialogId == dialog).OrderByDescending(t => t.TimeOfSend).Take(50).ToList();
+
+            messages = messages.OrderBy(t => t.TimeOfSend).ToList();
+
+            return messages.Select(item => new MessageViewModel
+            {
+                Id = item.Id,
+                Author = GetItemById(item.UserId).Surname + " " + GetItemById(item.UserId).Name,
+                Photo = Convert.ToBase64String(GetUserMainPhoto(GetItemById(item.UserId).Login)),
+                Text = item.Text,
+                TimeOfSend = item.TimeOfSend.ToString("dd.MM.yyyy HH:mm")
+            });
+        }
+
+        public bool SendMessage(int dialog, string message, int user)
+        {
+            try
+            {
+                _context.Messages.Add(new MessageEntity
+                {
+                    DialogId = dialog,
+                    Text = message,
+                    UserId = user,
+                    TimeOfSend = DateTime.Now
+                });
+
+                var allDialog = _context.Dialogs.Find(dialog);
+
+                allDialog.LastMessageTime = DateTime.Now;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                return false;
+            }
         }
 
         private FriendStatusEnum GetUserStatus(int mainUser, int secondUser)
@@ -378,7 +478,7 @@ namespace SocialNetwork.Core.Repository
 
         private IEnumerable<MessageEntity> GetSortedMessages(int id)
         {
-            return _context.Messages.Where(item => item.DialogId == id).OrderByDescending(t => t.TimeOfSend);
+            return _context.Messages.Where(item => item.DialogId == id).OrderByDescending(t => t.TimeOfSend).ToList();
         }
 
         private string GetDialogLastMessage(int id)

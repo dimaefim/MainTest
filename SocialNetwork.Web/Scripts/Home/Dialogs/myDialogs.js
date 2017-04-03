@@ -37,7 +37,7 @@
 
         for (var i = 0; i < dialogs.length; i++) {
 
-            var mainDiv = $('<div class="col-md-12 row dialod">');
+            var mainDiv = $('<div class="col-md-12 row dialog">');
 
             var photoDiv = $('<div class="col-md-3">');
             photoDiv.append('<img class="user-photo img-responsive" src="data:image/*;base64,' + dialogs[i].Photo + '" />');
@@ -54,8 +54,8 @@
             results.append('<hr/>');
         }
 
-        results.find(".dialod").click(function () {
-            console.log("click");
+        results.find(".dialog").click(function () {
+            window.location.href = "/Home/OpenDialogByDialogId/" + $(this).find("#id").val();
         });
     }
 

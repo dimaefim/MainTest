@@ -28,5 +28,10 @@ namespace SocialNetwork.Core.Interfaces
         IEnumerable<UsersViewModel> GetRequests(int user);
         IEnumerable<UsersViewModel> GetMyRequests(int user);
         IEnumerable<DialogsViewModel> GetAllDialogs(int user);
+        bool CheckExistenceDialog(int mainUser, int secondUser);
+        bool CreateNewDialog(int[] users);
+        int GetDialogId(int[] users);
+        IEnumerable<MessageViewModel> GetMessages(int dialog);
+        bool SendMessage(int dialog, string message, int user);
     }
 }
