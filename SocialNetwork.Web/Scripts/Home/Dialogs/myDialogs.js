@@ -3,7 +3,7 @@
     var allDialogs = [];
 
     $("#nameFilter").keyup(function () {
-        filterDialogs();
+        filterDialogs(allDialogs);
     });
 
     loadDialogs();
@@ -17,7 +17,7 @@
             success: function (data) {
                 allDialogs.length = 0;
                 allDialogs = data;
-                showDialogs(allDialogs);
+                filterDialogs(allDialogs);
             },
             error: function() {
                 alert("Ошибка получения диалогов");
@@ -59,11 +59,29 @@
         });
     }
 
-    function filterDialogs() {
-        filterUsersByName();
+    function filterDialogs(dialogs) {
+        dialogs = filterUsersByName(dialogs);
+        showDialogs(dialogs);
     }
 
-    function filterUsersByName() {
-        
+    function filterUsersByName(dialogs) {
+        var resultAfterNameFilter = [];
+        resultAfterNameFilter.length = 0;
+        var filterName = $("#nameFilter").val().toLowerCase();
+
+        if (filterName.length == 0) {
+
+            return dialogs;
+        }
+
+        for (var i = 0; i < dialogs.length; i++) {
+            var fullName = (dialogs[i].Name).toLowerCase();
+
+            if (fullName.indexOf(filterName) != -1) {
+                resultAfterNameFilter.push(dialogs[i]);
+            }
+        }
+
+        return resultAfterNameFilter;
     }
 });
