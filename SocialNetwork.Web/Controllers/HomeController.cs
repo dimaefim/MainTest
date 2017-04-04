@@ -1,12 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using System.Windows.Forms;
 using Ninject;
 using SocialNetwork.Core.Cache;
 using SocialNetwork.Core.Dependency;
@@ -106,12 +100,9 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public ActionResult LoadPhoto(HttpPostedFileBase uploadImage)
         {
-            if (uploadImage != null)
+            if (uploadImage != null && _usersRepository.SaveNewCurrentUserMainPhoto(uploadImage, _currentUser))
             {
-                if (_usersRepository.SaveNewCurrentUserMainPhoto(uploadImage, _currentUser))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
 
             return View(uploadImage);
@@ -215,15 +206,13 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult OpenDialog(int id = 0)
         {
-            if(!_usersRepository.CheckExistenceDialog(_currentUser.Id, id))
+            if (!_usersRepository.CheckExistenceDialog(_currentUser.Id, id) &&
+                !_usersRepository.CreateNewDialog(new[] {_currentUser.Id, id}))
             {
-                if(!_usersRepository.CreateNewDialog(new int[] { _currentUser.Id, id }))
-                {
-                    return RedirectToAction("ErrorCode500", "Error");
-                }
+                return RedirectToAction("ErrorCode500", "Error");
             }
 
-            int dialogId = _usersRepository.GetDialogId(new int[] { _currentUser.Id, id });
+            var dialogId = _usersRepository.GetDialogId(new[] { _currentUser.Id, id });
 
             if(dialogId == -1)
             {
@@ -250,12 +239,9 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public JsonResult SendMessage(int id, string message)
         {
-            if(_usersRepository.SendMessage(id, message, _currentUser.Id))
-            {
-                return Json(new { response = "true" });
-            }
-
-            return Json(new { response = "false" });
+            return Json(_usersRepository.SendMessage(id, message, _currentUser.Id)
+                ? new {response = "true"}
+                : new {response = "false"});
         }
     }
 }

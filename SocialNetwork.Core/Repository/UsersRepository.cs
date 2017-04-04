@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using Ninject;
@@ -350,7 +346,7 @@ namespace SocialNetwork.Core.Repository
                 _context.Dialogs.Add(dialog);
                 _context.SaveChanges();
 
-                foreach(int item in users)
+                foreach(var item in users)
                 {
                     _context.UsersInDialogs.Add(new UsersInDialogsEntity
                     {
@@ -373,12 +369,11 @@ namespace SocialNetwork.Core.Repository
         {
             try
             {
-                return _context.Dialogs.FirstOrDefault(
-                item =>
-                    item.DialogUsers.All(
+                var firstOrDefault = _context.Dialogs
+                    .FirstOrDefault(item => item.DialogUsers.All(
                         a => users.Any(b => b == a.UserId)
-                    && item.DialogUsers.Count == users.Count())
-                    ).Id;
+                             && item.DialogUsers.Count == users.Length));
+                return firstOrDefault?.Id ?? -1;
             }
             catch(Exception)
             {
@@ -388,7 +383,10 @@ namespace SocialNetwork.Core.Repository
 
         public IEnumerable<MessageViewModel> GetMessages(int dialog)
         {
-            var messages = _context.Messages.Where(item => item.DialogId == dialog).OrderByDescending(t => t.TimeOfSend).Take(50).ToList();
+            var messages = _context.Messages.Where(item => item.DialogId == dialog)
+                .OrderByDescending(t => t.TimeOfSend)
+                .Take(50)
+                .ToList();
 
             messages = messages.OrderBy(t => t.TimeOfSend).ToList();
 

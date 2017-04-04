@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
-using System.Runtime.CompilerServices;
 using SocialNetwork.DataAccess.DbEntity;
 
 namespace SocialNetwork.DataAccess.DbEntityConfiguration

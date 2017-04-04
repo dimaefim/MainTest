@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SocialNetwork.Models.Enums;
+﻿using SocialNetwork.Models.Enums;
 
 namespace SocialNetwork.Models.Models
 {

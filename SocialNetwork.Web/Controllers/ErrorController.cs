@@ -8,6 +8,7 @@ namespace SocialNetwork.Web.Controllers
         {
             ViewBag.RenderMenu = true;
         }
+
         public ActionResult ErrorCode401()
         {
             return View();

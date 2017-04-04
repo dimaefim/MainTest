@@ -1,11 +1,8 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
 using Ninject;
 using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
-using SocialNetwork.Core.Repository;
-using SocialNetwork.Core.UnitOfWork;
 using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
