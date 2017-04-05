@@ -148,7 +148,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DialogsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -296,13 +298,13 @@
     <Content Include="Views\Error\ErrorCode500.cshtml" />
     <Content Include="Views\Home\EditUserData.cshtml" />
     <Content Include="Views\Home\LoadPhoto.cshtml" />
-    <Content Include="Views\Home\ShowAllUsers.cshtml" />
-    <Content Include="Views\Home\ShowMyFriends.cshtml" />
+    <Content Include="Views\Friends\ShowAllUsers.cshtml" />
+    <Content Include="Views\Friends\ShowMyFriends.cshtml" />
     <Content Include="Views\Home\ShowUserPage.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
-    <Content Include="Views\Home\MyDialogs.cshtml" />
-    <Content Include="Views\Home\OpenDialog.cshtml" />
-    <Content Include="Views\Home\OpenDialogByDialogId.cshtml" />
+    <Content Include="Views\Dialogs\MyDialogs.cshtml" />
+    <Content Include="Views\Dialogs\OpenDialog.cshtml" />
+    <Content Include="Views\Dialogs\OpenDialogByDialogId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

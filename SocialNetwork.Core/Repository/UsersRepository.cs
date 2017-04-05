@@ -82,6 +82,20 @@ namespace SocialNetwork.Core.Repository
                 };
 
                 CreateNewItem(newUser);
+
+                byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
+
+                _context.Files.Add(new FileEntity
+                {
+                    Name = "nophoto.jpg",
+                    DateCreated = DateTime.Now,
+                    MimeType = "image/*",
+                    Notes = "MainPhoto",
+                    Content = photo,
+                    UserSettingsId = newUser.Settings.Id
+                });
+
+                _context.SaveChanges();
             }
             catch (Exception)
             {
@@ -159,17 +173,12 @@ namespace SocialNetwork.Core.Repository
         {
             var searchedUser = GetUserByLoginOrEmail(login);
 
-            byte[] photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
-
-            if (searchedUser != null)
+            if(!searchedUser.Settings.Files.Any(item => item.Notes.Equals("MainPhoto")))
             {
-                if (searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")) != null)
-                {
-                    photo = searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")).Content;
-                }
+                return File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
             }
 
-            return photo;
+            return searchedUser.Settings.Files.FirstOrDefault(item => item.Notes.Equals("MainPhoto")).Content;
         }
 
         public bool SaveNewCurrentUserMainPhoto(HttpPostedFileBase photo, UserEntity user)
@@ -201,89 +210,6 @@ namespace SocialNetwork.Core.Repository
             return true;
         }
 
-        public IEnumerable<UsersViewModel> GetAllUsers(int user)
-        {
-            return GetAllUsersStatus(user).Where(item => item.Status != FriendStatusEnum.Me && item.Status != FriendStatusEnum.Friends);
-        }
-
-        public IEnumerable<UsersViewModel> GetMyFriends(int user)
-        {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.Friends);
-        }
-
-        public IEnumerable<UsersViewModel> GetRequests(int user)
-        {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.UserWaitAccept);
-        }
-
-        public IEnumerable<UsersViewModel> GetMyRequests(int user)
-        {
-            return GetAllUsersStatus(user).Where(item => item.Status == FriendStatusEnum.WaitAccept);
-        }
-
-        public string AddRequestToFriendList(int user, int id)
-        {
-            try
-            {
-                switch (GetUserStatus(user, id))
-                {
-                    case FriendStatusEnum.Me:
-
-                    return "me";
-
-                    case FriendStatusEnum.Friends:
-                        var deletedFriend =
-                            _context.Friends.FirstOrDefault(t => (t.FriendId == id || t.FriendId == user) &&
-                                                                 (t.UserId == id || t.UserId == user) && t.IsFriends);
-
-                        _context.Friends.Remove(deletedFriend);
-
-                        _context.SaveChanges();
-
-                        return "no friend";
-
-                    case FriendStatusEnum.WaitAccept:
-                        _context.Friends.Remove(
-                            _context.Friends.FirstOrDefault(t => t.UserId == user && t.FriendId == id)
-                            );
-
-                        _context.SaveChanges();
-
-                        return "no friend";
-
-                    case FriendStatusEnum.UserWaitAccept:
-                        var friend = _context.Friends.FirstOrDefault(
-                            item => item.UserId == id && item.FriendId == user);
-
-                        friend.IsFriends = true;
-                        friend.DataConfirm = DateTime.Now;
-
-                        _context.SaveChanges();
-
-                        return "i accept";
-
-                    case FriendStatusEnum.NoFriends:
-                        _context.Friends.Add(new FriendsEntity
-                        {
-                            RequestDate = DateTime.Now,
-                            IsFriends = false,
-                            FriendId = id,
-                            UserId = user
-                        });
-
-                        _context.SaveChanges();
-
-                        return "request";
-                }
-            }
-            catch (Exception)
-            {
-                return "false";
-            }
-
-            return "false";
-        }
-
         public UsersViewModel GetUserPage(UserEntity mainUser, int id)
         {
             var user = GetItemById(id);
@@ -302,131 +228,6 @@ namespace SocialNetwork.Core.Repository
             return model;
         }
 
-        public IEnumerable<DialogsViewModel> GetAllDialogs(int user)
-        {
-            var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
-
-            var dialogs = _context.Dialogs.Where(y => y.DialogUsers.Any(t => t.UserId == user))
-                                          .OrderByDescending(a => a.LastMessageTime)
-                                          .ToList(); //пока без ToList никак,
-            //sql не знает GetDialogLastMessage, Convert.ToBase64String(), потом подумаю как убрать
-
-            var result = dialogs.Select(item => new DialogsViewModel
-            {
-                Id = item.Id,
-                Name = item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Name + " " +
-                       item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Surname,
-                Photo = item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Settings.Files.Any(i => i.Notes.Equals("MainPhoto"))
-                    ? Convert.ToBase64String(item.DialogUsers.FirstOrDefault(a => a.UserId != user).User.Settings.Files.FirstOrDefault(
-                        i => i.Notes.Equals("MainPhoto")).Content) 
-                    : Convert.ToBase64String(photo),
-                LastMessage = GetDialogLastMessage(item.Id)
-
-            });
-
-            return result;
-        }
-
-        public bool CheckExistenceDialog(int mainUser, int secondUser)
-        {
-            return _context.Dialogs.Any(item => item.DialogUsers.Any(a => a.UserId == mainUser) 
-                                        && item.DialogUsers.Any(b => b.UserId == secondUser)
-                                        && item.DialogUsers.Count == 2);
-        }
-
-        public bool CreateNewDialog(int[] users)
-        {
-            try
-            {
-                var dialog = new DialogEntity
-                {
-                    LastMessageTime = DateTime.Now
-                };
-
-                _context.Dialogs.Add(dialog);
-                _context.SaveChanges();
-
-                foreach(var item in users)
-                {
-                    _context.UsersInDialogs.Add(new UsersInDialogsEntity
-                    {
-                        DialogId = dialog.Id,
-                        UserId = item
-                    });
-                }
-
-                _context.SaveChanges();
-
-                return true;
-            }
-            catch(Exception)
-            {
-                return false;
-            }
-        }
-
-        public int GetDialogId(int[] users)
-        {
-            try
-            {
-                var firstOrDefault = _context.Dialogs
-                    .FirstOrDefault(item => item.DialogUsers.All(
-                        a => users.Any(b => b == a.UserId)
-                             && item.DialogUsers.Count == users.Length));
-                return firstOrDefault?.Id ?? -1;
-            }
-            catch(Exception)
-            {
-                return -1;
-            }
-        }
-
-        public IEnumerable<MessageViewModel> GetMessages(int dialog)
-        {
-            var messages = _context.Messages.Where(item => item.DialogId == dialog)
-                .OrderByDescending(t => t.TimeOfSend)
-                .Take(50)
-                .ToList();
-
-            messages = messages.OrderBy(t => t.TimeOfSend).ToList();
-
-            return messages.Select(item => new MessageViewModel
-            {
-                Id = item.Id,
-                Author = GetItemById(item.UserId).Surname + " " + GetItemById(item.UserId).Name,
-                Photo = Convert.ToBase64String(GetUserMainPhoto(GetItemById(item.UserId).Login)),
-                Text = item.Text,
-                TimeOfSend = item.TimeOfSend.ToString("dd.MM.yyyy HH:mm")
-            });
-        }
-
-        public bool SendMessage(int dialog, string message, int user)
-        {
-            try
-            {
-                _context.Messages.Add(new MessageEntity
-                {
-                    DialogId = dialog,
-                    Text = message,
-                    UserId = user,
-                    TimeOfSend = DateTime.Now
-                });
-
-                var allDialog = _context.Dialogs.Find(dialog);
-
-                allDialog.LastMessageTime = DateTime.Now;
-
-                _context.SaveChanges();
-
-                return true;
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                return false;
-            }
-        }
-
         private FriendStatusEnum GetUserStatus(int mainUser, int secondUser)
         {
             return mainUser == secondUser
@@ -441,47 +242,6 @@ namespace SocialNetwork.Core.Repository
                         : _context.Friends.Any(t => t.UserId == secondUser && t.FriendId == mainUser)
                             ? FriendStatusEnum.UserWaitAccept
                             : FriendStatusEnum.NoFriends;
-        }
-
-        private IEnumerable<UsersViewModel> GetAllUsersStatus(int user)
-        {
-            var photo = File.ReadAllBytes(HttpContext.Current.Server.MapPath("~/Content/Home/nophoto.jpg"));
-
-            IEnumerable<UsersViewModel> result = _context.Users.Where(y => y.Id != user).Select(item => new UsersViewModel
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Surname = item.Surname,
-                DateOfBirth = item.DateOfBirth,
-                AboutMe = item.Settings.AboutMe,
-                MainPhoto = item.Settings.Files.Any(i => i.Notes.Equals("MainPhoto"))
-                    ? item.Settings.Files.FirstOrDefault(i => i.Notes.Equals("MainPhoto")).Content :
-                    photo,
-                Status = user == item.Id
-                ? FriendStatusEnum.Me
-                : _context.Friends.Any(
-                    t =>
-                        (t.FriendId == item.Id || t.FriendId == user) &&
-                        (t.UserId == item.Id || t.UserId == user) && t.IsFriends)
-                    ? FriendStatusEnum.Friends
-                    : _context.Friends.Any(t => t.UserId == user && t.FriendId == item.Id)
-                        ? FriendStatusEnum.WaitAccept
-                        : _context.Friends.Any(t => t.UserId == item.Id && t.FriendId == user)
-                            ? FriendStatusEnum.UserWaitAccept
-                            : FriendStatusEnum.NoFriends
-            });
-
-            return result;
-        }
-
-        private IEnumerable<MessageEntity> GetSortedMessages(int id)
-        {
-            return _context.Messages.Where(item => item.DialogId == id).OrderByDescending(t => t.TimeOfSend).ToList();
-        }
-
-        private string GetDialogLastMessage(int id)
-        {
-            return GetSortedMessages(id).FirstOrDefault().Text;
         }
     }
 }

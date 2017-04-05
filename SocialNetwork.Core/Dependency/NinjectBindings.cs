@@ -24,6 +24,8 @@ namespace SocialNetwork.Core.Dependency
             NinjectKernel.Bind<IRepository<RoleEntity>>().To<RoleRepository>();
             NinjectKernel.Bind<IUsersRepository>().To<UsersRepository>();
             NinjectKernel.Bind<IFilesRepository>().To<FilesRepository>();
+            NinjectKernel.Bind<IFriendsRepository>().To<FriendsRepository>();
+            NinjectKernel.Bind<IDialogsRepository>().To<DialogsRepository>();
         }
 
         public static IKernel Instance => NinjectKernel;

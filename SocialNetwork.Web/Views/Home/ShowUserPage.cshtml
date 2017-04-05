@@ -19,35 +19,35 @@
                 case FriendStatusEnum.Friends:
                     <li class="col-md-12 text-center">@Html.ActionLink("Убрать из друзей",
                                                                        "AddRequestToFriendListFromUserPage",
-                                                                       "Home",
+                                                                       "Friends",
                                                                        new {id = @Model.Id},
                                                                        null)</li>
                     break;
                 case FriendStatusEnum.UserWaitAccept:
-                    <li class="col-md-12 text-center">@Html.ActionLink("Хочет дружить. Добавить в друзья", 
-                                                                       "AddRequestToFriendListFromUserPage", 
-                                                                       "Home", 
+                    <li class="col-md-12 text-center">@Html.ActionLink("Хочет дружить. Добавить в друзья",
+                                                                       "AddRequestToFriendListFromUserPage",
+                                                                       "Friends",
                                                                        new { id = @Model.Id },
                                                                        null)</li>
                     break;
                 case FriendStatusEnum.WaitAccept:
-                    <li class="col-md-12 text-center">@Html.ActionLink("Отменить запрос дружбы", 
-                                                                       "AddRequestToFriendListFromUserPage", 
-                                                                       "Home", 
+                    <li class="col-md-12 text-center">@Html.ActionLink("Отменить запрос дружбы",
+                                                                       "AddRequestToFriendListFromUserPage",
+                                                                       "Friends",
                                                                        new { id = @Model.Id },
                                                                        null)</li>
                     break;
                 case FriendStatusEnum.NoFriends:
-                    <li class="col-md-12 text-center">@Html.ActionLink("Дружить", 
-                                                                       "AddRequestToFriendListFromUserPage", 
-                                                                       "Home", 
+                    <li class="col-md-12 text-center">@Html.ActionLink("Дружить",
+                                                                       "AddRequestToFriendListFromUserPage",
+                                                                       "Friends",
                                                                        new { id = @Model.Id },
                                                                        null)</li>
                     break;
             }
             <li class="col-md-12 text-center">@Html.ActionLink("Написать сообщение",
                                                                "OpenDialog",
-                                                               "Home",
+                                                               "Dialogs",
                                                                new { id = @Model.Id },
                                                                null)</li>
         </ul>

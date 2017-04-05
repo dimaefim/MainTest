@@ -108,43 +108,6 @@ namespace SocialNetwork.Web.Controllers
             return View(uploadImage);
         }
 
-        public ActionResult ShowAllUsers()
-        {
-            return View();
-        }
-
-        public JsonResult GetAllUsers()
-        {
-            return Json(_usersRepository.GetAllUsers(_currentUser.Id));
-        }
-
-        public JsonResult GetMyFriends()
-        {
-            return Json(_usersRepository.GetMyFriends(_currentUser.Id));
-        }
-
-        public JsonResult GetRequests()
-        {
-            return Json(_usersRepository.GetRequests(_currentUser.Id));
-        }
-
-        public JsonResult GetMyRequests()
-        {
-            return Json(_usersRepository.GetMyRequests(_currentUser.Id));
-        }
-
-        public JsonResult AddRequestToFriendList(int id)
-        {
-            var obj = new {response = _usersRepository.AddRequestToFriendList(_currentUser.Id, id)};
-
-            return Json(obj);
-        }
-
-        public ActionResult ShowMyFriends()
-        {
-            return View();
-        }
-
         public ActionResult ShowUserPage(int id)
         {
             var model = _usersRepository.GetUserPage(_currentUser, id);
@@ -152,16 +115,6 @@ namespace SocialNetwork.Web.Controllers
             ViewBag.Title = model.Name + " " + model.Surname;
 
             return View(model);
-        }
-
-        public ActionResult AddRequestToFriendListFromUserPage(int id = 0)
-        {
-            if (_usersRepository.AddRequestToFriendList(_currentUser.Id, id).Equals("false"))
-            {
-                return RedirectToAction("ErrorCode500", "Error");
-            }
-
-            return RedirectToAction("ShowUserPage", "Home", new {id = id});
         }
 
         public ActionResult ChangePassword()
@@ -192,56 +145,6 @@ namespace SocialNetwork.Web.Controllers
             }
 
             return PartialView(model);
-        }
-
-        public ActionResult MyDialogs()
-        {
-            return View();
-        }
-
-        public JsonResult GetAllDialogs()
-        {
-            return Json(_usersRepository.GetAllDialogs(_currentUser.Id));
-        }
-
-        public ActionResult OpenDialog(int id = 0)
-        {
-            if (!_usersRepository.CheckExistenceDialog(_currentUser.Id, id) &&
-                !_usersRepository.CreateNewDialog(new[] {_currentUser.Id, id}))
-            {
-                return RedirectToAction("ErrorCode500", "Error");
-            }
-
-            var dialogId = _usersRepository.GetDialogId(new[] { _currentUser.Id, id });
-
-            if(dialogId == -1)
-            {
-                return RedirectToAction("ErrorCode500", "Error");
-            }
-
-            ViewBag.DialogId = dialogId;
-
-            return View();
-        }
-
-        public ActionResult OpenDialogByDialogId(int id = 0)
-        {
-            ViewBag.DialogId = id;
-
-            return View();
-        }
-
-        public JsonResult GetMessages(int id)
-        {
-            return Json(_usersRepository.GetMessages(id));
-        }
-
-        [HttpPost]
-        public JsonResult SendMessage(int id, string message)
-        {
-            return Json(_usersRepository.SendMessage(id, message, _currentUser.Id)
-                ? new {response = "true"}
-                : new {response = "false"});
         }
     }
 }

@@ -22,7 +22,7 @@
     function loadUsers() {
         $.ajax({
             type: "POST",
-            url: "/Home/GetAllUsers",
+            url: "/Friends/GetAllUsers",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -87,7 +87,7 @@
     function addRequestInFriendsList(id) {
         $.ajax({
             type: "POST",
-            url: "/Home/AddRequestToFriendList/" + id,
+            url: "/Friends/AddRequestToFriendList/" + id,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {

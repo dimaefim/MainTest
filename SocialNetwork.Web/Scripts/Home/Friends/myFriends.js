@@ -61,7 +61,7 @@
 
     function loadUsers() {
 
-        var url = "/Home/";
+        var url = "/Friends/";
 
         if (tab == 1) {
             url += "GetMyFriends";
@@ -136,7 +136,7 @@
     function addRequestInFriendsList(id) {
         $.ajax({
             type: "POST",
-            url: "/Home/AddRequestToFriendList/" + id,
+            url: "/Friends/AddRequestToFriendList/" + id,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {

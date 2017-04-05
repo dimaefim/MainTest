@@ -83,6 +83,7 @@
     <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Models\MessageViewModel.cs" />
     <Compile Include="Models\RegistrationViewModel.cs" />
+    <Compile Include="Models\UserMessageViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

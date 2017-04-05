@@ -76,7 +76,7 @@ namespace SocialNetwork.Web.Controllers
                     return View(newUser);
                 }
 
-                if (_usersRepository.AddNewUser(newUser))
+                if (!_usersRepository.AddNewUser(newUser))
                 {
                     ViewBag.Message = "Ошибка создания пользователя";
 

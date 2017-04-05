@@ -11,7 +11,7 @@
     function loadDialogs() {
         $.ajax({
             type: "POST",
-            url: "/Home/GetAllDialogs",
+            url: "/Dialogs/GetAllDialogs",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
@@ -55,7 +55,7 @@
         }
 
         results.find(".dialog").click(function () {
-            window.location.href = "/Home/OpenDialogByDialogId/" + $(this).find("#id").val();
+            window.location.href = "/Dialogs/OpenDialogByDialogId/" + $(this).find("#id").val();
         });
     }
 
