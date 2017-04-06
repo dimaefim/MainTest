@@ -26,3 +26,8 @@
 
     <script src="~/Scripts/Home/Friends/myFriends.js?645"></script>
 </div>
+
+@section SignalR {
+    <input type="hidden" id="user-id" value="@ViewBag.UserId" />
+    <script src="~/Scripts/SignalR/SNSignalR.js"></script>
+}

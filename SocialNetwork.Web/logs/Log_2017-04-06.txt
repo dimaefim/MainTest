@@ -1,0 +1,36 @@
+ Info|  1|15:54:55.5669: Старт приложения.
+ Info|  1|15:56:32.7928: Старт приложения.
+ Info|  1|15:58:31.2602: Старт приложения.
+ Info|  1|16:00:13.2760: Старт приложения.
+ Info|  1|16:30:00.4913: Старт приложения.
+ Info|  1|17:21:35.6648: Старт приложения.
+ Info|  1|18:24:11.9596: Старт приложения.
+Error|  8|18:25:10.9175: Ошибка! System.InvalidOperationException: An error occurred when trying to create a controller of type 'SocialNetwork.Web.Controllers.HomeController'. Make sure that the controller has a parameterless public constructor. ---> System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в SocialNetwork.Web.Controllers.HomeController..ctor() в F:\Git Repository\SocialNetwork\SocialNetwork.Web\Controllers\HomeController.cs:строка 23
+   в DynamicInjector2ae036c775f74d5a8211eb162645bb2f(Object[] )
+   в Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   в Ninject.Activation.Context.ResolveInternal(Object scope)
+   в Ninject.Activation.Context.Resolve()
+   в Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   в System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   в System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   в Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   в System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   в System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   в System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   в System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   в System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ Info|  1|18:33:39.9493: Старт приложения.
+ Info|  1|18:41:04.0196: Старт приложения.
+ Info|  1|18:44:21.6648: Старт приложения.
+ Info|  1|18:46:05.2451: Старт приложения.
+ Info|  1|18:52:33.4127: Старт приложения.
+ Info|  1|19:27:41.2015: Старт приложения.
+ Info|  1|19:35:24.1434: Старт приложения.
+ Info|  1|19:46:05.7738: Старт приложения.

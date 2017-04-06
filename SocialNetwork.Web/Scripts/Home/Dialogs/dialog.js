@@ -2,33 +2,73 @@
 
     var allMessages = [];
 
-    $("#send").click(function () {
-        var users = getDialogUsers();
+    var chat = $.connection.socialNetworkHub;
 
-        var message = {
-            users: users,
-            message : $("#text-message").val()
+    chat.client.getMessage = function (user, message, users) {
+
+        var usersInPage = getDialogUsers();
+
+        for (var i = 0; i < usersInPage.length; i++) {
+
+            if (users.indexOf(usersInPage[i]) == -1) {
+                var mainDiv = $('<div id="modal-message" class="col-md-4 row" style="height: 100px; overflow: hidden; max-width: 34%; ' +
+                        'position: fixed; top: 80%; left: 0%; background-color: rgba(128, 128, 128, 0.3)">');
+
+                var photoDiv = $('<div class="col-md-3">');
+                photoDiv.append('<img style="height: 90px;" class="img-responsive" src="data:image/*;base64,' + user.Photo + '" />');
+
+                var descriptionDiv = $('<div class="col-md-9">');
+                descriptionDiv.append('<p>' + user.Name + '</p><br/>');
+                descriptionDiv.append('<p>' + message + '</p><br/>');
+
+                mainDiv.append(photoDiv);
+                mainDiv.append(descriptionDiv);
+
+                $("body").append(mainDiv);
+
+                setTimeout(function () {
+                    $("#modal-message").remove();
+                }, 5000);
+
+                return;
+            }
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/Dialogs/SendMessage/",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            data: JSON.stringify(message),
-            success: function (data) {
-                if (data.response == false) {
-                    alert("Ошибка отправки сообщения");
-                    return;
-                }
+        loadDialog();
+    };
 
-                $("#text-message").val('');
+    $.connection.hub.start().done(function () {
+        $("#send").click(function () {
 
-                loadDialog();
-            },
-            error: function () {
-                alert("Ошибка отправки сообщения");
+            var users = getDialogUsers();
+
+            var message = {
+                users: users,
+                message: $("#text-message").val()
             }
+
+            $.ajax({
+                type: "POST",
+                url: "/Dialogs/SendMessage/",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify(message),
+                success: function (data) {
+                    if (data.response == false) {
+                        alert("Ошибка отправки сообщения");
+                        return;
+                    }
+
+                    $("#text-message").val('');
+
+                    chat.server.send(users, $("#text-message").val(), $("#user-id").val());
+
+                    loadDialog();
+                },
+                error: function () {
+                    alert("Ошибка отправки сообщения");
+                }
+            });
         });
     });
 
@@ -102,7 +142,6 @@
     }
 
     function getDialogUsers() {
-        var inputs = [];
         var users = [];
         var inputs = $(".users");
         for(var i = 0; i < inputs.length; i++)

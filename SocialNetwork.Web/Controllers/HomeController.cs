@@ -20,6 +20,7 @@ namespace SocialNetwork.Web.Controllers
         {
             ViewBag.RenderMenu = true;
             SetCurrentUser();
+            ViewBag.UserId = _currentUser.Id;
         }
 
         private void SetCurrentUser()

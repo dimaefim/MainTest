@@ -14,6 +14,11 @@
     <textarea id="text-message" class="col-md-9" maxlength="8000" rows="3" style="min-width: 70%; max-height: 70px;"></textarea>
     <input type="button" id="send" class="btn btn-default col-md-3" style="margin-top: 20px; margin-left: 3%" value="Отправить" />
 
-    <script src="~/Scripts/Home/Dialogs/dialog.js?543"></script>
+    <script src="~/Scripts/Home/Dialogs/dialog.js?268"></script>
 </div>
+
+@section SignalR {
+    <input type="hidden" id="user-id" value="@ViewBag.UserId" />
+    <script src="~/Scripts/SignalR/SNDialogSignalR.js?548"></script>
+}
 

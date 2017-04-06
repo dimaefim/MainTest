@@ -117,8 +117,7 @@
     }
 
     function addValuesToSelects(val) {
-        var startAge = $("#startAge").val();
-        var endAge = $("#endAge").val();
+        var startAge = $("#startAge").val(), endAge = $("#endAge").val();
 
         var startSelect = $("#startAge");
         var endSelect = $("#endAge");
