@@ -1,8 +1,9 @@
 ﻿$(document).ready(function () {
 
-    var allMessages = [];
-
-    var chat = $.connection.socialNetworkHub;
+    var allMessages = [],
+        chat = $.connection.socialNetworkHub,
+        messageText = $("#text-message"),
+        userId = $("#user-id");
 
     chat.client.getMessage = function (user, message, users) {
 
@@ -12,14 +13,14 @@
 
             if (users.indexOf(usersInPage[i]) == -1) {
                 var mainDiv = $('<div id="modal-message" class="col-md-4 row" style="height: 100px; overflow: hidden; max-width: 34%; ' +
-                        'position: fixed; top: 80%; left: 0%; background-color: rgba(128, 128, 128, 0.3)">');
+                        'position: fixed; top: 80%; left: 0%; background-color: rgba(0, 0, 0, 1.0)">');
 
                 var photoDiv = $('<div class="col-md-3">');
                 photoDiv.append('<img style="height: 90px;" class="img-responsive" src="data:image/*;base64,' + user.Photo + '" />');
 
                 var descriptionDiv = $('<div class="col-md-9">');
-                descriptionDiv.append('<p>' + user.Name + '</p><br/>');
-                descriptionDiv.append('<p>' + message + '</p><br/>');
+                descriptionDiv.append('<p style="color: white;">' + user.Name + '</p><br/>');
+                descriptionDiv.append('<p style="color: white;">' + message + '</p><br/>');
 
                 mainDiv.append(photoDiv);
                 mainDiv.append(descriptionDiv);
@@ -38,14 +39,16 @@
     };
 
     $.connection.hub.start().done(function () {
+
+        chat.server.connect(userId.val());
+
         $("#send").click(function () {
 
-            var users = getDialogUsers();
-
-            var message = {
-                users: users,
-                message: $("#text-message").val()
-            }
+            var users = getDialogUsers(),
+                message = {
+                    users: users,
+                    message: messageText.val()
+                }
 
             $.ajax({
                 type: "POST",
@@ -59,9 +62,9 @@
                         return;
                     }
 
-                    $("#text-message").val('');
+                    chat.server.send(users, messageText.val(), userId.val());
 
-                    chat.server.send(users, $("#text-message").val(), $("#user-id").val());
+                    messageText.val('');
 
                     loadDialog();
                 },
@@ -107,8 +110,8 @@
 
         for (var i = 0; i < messages.messages.length; i++) {
 
-            var photo = "";
-            var fullName = "";
+            var photo = "",
+                fullName = "";
 
             for (var j = 0; j < messages.userData.length; j++) {
 
@@ -142,8 +145,9 @@
     }
 
     function getDialogUsers() {
-        var users = [];
-        var inputs = $(".users");
+        var users = [],
+            inputs = $(".users");
+
         for(var i = 0; i < inputs.length; i++)
         {
             users.push(+$(inputs[i]).val());

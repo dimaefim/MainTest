@@ -1,8 +1,34 @@
 ﻿$(document).ready(function () {
 
-    var allDialogs = [];
+    var allDialogs = [],
+        chat = $.connection.socialNetworkHub,
+        filterByName = $("#nameFilter");
 
-    $("#nameFilter").keyup(function () {
+    chat.client.getMessage = function (user, message, users) {
+
+        var mainDiv = $('<div id="modal-message" class="col-md-4 row" style="height: 100px; overflow: hidden; max-width: 34%; ' +
+                        'position: fixed; top: 80%; left: 0%; background-color: rgba(0, 0, 0, 1.0)">');
+
+        var photoDiv = $('<div class="col-md-3">');
+        photoDiv.append('<img style="height: 90px;" class="img-responsive" src="data:image/*;base64,' + user.Photo + '" />');
+
+        var descriptionDiv = $('<div class="col-md-9">');
+        descriptionDiv.append('<p style="color: white;">' + user.Name + '</p><br/>');
+        descriptionDiv.append('<p style="color: white;">' + message + '</p><br/>');
+
+        mainDiv.append(photoDiv);
+        mainDiv.append(descriptionDiv);
+
+        $("body").append(mainDiv);
+
+        setTimeout(function () {
+            $("#modal-message").remove();
+        }, 5000);
+
+        loadDialogs();
+    }
+
+    filterByName.keyup(function () {
         filterDialogs(allDialogs);
     });
 
@@ -65,9 +91,8 @@
     }
 
     function filterUsersByName(dialogs) {
-        var resultAfterNameFilter = [];
-        resultAfterNameFilter.length = 0;
-        var filterName = $("#nameFilter").val().toLowerCase();
+        var resultAfterNameFilter = [],
+            filterName = filterByName.val().toLowerCase();
 
         if (filterName.length == 0) {
 

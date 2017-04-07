@@ -1,17 +1,20 @@
 ﻿$(document).ready(function () {
 
-    var allUsers = [];
+    var allUsers = [],
+        filterByName = $("#nameFilter"),
+        startAgeSelect = $("#startAge"),
+        endAgeSelect = $("#endAge");
 
-    $("#nameFilter").keyup(function () {
+    filterByName.keyup(function () {
         filterUsers();
     });
 
-    $("#startAge").change(function () {
+    startAgeSelect.change(function () {
         addValuesToSelects(1);
         filterUsers();
     });
 
-    $("#endAge").change(function () {
+    endAgeSelect.change(function () {
         addValuesToSelects(2);
         filterUsers();
     });
@@ -117,58 +120,63 @@
     }
 
     function addValuesToSelects(val) {
-        var startAge = $("#startAge").val(), endAge = $("#endAge").val();
-
-        var startSelect = $("#startAge");
-        var endSelect = $("#endAge");
+        var startAge = startAgeSelect.val(),
+            endAge = endAgeSelect.val();
         
         if (val == 0) {
 
-            endSelect.empty();
-            startSelect.empty();
+            endAgeSelect.empty();
+            startAgeSelect.empty();
 
             for (var i = 10; i <= 80; i++) {
-                startSelect.append('<option id="start' + i + '">' + i + '</option>');
-                endSelect.append('<option id="end' + i + '">' + i + '</option>');
+                startAgeSelect.append('<option>' + i + '</option>');
+                endAgeSelect.append('<option>' + i + '</option>');
             }
 
-            $("#endAge").children().last().attr("selected", "selected");
+            endAgeSelect.children().last().attr("selected", "selected");
         }
 
         if (val == 1) {
 
-            endSelect.empty();
-
-            for (var i = +startAge; i <= 80; i++) {
-                endSelect.append('<option id="end' + i + '">' + i + '</option>');
-            }
+            endAgeSelect.empty();
 
             if (+endAge < +startAge) {
                 endAge = +startAge;
             }
 
-            $("#end" + endAge).attr("selected", "selected");
+            for (var i = +startAge; i <= 80; i++) {
+
+                if (i == +endAge) {
+                    endAgeSelect.append('<option selected="selected">' + i + '</option>');
+                    continue;
+                }
+
+                endAgeSelect.append('<option>' + i + '</option>');
+            }
         }
 
         if (val == 2) {
 
-            startSelect.empty();
-
-            for (var i = 10; i <= +endAge; i++) {
-                startSelect.append('<option id="start' + i + '">' + i + '</option>');
-            }
+            startAgeSelect.empty();
 
             if (+startAge > +endAge) {
                 startAge = +endAge;
             }
 
-            $("#start" + startAge).attr("selected", "selected");
+            for (var i = 10; i <= +endAge; i++) {
+
+                if (i == +startAge) {
+                    startAgeSelect.append('<option selected="selected">' + i + '</option>');
+                    continue;
+                }
+
+                startAgeSelect.append('<option>' + i + '</option>');
+            }
         }
     }
 
     function filterUsers() {
         var result = [];
-        result.length = 0;
 
         result = filterUsersByName(allUsers);
         result = filterUsersByAge(result);
@@ -177,9 +185,8 @@
     }
 
     function filterUsersByName(users) {
-        var resultAfterNameFilter = [];
-        resultAfterNameFilter.length = 0;
-        var filterName = $("#nameFilter").val().toLowerCase();
+        var resultAfterNameFilter = [],
+            filterName = filterByName.val().toLowerCase();
 
         if (filterName.length == 0) {
 
@@ -199,19 +206,16 @@
     }
 
     function filterUsersByAge(users) {
-        var resultAfterAgeFilter = [];
-        resultAfterAgeFilter.length = 0;
-
-        var startAge = +$("#startAge").val();
-        var endAge = +$("#endAge").val();
+        var resultAfterAgeFilter = [],
+            startAge = +startAgeSelect.val(),
+            endAge = +endAgeSelect.val();
 
         for (var i = 0; i < users.length; i++) {
             var dateOfBirth = new Date(users[i].DateOfBirthString.substr(6, 4),
                                        users[i].DateOfBirthString.substr(3, 2),
-                                       users[i].DateOfBirthString.substr(0, 2));
-            var nowDate = new Date();
-
-            var difference = (nowDate - dateOfBirth) / 31536000000;
+                                       users[i].DateOfBirthString.substr(0, 2)),
+                                       nowDate = new Date(),
+                                       difference = (nowDate - dateOfBirth) / 31536000000;
 
             if (difference >= startAge && difference <= endAge) {
                 resultAfterAgeFilter.push(users[i]);
