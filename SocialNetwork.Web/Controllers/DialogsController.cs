@@ -1,13 +1,7 @@
-﻿using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
+﻿using System.Web.Mvc;
 using Ninject;
-using SocialNetwork.Core.Cache;
 using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
-using SocialNetwork.DataAccess.DbEntity;
-using System.Windows.Forms;
-using SocialNetwork.Models.Models;
 
 namespace SocialNetwork.Web.Controllers
 {
@@ -23,12 +17,12 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetAllDialogs()
         {
-            return Json(_dialogsRepository.GetAllDialogs(_currentUser.Id));
+            return Json(_dialogsRepository.GetAllDialogs(CurrentUser.Id));
         }
 
         public ActionResult OpenDialog(int id = 0)
         {
-            ViewBag.Users = new int[] { _currentUser.Id, id };
+            ViewBag.Users = new int[] { CurrentUser.Id, id };
 
             return View();
         }
@@ -48,7 +42,7 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public JsonResult SendMessage(int[] users, string message)
         {
-            return Json(_dialogsRepository.SendMessage(users, message, _currentUser.Id)
+            return Json(_dialogsRepository.SendMessage(users, message, CurrentUser.Id)
                 ? new { response = true }
                 : new { response = false });
         }

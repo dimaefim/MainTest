@@ -1,28 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Ninject;
+﻿using System.Web.Mvc;
 using SocialNetwork.Core.Cache;
 using SocialNetwork.DataAccess.DbEntity;
 
 namespace SocialNetwork.Web.Controllers
 {
+    [Authorize]
     public class BaseController : Controller
     {
-        protected UserEntity _currentUser;
+        protected UserEntity CurrentUser;
 
-        public BaseController()
+        protected BaseController()
         {
+            SessionCache.UpdateCurrentUser();
             ViewBag.RenderMenu = true;
             SetCurrentUser();
-            ViewBag.UserId = _currentUser.Id;
+            if (CurrentUser != null)
+                ViewBag.UserId = CurrentUser.Id;
         }
 
         private void SetCurrentUser()
         {
-            _currentUser = SessionCache.CurrentUser;
+            CurrentUser = SessionCache.CurrentUser;
         }
     }
 }

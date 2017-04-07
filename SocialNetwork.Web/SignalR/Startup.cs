@@ -1,11 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
 using Owin;
+using SocialNetwork.Web.SignalR;
 
-[assembly: OwinStartup(typeof(SocialNetwork.Core.SignalR.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
-namespace SocialNetwork.Core.SignalR
+namespace SocialNetwork.Web.SignalR
 {
     public class Startup
     {

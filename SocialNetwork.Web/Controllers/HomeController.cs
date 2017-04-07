@@ -17,7 +17,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult Index()
         {
-            if (_currentUser == null)
+            if (CurrentUser == null)
             {
                 FormsAuthentication.SignOut();
                 RedirectToAction("Login", "Account");
@@ -25,14 +25,14 @@ namespace SocialNetwork.Web.Controllers
 
             var user = new MainPageViewModel
             {
-                Name = _currentUser.Name,
-                Surname = _currentUser.Surname,
-                DateOfBirth = _currentUser.DateOfBirth,
-                AboutMe = _currentUser.Settings.AboutMe,
-                MainPhoto = _usersRepository.GetUserMainPhoto(_currentUser.Login)
+                Name = CurrentUser.Name,
+                Surname = CurrentUser.Surname,
+                DateOfBirth = CurrentUser.DateOfBirth,
+                AboutMe = CurrentUser.Settings.AboutMe,
+                MainPhoto = _usersRepository.GetUserMainPhoto(CurrentUser.Login)
             };
             
-            ViewBag.Title = _currentUser.Name + " " + _currentUser.Surname;
+            ViewBag.Title = CurrentUser.Name + " " + CurrentUser.Surname;
 
             return View(user);
         }
@@ -41,13 +41,13 @@ namespace SocialNetwork.Web.Controllers
         {
             var updeteUser = new EditProfileViewModel
             {
-                Login = _currentUser.Login,
-                Name = _currentUser.Name,
-                Surname = _currentUser.Surname,
-                Patronymic = _currentUser.Patronymic,
-                Email = _currentUser.Email,
-                DateOfBirth = _currentUser.DateOfBirth.ToString("dd.MM.yyyy"),
-                AboutMe = _currentUser.Settings.AboutMe
+                Login = CurrentUser.Login,
+                Name = CurrentUser.Name,
+                Surname = CurrentUser.Surname,
+                Patronymic = CurrentUser.Patronymic,
+                Email = CurrentUser.Email,
+                DateOfBirth = CurrentUser.DateOfBirth.ToString("dd.MM.yyyy"),
+                AboutMe = CurrentUser.Settings.AboutMe
             };
 
             return View(updeteUser);
@@ -88,7 +88,7 @@ namespace SocialNetwork.Web.Controllers
         [HttpPost]
         public ActionResult LoadPhoto(HttpPostedFileBase uploadImage)
         {
-            if (uploadImage != null && _usersRepository.SaveNewCurrentUserMainPhoto(uploadImage, _currentUser))
+            if (uploadImage != null && _usersRepository.SaveNewCurrentUserMainPhoto(uploadImage, CurrentUser))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -98,7 +98,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult ShowUserPage(int id)
         {
-            var model = _usersRepository.GetUserPage(_currentUser, id);
+            var model = _usersRepository.GetUserPage(CurrentUser, id);
 
             ViewBag.Title = model.Name + " " + model.Surname;
 
@@ -115,7 +115,7 @@ namespace SocialNetwork.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (!_currentUser.Password.Equals(model.OldPassword))
+                if (!CurrentUser.Password.Equals(model.OldPassword))
                 {
                     ViewBag.MessageForPassword = "Неверный текущий пароль";
 

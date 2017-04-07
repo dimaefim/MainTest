@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.SignalR;
-using SocialNetwork.Core.SignalR.Models;
-using SocialNetwork.DataAccess.DbEntity;
-using System.Windows.Forms;
 using Ninject;
 using SocialNetwork.Core.Dependency;
 using SocialNetwork.Core.Interfaces;
+using SocialNetwork.Web.SignalR.Models;
 
-namespace SocialNetwork.Core.SignalR.Hubs
+namespace SocialNetwork.Web.SignalR.Hubs
 {
     public class SocialNetworkHub : Hub
     {
@@ -21,7 +18,7 @@ namespace SocialNetwork.Core.SignalR.Hubs
         {
             var connectionId = Context.ConnectionId;
 
-            if (!Users.Any(item => item.ConnectionId == connectionId))
+            if (Users.All(item => item.ConnectionId != connectionId))
             {
                 Users.Add(new UserSignalRModel
                 {
@@ -33,12 +30,12 @@ namespace SocialNetwork.Core.SignalR.Hubs
 
         public void Send(int[] users, string message, int userId)
         {
-            var _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
-            var user = _usersRepository.GetItemById(userId);
+            var usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
+            var user = usersRepository.GetItemById(userId);
 
             var userModel = new
             {
-                Photo = Convert.ToBase64String(_usersRepository.GetUserMainPhoto(user.Login)),
+                Photo = Convert.ToBase64String(usersRepository.GetUserMainPhoto(user.Login)),
                 Name = user.Surname + " " + user.Name
             };
 

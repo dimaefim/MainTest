@@ -22,27 +22,27 @@ namespace SocialNetwork.Web.Controllers
 
         public JsonResult GetAllUsers()
         {
-            return Json(_friendsRepository.GetAllUsers(_currentUser.Id));
+            return Json(_friendsRepository.GetAllUsers(CurrentUser.Id));
         }
 
         public JsonResult GetMyFriends()
         {
-            return Json(_friendsRepository.GetMyFriends(_currentUser.Id));
+            return Json(_friendsRepository.GetMyFriends(CurrentUser.Id));
         }
 
         public JsonResult GetRequests()
         {
-            return Json(_friendsRepository.GetRequests(_currentUser.Id));
+            return Json(_friendsRepository.GetRequests(CurrentUser.Id));
         }
 
         public JsonResult GetMyRequests()
         {
-            return Json(_friendsRepository.GetMyRequests(_currentUser.Id));
+            return Json(_friendsRepository.GetMyRequests(CurrentUser.Id));
         }
 
         public JsonResult AddRequestToFriendList(int id)
         {
-            var obj = new { response = _friendsRepository.AddRequestToFriendList(_currentUser.Id, id) };
+            var obj = new { response = _friendsRepository.AddRequestToFriendList(CurrentUser.Id, id) };
 
             return Json(obj);
         }
@@ -54,7 +54,7 @@ namespace SocialNetwork.Web.Controllers
 
         public ActionResult AddRequestToFriendListFromUserPage(int id = 0)
         {
-            if (_friendsRepository.AddRequestToFriendList(_currentUser.Id, id).Equals("false"))
+            if (_friendsRepository.AddRequestToFriendList(CurrentUser.Id, id).Equals("false"))
             {
                 return RedirectToAction("ErrorCode500", "Error");
             }
