@@ -11,22 +11,9 @@ using SocialNetwork.Models.Models;
 namespace SocialNetwork.Web.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private UserEntity _currentUser;
         private readonly IUsersRepository _usersRepository = NinjectBindings.Instance.Get<IUsersRepository>();
-
-        public HomeController()
-        {
-            ViewBag.RenderMenu = true;
-            SetCurrentUser();
-            ViewBag.UserId = _currentUser.Id;
-        }
-
-        private void SetCurrentUser()
-        {
-            _currentUser = SessionCache.CurrentUser;
-        }
 
         public ActionResult Index()
         {

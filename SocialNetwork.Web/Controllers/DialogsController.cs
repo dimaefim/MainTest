@@ -12,22 +12,9 @@ using SocialNetwork.Models.Models;
 namespace SocialNetwork.Web.Controllers
 {
     [Authorize]
-    public class DialogsController : Controller
+    public class DialogsController : BaseController
     {
         private readonly IDialogsRepository _dialogsRepository = NinjectBindings.Instance.Get<IDialogsRepository>();
-        private UserEntity _currentUser;
-
-        public DialogsController()
-        {
-            ViewBag.RenderMenu = true;
-            SetCurrentUser();
-            ViewBag.UserId = _currentUser.Id;
-        }
-
-        private void SetCurrentUser()
-        {
-            _currentUser = SessionCache.CurrentUser;
-        }
 
         public ActionResult MyDialogs()
         {

@@ -11,22 +11,9 @@ using SocialNetwork.Models.Models;
 namespace SocialNetwork.Web.Controllers
 {
     [Authorize]
-    public class FriendsController : Controller
+    public class FriendsController : BaseController
     {
-        private UserEntity _currentUser;
         private readonly IFriendsRepository _friendsRepository = NinjectBindings.Instance.Get<IFriendsRepository>();
-
-        public FriendsController()
-        {
-            ViewBag.RenderMenu = true;
-            SetCurrentUser();
-            ViewBag.UserId = _currentUser.Id;
-        }
-
-        private void SetCurrentUser()
-        {
-            _currentUser = SessionCache.CurrentUser;
-        }
 
         public ActionResult ShowAllUsers()
         {
